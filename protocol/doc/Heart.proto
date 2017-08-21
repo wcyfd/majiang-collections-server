@@ -1,0 +1,18 @@
+package com.randioo.mahjong_public_server.protocol;
+import "Entity.proto";
+
+message HeartRequest{
+	
+}
+
+message HeartResponse{
+	
+}
+
+message SCHeart{
+	
+}
+
+message CSHeart{
+	
+}

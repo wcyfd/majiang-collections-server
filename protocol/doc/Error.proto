@@ -1,0 +1,56 @@
+package com.randioo.mahjong_public_server.protocol;
+
+enum ErrorCode{
+
+	//通用
+
+	OK = 1;//成功
+	NO_STRING = 2;//字符串为空
+
+
+	//登录
+
+	NO_ROLE_ACCOUNT = 3;//没有该帐号
+	EXIST_ROLE = 4;//已经存在用户
+	CREATE_FAILED = 5;//创建失败
+	REJECT_LOGIN = 6;//拒绝登陆
+	ACCOUNT_ILLEGEL = 7;//帐号不合法，只能是英文字母
+	IN_LOGIN = 8;//正在登录中
+	NAME_SENSITIVE = 9;//玩家名有敏感字
+	NO_ROLE_DATA = 10;//没有该玩家信息
+	NAME_REPEATED = 11;//名字重复
+	NAME_TOO_LONG = 12;//名字过长
+	NAME_SPECIAL_CHAR = 13;//名字特殊字符
+
+	
+	//匹配
+	GAME_CREATE_ERROR = 14;//创建游戏失败
+	GAME_JOIN_ERROR = 15;//加入游戏失败
+	ROUND_ERROR = 16;//操作错误
+	MONEY_NUM_ERROR = 17;//兑换数量错误
+	MATCH_ERROR_LOCK = 18;//房间号错误
+	MATCH_MAX_ROLE_COUNT = 19;//房间已经满了
+
+	GAME_NOT_EXIST = 20;//游戏不存在
+	GAME_CARD_NOT_EXIST = 21;//卡牌不存在
+	GAME_EXITING = 22;//其他人正申请退出
+	APPLY_REJECT = 23;//拒绝解散房间
+	NOT_YOUR_TURN = 24;//没轮到你
+	
+	NOT_SAME_TYPE = 25;//牌型不符
+	SMALLER = 26;//牌比上家小
+	NULL_REJECT = 27;//不允许不出牌
+	NOT_LANDLORD = 28;//你不是地主
+	MINGPAI_FORBIDDEN = 29;//不能明牌
+	FIRST_ROUND = 30;//第一轮
+
+	//战斗
+	FIGHT_TIME_PASS = 31;//时间过期
+	FIGHT_MORE_CARD = 32;//牌多了一张，有问题	
+
+	//比赛
+	RACE_JOIN_FAILED = 33;//比赛加入失败
+	
+	//燃点币
+	NOT_RANDIOOMONEY_ENOUGH = 34;//燃点币不足
+} // 34

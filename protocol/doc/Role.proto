@@ -1,0 +1,21 @@
+package com.randioo.mahjong_public_server.protocol;
+import "Entity.proto";
+
+message RoleRenameRequest{	
+	optional string name =1;
+}
+
+message RoleRenameResponse{
+	optional int32 errorCode = 1 [default =1];
+}
+message RoleGetRoleDataRequest{
+}
+
+message RoleGetRoleDataResponse{
+	optional int32 errorCode=1 [default = 1];
+	optional RoleData roleData = 2;
+}
+
+message SCRoleRandiooCoinChange{
+	optional int32 randiooCoin = 1;
+}

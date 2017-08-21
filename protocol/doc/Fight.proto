@@ -1,0 +1,266 @@
+package com.randioo.mahjong_public_server.protocol;
+
+import "Entity.proto";
+
+
+message FightExitGameRequest{//
+	
+}
+
+message FightExitGameResponse{
+	optional int32 errorCode = 1 [default = 1];
+}
+
+message FightApplyExitGameRequest{
+	
+}
+
+message FightApplyExitGameResponse{
+	optional int32 errorCode = 1 [default = 1];
+}
+
+message SCFightExitGame{//
+	optional int32 seat = 1;
+}
+
+/**房间解散*/
+message SCFightRoomDismiss{
+	
+}
+
+/**确认游戏结束*/
+message FightConfirmGameOverRequest{
+	
+}
+
+message FightConfirmGameOverResponse{
+	
+}
+
+message SCFightApplyExitGame{//
+	optional string name = 1;
+	optional int32 countDown = 2;
+	optional int32 applyExitId = 3;
+}
+
+message FightAgreeExitGameRequest{//
+	optional FightVoteApplyExit fightVoteApplyExit = 1;
+	optional int32 applyExitId = 2;//申请的id
+}
+
+message FightAgreeExitGameResponse{//
+	optional int32 errorCode = 1 [default = 1];
+}
+
+message SCFightApplyExitResult{
+	repeated string rejectName = 1;
+	repeated string agreeName = 2;
+}
+
+message SCFightClearRoomId{
+	
+}
+
+message SCFightLoadResource{
+	
+}
+
+message FightReadyRequest{//
+}
+
+message FightReadyResponse{//
+	optional int32 errorCode = 1[default = 1];
+}
+
+message SCFightNoticeReady{
+}
+
+message SCFightReady{//
+	optional int32 seat = 1;
+}
+
+
+message FightGetlastRoundRequest{
+}
+
+message FightGetlastRoundResponse{
+	optional int32 errorCode = 1 [default = 1];
+	repeated Record records = 2;
+}
+
+message FightRecommandRequest{
+}
+
+message FightRecommandResponse{
+	optional int32 errorCode = 1 [default = 1];
+	repeated RecommandPai recommandPai = 2;
+}
+
+message SCFightStart{
+	repeated FightStartRoleData fightStartRoleData = 1;
+	optional int32 remainCardCount = 2;
+	optional int32 zhuangSeat = 3;
+	optional int32 baidaCard = 4; //百搭牌
+	repeated int32 dice = 5; //骰子数
+	optional int32 remainHuangFan = 6;//荒番剩余局数
+	optional int32 currentRoundNum = 7;//当前局数
+	optional int32 maxRound = 8;//总局数
+	optional int32 firstBaiDaCard = 9;//第一次产生的百搭牌
+}
+message SCFightRoundOver{
+	repeated int32 zhamaCards = 1;//扎马的牌
+	repeated int32 flyCards = 2;//苍蝇牌
+	repeated RoleRoundOverInfoData roleRoundOverInfoData = 3;
+	optional string roomId = 4;//房间号
+	optional int32 finishRoundCount = 5;//打完的局数
+	optional int32 maxRoundCount = 6;//最大局数
+	optional int32 flyScore = 7; //飞苍蝇的分数
+	optional bool huangFan = 8;//是否荒番
+}
+
+message SCFightGameOver{
+	repeated RoleGameOverInfoData roleGameOverInfoData = 1;
+	optional string roomId = 2;//房间号
+	optional int32 finishRoundCount = 3;//打完的局数
+	optional int32 maxRoundCount = 4;//最大局数
+}
+
+message SCFightNoticeSendCard{
+	optional int32 seat = 1;
+}
+
+message FightSendCardRequest{
+	optional int32 card = 1;
+	optional bool isTouchCard = 2[default=false];
+}
+
+message FightSendCardResponse{//
+	optional int32 errorCode = 1 [default = 1];
+}
+message SCFightSendCard{
+	optional int32 card = 1;
+	optional int32 seat = 2;
+	optional bool isTouchCard = 3;
+}
+
+message SCFightTouchCard{
+	optional int32 seat = 1;
+	optional int32 touchCard = 2;
+	optional int32 remainCardCount = 3;
+	optional bool isFlower=4[default=false];
+}
+
+message SCFightNoticeChooseCardList{
+	repeated CallHuData callHuData = 1;
+	repeated CallCardListData callCardListData = 2;
+	optional int32 seat = 3;
+	optional int32 tempGameCount = 4;
+}
+
+message SCFightCountdown{
+	optional int32 countdown = 1;
+}
+
+message FightPengRequest{
+	optional int32 tempGameCount = 1;
+	optional int32 callCardListId = 2;
+}
+
+message FightPengResponse{
+	optional int32 errorCode = 1[default = 1];	
+}
+
+message SCFightCardList{
+	optional int32 seat = 1;
+	optional CardListData cardListData = 2;
+}
+
+message FightGangRequest{
+	optional int32 tempGameCount = 1;
+	optional int32 callCardListId = 2;
+}
+
+message FightGangResponse{
+	optional int32 errorCode = 1[default = 1];
+}
+
+message FightHuRequest{
+	optional int32 tempGameCount = 1;
+	optional int32 callCardListId = 2;
+}
+
+message FightHuResponse{
+	optional int32 errorCode = 1[default=1];
+}
+
+message SCFightHu{
+	optional int32 seat = 1;
+	optional RoundCardsData huData = 2;
+}
+
+message FightGuoRequest{
+	optional int32 tempGameCount = 1;
+}
+
+message FightGuoResponse{
+	optional int32 errorCode = 1[default = 1];
+}
+
+message SCFightGuo{
+	optional int32 seat = 1;
+}
+
+message FightChiRequest{
+	optional int32 tempGameCount = 1;
+	optional int32 callCardListId = 2;
+}
+
+message FightChiResponse{
+	optional int32 errorCode = 1[default=1];
+}
+
+message SCFightPointSeat{
+	optional int32 seat = 1;
+	optional int32 tempGameCount = 2;
+}
+
+message SCFightDisconnect{
+	optional int32 seat = 1;
+}
+
+message SCFightScore{
+	repeated ScoreData scoreData = 1;
+}
+
+message SCFightChooseCardListOver{
+	
+}
+
+message FightQueryGameConfigRequest{
+}
+
+message FightQueryGameConfigResponse{
+	optional int32 errorCode= 1[default = 1];
+	optional GameConfigData gameConfigData = 2;
+	optional int32 currentRoundNumber = 3;
+}
+message SCFightFlowerCount{
+	optional int32 flowerCount = 1;
+	optional int32 seat = 2;
+}
+
+message FightClientDispatchRequest{
+	repeated ClientCard cards = 1;
+}
+
+message FightClientDispatchResponse{
+	optional int32 errorCode = 1;
+}
+
+message FightClientTouchCardRequest{
+	optional int32 card = 1;
+}
+
+message FightClientTouchCardResponse{
+	optional int32 errorCode = 1;
+}
