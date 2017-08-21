@@ -109,9 +109,4 @@ public class HongZhongMajiangRule extends MajiangRule {
         return majiangState;
     }
 
-    @Override
-    public void onNotify(RuleableGame ruleableGame) {
-        this.notifyObservers(ruleableGame.getMajiangState().toString(), ruleableGame);
-    }
-
 }

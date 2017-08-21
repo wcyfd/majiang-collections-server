@@ -1,18 +1,14 @@
 package com.randioo.majiang_collections_server.module.fight.component;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import com.randioo.majiang_collections_server.entity.bo.Game;
-import com.randioo.majiang_collections_server.entity.po.RoleGameInfo;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.CardList;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Chi;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Gang;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Hu;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Peng;
-import com.randioo.randioo_server_base.service.ObservableInterface;
-import com.randioo.randioo_server_base.template.Observer;
+import com.randioo.majiang_collections_server.util.DefaultObservePattern;
 
 /**
  * 麻将规则
@@ -20,41 +16,7 @@ import com.randioo.randioo_server_base.template.Observer;
  * @author wcy 2017年8月21日
  *
  */
-public abstract class MajiangRule implements Observer, ObservableInterface {
-
-    /** 所有观察者 */
-    private List<Observer> observers = new LinkedList<>();
-
-    @Override
-    public void addObserver(Observer paramObserver) {
-        observers.add(paramObserver);
-    }
-
-    @Override
-    public void deleteObserver(Observer paramObserver) {
-        observers.remove(paramObserver);
-    }
-
-    @Override
-    public void notifyObservers(String msg, Object... params) {
-        for (Observer observer : observers) {
-            try {
-                observer.update(this, msg, params);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @Override
-    public int countObservers() {
-        return observers.size();
-    }
-
-    @Override
-    public void deleteObservers() {
-        observers.clear();
-    }
+public abstract class MajiangRule extends DefaultObservePattern {
 
     /**
      * 麻将状态
@@ -177,12 +139,14 @@ public abstract class MajiangRule implements Observer, ObservableInterface {
      * @return
      * @author wcy 2017年8月21日
      */
-    public abstract MajiangState execute(MajiangState majiangState);
+    protected abstract MajiangState execute(MajiangState majiangState);
 
     /**
      * 
      * @param majiangState
      * @author wcy 2017年8月21日
      */
-    public abstract void onNotify(RuleableGame game);
+    public void onNotify(RuleableGame game) {
+        this.notifyObservers(game.getMajiangState().toString(), game);
+    }
 }

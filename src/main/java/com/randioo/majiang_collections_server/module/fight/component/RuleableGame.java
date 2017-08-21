@@ -12,7 +12,7 @@ public class RuleableGame {
     /** 游戏状态 */
     private MajiangState majiangState;
     /** 麻将规则 */
-    private MajiangRule majiangRule;
+    private MajiangRule rule;
 
     public void setMajiangState(MajiangState majiangState) {
         this.majiangState = majiangState;
@@ -22,12 +22,12 @@ public class RuleableGame {
         return majiangState;
     }
 
-    public MajiangRule getMajiangRule() {
-        return majiangRule;
+    public MajiangRule getRule() {
+        return rule;
     }
 
-    public void setMajiangRule(MajiangRule majiangRule) {
-        this.majiangRule = majiangRule;
+    public void setRule(MajiangRule rule) {
+        this.rule = rule;
     }
 
 }
