@@ -1,13 +1,12 @@
 package com.randioo.majiang_collections_server.module.fight.component;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.CardList;
-import com.randioo.majiang_collections_server.module.fight.component.cardlist.Chi;
-import com.randioo.majiang_collections_server.module.fight.component.cardlist.Gang;
-import com.randioo.majiang_collections_server.module.fight.component.cardlist.Hu;
-import com.randioo.majiang_collections_server.module.fight.component.cardlist.Peng;
 import com.randioo.majiang_collections_server.util.DefaultObservePattern;
 
 /**
@@ -25,27 +24,51 @@ public abstract class MajiangRule extends DefaultObservePattern {
      *
      */
     public enum MajiangState {
+        /** 通知游戏准备 */
+        STATE_NOTICE_READY,
         /** 游戏准备 */
         STATE_GAME_READY,
         /** 游戏开始 */
         STATE_GAME_START,
+        /** 游戏初始化 */
+        STATE_GAME_INIT,
+        /** 检查庄家 */
+        STATE_CHECK_ZHUANG,
         /** 发牌 */
         STATE_DISPATCH,
+        /** 通知游戏开始 */
+        STATE_NOTICE_GAME_START,
         /** 通知出牌 */
-        STATE_NOTICE_SEND_CARD,
+        STATE_SC_SEND_CARD,
         /** 出牌 */
         STATE_GAME_SEND_CARD,
         /** 摸牌 */
         STATE_TOUCH_CARD,
+        /** 通知摸到的牌 */
+        STATE_SC_TOUCH_CARD,
         /** 检查别人的杠碰吃胡 */
-        STATE_CHECK_OTHER_GANG_PENG_HU_CHI,
+        STATE_CHECK_OTHER_CARDLIST,
         /** 检查自己的杠碰吃胡 */
-        STATE_CHECK_MINE_GANG_PENG_HU_CHI,
+        STATE_CHECK_MINE_CARDLIST,
+        /** 通知卡组到玩家 */
+        STATE_SC_SEND_CARDLIST_2_ROLE,
         /** 回合结束 */
         STATE_ROUND_OVER,
         /** 游戏结束 */
-        STATE_GAME_OVER;
+        STATE_GAME_OVER,
+        /** 消费燃点币 */
+        STATE_CONSUME_MONEY,
+        /** 增加燃点活动点数 */
+        STATE_ADD_RANDIOO_ACTIVE;
     }
+
+    /** 所有的牌型 */
+    protected Map<Class<? extends CardList>, CardList> allCardListMap = new HashMap<>();
+
+    protected List<Class<? extends CardList>> mineCardListSequence = new ArrayList<>();
+    protected List<Class<? extends CardList>> otherCardListSequence = new ArrayList<>();
+
+    protected List<Class<? extends CardList>> gangCardListSequence = new ArrayList<>();
 
     /**
      * 获得所有牌
@@ -61,7 +84,9 @@ public abstract class MajiangRule extends DefaultObservePattern {
      * @return
      * @author wcy 2017年8月21日
      */
-    public abstract boolean canZhuaHu(Game game);
+    public boolean canZhuaHu(Game game) {
+        return true;
+    }
 
     /**
      * 能否白搭抓胡
@@ -69,68 +94,50 @@ public abstract class MajiangRule extends DefaultObservePattern {
      * @return
      * @author wcy 2017年8月21日
      */
-    public abstract boolean canBaiDaZhuaHu(Game game);
+    public boolean canBaiDaZhuaHu(Game game) {
+        return true;
+    }
 
     /**
-     * 获得胡
+     * 获得百搭牌
      * 
      * @return
-     * @author wcy 2017年8月21日
+     * @author wcy 2017年8月22日
      */
-    public abstract Hu getHu();
-
-    /**
-     * 获得碰
-     * 
-     * @return
-     * @author wcy 2017年8月21日
-     */
-    public abstract Peng getPeng();
-
-    /**
-     * 获得杠
-     * 
-     * @return
-     * @author wcy 2017年8月21日
-     */
-    public abstract Gang getGang();
-
-    /**
-     * 获得吃
-     * 
-     * @return
-     * @author wcy 2017年8月21日
-     */
-    public abstract Chi getChi();
+    public int getBaidaCard() {
+        return 0;
+    }
 
     /**
      * 
      * @return
      * @author wcy 2017年8月21日
      */
-    public abstract Map<Class<? extends CardList>, CardList> checkOtherCardListSequence();
+    public List<Class<? extends CardList>> getOtherCardListSequence() {
+        return otherCardListSequence;
+    }
 
     /**
      * 
      * @return
      * @author wcy 2017年8月21日
      */
-    public abstract Map<Class<? extends CardList>, CardList> checkMineCardListSequence();
+    public List<Class<? extends CardList>> getMineCardListSequence() {
+        return mineCardListSequence;
+    }
 
     /**
      * 执行下一条流程
      * 
-     * @param game
+     * @param ruleableGame
      * @author wcy 2017年8月21日
      */
-    public void executeNextProcess(RuleableGame game) {
-        MajiangState majiangState = game.getMajiangState();
+    public void executeNextProcess(RuleableGame ruleableGame) {
+        List<MajiangState> majiangStateList = ruleableGame.getMajiangStateList();
 
-        majiangState = this.execute(majiangState);
+        this.execute(ruleableGame, majiangStateList);
 
-        game.setMajiangState(majiangState);
-
-        this.onNotify(game);
+        this.onNotify(ruleableGame);
     }
 
     /**
@@ -139,7 +146,7 @@ public abstract class MajiangRule extends DefaultObservePattern {
      * @return
      * @author wcy 2017年8月21日
      */
-    protected abstract MajiangState execute(MajiangState majiangState);
+    protected abstract void execute(RuleableGame ruleableGame, List<MajiangState> majiangStateList);
 
     /**
      * 
@@ -147,6 +154,9 @@ public abstract class MajiangRule extends DefaultObservePattern {
      * @author wcy 2017年8月21日
      */
     public void onNotify(RuleableGame game) {
-        this.notifyObservers(game.getMajiangState().toString(), game);
+        List<MajiangState> states = game.getMajiangStateList();
+        MajiangState majiangState = states.get(states.size() - 1);
+
+        this.notifyObservers(majiangState.toString(), game);
     }
 }

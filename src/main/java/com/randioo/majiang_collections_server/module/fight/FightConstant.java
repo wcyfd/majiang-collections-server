@@ -5,7 +5,6 @@ public class FightConstant {
     public final static String SEND_CARD = "fight_send_card";
 
     public static final String NEXT_GAME_ROLE_SEND_CARD = "next_game_role_send_card";
-    public static final String NEXT_ROLE_TO_CALL_LANDLORD = "next_role_to_call_landlord";
     public static final String ROUND_OVER = "fight_round_over";
     public static final String FIGHT_GAME_OVER = "fight_game_over";
     public static final String FIGHT_NOTICE_SEND_CARD = "fight_notice_send_card";
