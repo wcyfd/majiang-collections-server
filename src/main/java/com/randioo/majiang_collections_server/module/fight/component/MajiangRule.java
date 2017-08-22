@@ -59,7 +59,15 @@ public abstract class MajiangRule extends DefaultObservePattern {
         /** 消费燃点币 */
         STATE_CONSUME_MONEY,
         /** 增加燃点活动点数 */
-        STATE_ADD_RANDIOO_ACTIVE;
+        STATE_ADD_RANDIOO_ACTIVE,
+        /** 杠 */
+        STATE_GANG,
+        /** 碰 */
+        STATE_PENG,
+        /** 吃 */
+        STATE_CHI,
+        /** 胡 */
+        STATE_HU;
     }
 
     /** 所有的牌型 */
@@ -132,12 +140,12 @@ public abstract class MajiangRule extends DefaultObservePattern {
      * @param ruleableGame
      * @author wcy 2017年8月21日
      */
-    public void executeNextProcess(RuleableGame ruleableGame) {
-        List<MajiangState> majiangStateList = ruleableGame.getMajiangStateList();
+    public void executeNextProcess(RuleableGame game) {
+        this.execute(game);
 
-        this.execute(ruleableGame, majiangStateList);
+        MajiangState state = this.getCurrentState(game);
 
-        this.onNotify(ruleableGame);
+        this.notifyObservers(state.toString(), game);
     }
 
     /**
@@ -146,17 +154,8 @@ public abstract class MajiangRule extends DefaultObservePattern {
      * @return
      * @author wcy 2017年8月21日
      */
-    protected abstract void execute(RuleableGame ruleableGame, List<MajiangState> majiangStateList);
+    protected abstract void execute(RuleableGame ruleableGame);
 
-    /**
-     * 
-     * @param majiangState
-     * @author wcy 2017年8月21日
-     */
-    public void onNotify(RuleableGame game) {
-        List<MajiangState> states = game.getMajiangStateList();
-        MajiangState majiangState = states.get(states.size() - 1);
+    protected abstract MajiangState getCurrentState(RuleableGame ruleableGame);
 
-        this.notifyObservers(majiangState.toString(), game);
-    }
 }

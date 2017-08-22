@@ -1,10 +1,5 @@
 package com.randioo.majiang_collections_server.module.fight.component;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.randioo.majiang_collections_server.module.fight.component.MajiangRule.MajiangState;
-
 /**
  * 有规则的游戏
  * 
@@ -14,13 +9,9 @@ import com.randioo.majiang_collections_server.module.fight.component.MajiangRule
 public class RuleableGame {
 
     /** 游戏状态 */
-    private List<MajiangState> majiangStateList = new ArrayList<>();
+    private int stateIndex;
     /** 麻将规则 */
     private MajiangRule rule;
-
-    public List<MajiangState> getMajiangStateList() {
-        return majiangStateList;
-    }
 
     public MajiangRule getRule() {
         return rule;
@@ -28,6 +19,14 @@ public class RuleableGame {
 
     public void setRule(MajiangRule rule) {
         this.rule = rule;
+    }
+
+    public int getStateIndex() {
+        return stateIndex;
+    }
+
+    public void setStateIndex(int stateIndex) {
+        this.stateIndex = stateIndex;
     }
 
 }

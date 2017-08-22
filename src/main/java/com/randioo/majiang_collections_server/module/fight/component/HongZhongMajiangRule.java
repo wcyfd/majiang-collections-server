@@ -28,7 +28,7 @@ import com.randioo.randioo_server_base.utils.TimeUtils;
 @Component
 public class HongZhongMajiangRule extends MajiangRule {
 
-    public final int[] cards = { 101, 102, 103, 104, 105, 106, 107, 108, 109, // 条
+    private final int[] cards = { 101, 102, 103, 104, 105, 106, 107, 108, 109, // 条
             101, 102, 103, 104, 105, 106, 107, 108, 109, // 条
             101, 102, 103, 104, 105, 106, 107, 108, 109, // 条
             101, 102, 103, 104, 105, 106, 107, 108, 109, // 条
@@ -47,63 +47,113 @@ public class HongZhongMajiangRule extends MajiangRule {
             // 601, 601, 601, 601,// 西
             // 701, 701, 701, 701,// 北
             801, 801, 801, 801,// 中
-    // 901, 901, 901, 901,// 发
-    // 1001, 1001, 1001, 1001,// 白
-    // 1101,// 春
-    // 1102,// 夏
-    // 1103,// 秋
-    // 1104,// 冬
-    // 1105,// 梅
-    // 1106,// 兰
-    // 1107,// 竹
-    // 1108,// 菊
-    // B9,// 财神
-    // BA,// 猫
-    // BB,// 老鼠
-    // BC,// 聚宝盆
-    // C1,// 白搭
-    // C1,// 白搭
-    // C1,// 白搭
-    // C1,// 白搭
+            // 901, 901, 901, 901,// 发
+            // 1001, 1001, 1001, 1001,// 白
+            // 1101,// 春
+            // 1102,// 夏
+            // 1103,// 秋
+            // 1104,// 冬
+            // 1105,// 梅
+            // 1106,// 兰
+            // 1107,// 竹
+            // 1108,// 菊
+            // B9,// 财神
+            // BA,// 猫
+            // BB,// 老鼠
+            // BC,// 聚宝盆
+            // C1,// 白搭
+            // C1,// 白搭
+            // C1,// 白搭
+            // C1,// 白搭
 
-    // 11, 12, 13, 14, 15, 16, 17, 18, 19, // 条
-    // 11, 12, 13, 14, 15, 16, 17, 18, 19, // 条
-    // 11, 12, 13, 14, 15, 16, 17, 18, 19, // 条
-    // 11, 12, 13, 14, 15, 16, 17, 18, 19, // 条
-    //
-    // 21, 22, 23, 24, 25, 26, 27, 28, 29, // 筒
-    // 21, 22, 23, 24, 25, 26, 27, 28, 29, // 筒
-    // 21, 22, 23, 24, 25, 26, 27, 28, 29, // 筒
-    // 21, 22, 23, 24, 25, 26, 27, 28, 29, // 筒
-    //
-    // 31, 32, 33, 34, 35, 36, 37, 38, 39, // 万
-    // 31, 32, 33, 34, 35, 36, 37, 38, 39, // 万
-    // 31, 32, 33, 34, 35, 36, 37, 38, 39, // 万
-    // 31, 32, 33, 34, 35, 36, 37, 38, 39, // 万
-    // // 41, 41, 41, 41,// 东
-    // // 51, 51, 51, 51,// 南
-    // // 61, 61, 61, 61,// 西
-    // // 71, 71, 71, 71,// 北
-    // 81, 81, 81, 81,// 中
-    // 91, 91, 91, 91,// 发
-    // A1, A1, A1, A1,// 白
-    // B1,// 梅
-    // B2,// 兰
-    // B3,// 竹
-    // B4,// 菊
-    // B5,// 春
-    // B6,// 夏
-    // B7,// 秋
-    // B8,// 冬
-    // B9,// 财神
-    // BA,// 猫
-    // BB,// 老鼠
-    // BC,// 聚宝盆
-    // C1,// 白搭
-    // C1,// 白搭
-    // C1,// 白搭
-    // C1,// 白搭
+            // 11, 12, 13, 14, 15, 16, 17, 18, 19, // 条
+            // 11, 12, 13, 14, 15, 16, 17, 18, 19, // 条
+            // 11, 12, 13, 14, 15, 16, 17, 18, 19, // 条
+            // 11, 12, 13, 14, 15, 16, 17, 18, 19, // 条
+            //
+            // 21, 22, 23, 24, 25, 26, 27, 28, 29, // 筒
+            // 21, 22, 23, 24, 25, 26, 27, 28, 29, // 筒
+            // 21, 22, 23, 24, 25, 26, 27, 28, 29, // 筒
+            // 21, 22, 23, 24, 25, 26, 27, 28, 29, // 筒
+            //
+            // 31, 32, 33, 34, 35, 36, 37, 38, 39, // 万
+            // 31, 32, 33, 34, 35, 36, 37, 38, 39, // 万
+            // 31, 32, 33, 34, 35, 36, 37, 38, 39, // 万
+            // 31, 32, 33, 34, 35, 36, 37, 38, 39, // 万
+            // // 41, 41, 41, 41,// 东
+            // // 51, 51, 51, 51,// 南
+            // // 61, 61, 61, 61,// 西
+            // // 71, 71, 71, 71,// 北
+            // 81, 81, 81, 81,// 中
+            // 91, 91, 91, 91,// 发
+            // A1, A1, A1, A1,// 白
+            // B1,// 梅
+            // B2,// 兰
+            // B3,// 竹
+            // B4,// 菊
+            // B5,// 春
+            // B6,// 夏
+            // B7,// 秋
+            // B8,// 冬
+            // B9,// 财神
+            // BA,// 猫
+            // BB,// 老鼠
+            // BC,// 聚宝盆
+            // C1,// 白搭
+            // C1,// 白搭
+            // C1,// 白搭
+            // C1,// 白搭
     };
+
+    private MajiangState states[] = { //
+            MajiangState.STATE_GAME_READY, // 0
+            MajiangState.STATE_GAME_START, // 1
+            MajiangState.STATE_CHECK_ZHUANG, // 2
+            MajiangState.STATE_DISPATCH, // 3
+            MajiangState.STATE_NOTICE_GAME_START, // 4
+            MajiangState.STATE_TOUCH_CARD, // 5
+            MajiangState.STATE_CONSUME_MONEY, // 6
+            MajiangState.STATE_ROUND_OVER, // 7
+            MajiangState.STATE_NOTICE_READY, // 8
+            MajiangState.STATE_GAME_OVER, // 9
+            MajiangState.STATE_ADD_RANDIOO_ACTIVE, // 10
+            MajiangState.STATE_SC_TOUCH_CARD, // 11
+            MajiangState.STATE_CHECK_MINE_CARDLIST, // 12
+            MajiangState.STATE_SC_SEND_CARD, // 13
+            MajiangState.STATE_SC_SEND_CARDLIST_2_ROLE, // 14
+            MajiangState.STATE_GANG, // 15
+            MajiangState.STATE_PENG, // 16
+            MajiangState.STATE_CHI, // 17
+            MajiangState.STATE_HU// 18
+    };
+
+    @Override
+    public void execute(RuleableGame ruleableGame) {
+
+        Game game = (Game) ruleableGame;
+        int stateIndex = game.getStateIndex();
+
+        if (stateIndex == 9) {// STATE_GAME_OVER
+            return;
+        } else if (stateIndex == 5) {// STATE_TOUCH_CARD
+            // 卡牌用完切换到游戏结束
+            if (game.getRemainCards().size() > 0) {
+                stateIndex = 11;// STATE_SC_TOUCH_CARD
+            }
+        } else if (stateIndex == 7) {// STATE_ROUND_OVER
+            if (this.isGameOver(game)) {
+                stateIndex = 9;// STATE_GAME_OVER
+            }
+        } else if (stateIndex == 12) {// STATE_CHECK_MINE_CARDLIST
+            if (game.getHuCallCardLists().size() > 0) {
+                stateIndex = 14;// STATE_SC_SEND_CARDLIST_2_ROLE
+            }
+        } else {
+            stateIndex++;
+        }
+        game.setStateIndex(stateIndex);
+
+    }
 
     @Override
     public void update(Observer paramObserver, String paramString, Object... paramArrayOfObject) {
@@ -148,127 +198,9 @@ public class HongZhongMajiangRule extends MajiangRule {
     }
 
     @Override
-    public void execute(RuleableGame ruleableGame, List<MajiangState> majiangStates) {
-        Game game = (Game) ruleableGame;
-        // switch (majiangState) {
-        //
-        // case STATE_CHECK_OTHER_CARDLIST:
-        // break;
-        // case STATE_DISPATCH:
-        // majiangState = MajiangState.STATE_NOTICE_GAME_START;
-        // break;
-        // case STATE_GAME_OVER:
-        // break;
-        // case STATE_GAME_READY:
-        // majiangState = MajiangState.STATE_GAME_START;
-        // case STATE_GAME_SEND_CARD:
-        // break;
-        // case STATE_GAME_START:
-        // majiangState = MajiangState.STATE_GAME_INIT;
-        // break;
-        // case STATE_GAME_INIT:
-        // majiangState = MajiangState.STATE_CHECK_ZHUANG;
-        // break;
-        // case STATE_CHECK_ZHUANG:
-        // majiangState = MajiangState.STATE_DISPATCH;
-        // break;
-        // case STATE_NOTICE_GAME_START:
-        // majiangState = MajiangState.STATE_TOUCH_CARD;
-        // break;
-        // case STATE_SC_SEND_CARD:
-        // break;
-        // case STATE_ROUND_OVER:
-        // if (isGameOver(game)) {
-        // majiangState = MajiangState.STATE_GAME_OVER;
-        // } else {
-        // majiangState = MajiangState.STATE_NOTICE_READY;
-        // }
-        // break;
-        // case STATE_SC_TOUCH_CARD:
-        // majiangState = MajiangState.STATE_CHECK_MINE_CARDLIST;
-        // break;
-        // case STATE_TOUCH_CARD:
-        // // 卡牌用完切换到游戏结束
-        // if (game.getRemainCards().size() == 0) {
-        // majiangState = MajiangState.STATE_ROUND_OVER;
-        // } else {
-        // // 通知别人我摸到牌，包括告诉自己摸到的是什么牌
-        // majiangState = MajiangState.STATE_SC_TOUCH_CARD;
-        // }
-        // break;
-        // case STATE_CHECK_MINE_CARDLIST:
-        // if (game.getCallCardLists().size() > 0) {
-        // majiangState = MajiangState.STATE_SC_SEND_CARDLIST_2_ROLE;
-        // } else {
-        // majiangState = MajiangState.STATE_SC_SEND_CARD;
-        // }
-        // break;
-        // default:
-        // return null;
-        // }
-
-        List<MajiangState> l = majiangStates;
-        MajiangState s1 = majiangStates.get(0);
-        switch (s1) {
-
-        case STATE_CHECK_OTHER_CARDLIST:
-            break;
-
-        case STATE_GAME_OVER:
-            break;
-        case STATE_GAME_READY:
-            l.set(0, MajiangState.STATE_GAME_START);
-            break;
-        case STATE_GAME_SEND_CARD:
-            break;
-        case STATE_GAME_START:
-            l.set(0, MajiangState.STATE_GAME_INIT);
-            break;
-        case STATE_GAME_INIT:
-            l.set(0, MajiangState.STATE_CHECK_ZHUANG);
-            break;
-        case STATE_CHECK_ZHUANG:
-            l.set(0, MajiangState.STATE_DISPATCH);
-            break;
-        case STATE_DISPATCH:
-            l.set(0, MajiangState.STATE_NOTICE_GAME_START);
-            break;
-        case STATE_NOTICE_GAME_START:
-            l.set(0, MajiangState.STATE_TOUCH_CARD);
-            break;
-        case STATE_SC_SEND_CARD:
-            break;
-        case STATE_ROUND_OVER:
-            if (isGameOver(game)) {
-                l.set(0, MajiangState.STATE_GAME_OVER);
-            } else {
-                l.set(0, MajiangState.STATE_NOTICE_READY);
-            }
-            break;
-        case STATE_CONSUME_MONEY:
-            l.set(0, MajiangState.STATE_ROUND_OVER);
-            break;
-        case STATE_SC_TOUCH_CARD:
-            l.set(0, MajiangState.STATE_CHECK_MINE_CARDLIST);
-            break;
-        case STATE_TOUCH_CARD:
-            // 卡牌用完切换到游戏结束
-            if (game.getRemainCards().size() == 0) {
-                l.set(0, MajiangState.STATE_CONSUME_MONEY);
-            } else {
-                // 通知别人我摸到牌，包括告诉自己摸到的是什么牌
-                l.set(0, MajiangState.STATE_SC_TOUCH_CARD);
-            }
-            break;
-        case STATE_CHECK_MINE_CARDLIST:
-            if (game.getCallCardLists().size() > 0) {
-                l.set(0, MajiangState.STATE_SC_SEND_CARDLIST_2_ROLE);
-            } else {
-                l.set(0, MajiangState.STATE_SC_SEND_CARD);
-            }
-            break;
-        default:
-        }
+    protected MajiangState getCurrentState(RuleableGame ruleableGame) {
+        int stateIndex = ruleableGame.getStateIndex();
+        return states[stateIndex];
     }
 
     private boolean isGameOver(Game game) {

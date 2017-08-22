@@ -289,8 +289,6 @@ public class MatchServiceImpl extends ObserveBaseService implements MatchService
 
         // 设置麻将规则
         game.setRule(hongZhongMajiangRule);
-        // 设置初始状态
-        game.setMajiangState(MajiangState.STATE_GAME_READY);
 
         GameCache.getGameMap().put(gameId, game);
         GameCache.getGameLockStringMap().put(lockString, gameId);
