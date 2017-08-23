@@ -25,7 +25,7 @@ public abstract class MajiangRule extends DefaultObservePattern {
      */
     public enum MajiangState {
         /** 通知游戏准备 */
-        STATE_NOTICE_READY,
+        STATE_INIT_READY,
         /** 游戏准备 */
         STATE_GAME_READY,
         /** 游戏开始 */
@@ -37,7 +37,7 @@ public abstract class MajiangRule extends DefaultObservePattern {
         /** 发牌 */
         STATE_DISPATCH,
         /** 通知游戏开始 */
-        STATE_NOTICE_GAME_START,
+        STATE_SC_GAME_START,
         /** 通知出牌 */
         STATE_SC_SEND_CARD,
         /** 出牌 */
@@ -67,7 +67,11 @@ public abstract class MajiangRule extends DefaultObservePattern {
         /** 吃 */
         STATE_CHI,
         /** 胡 */
-        STATE_HU;
+        STATE_HU,
+        /** 过 */
+        STATE_GUO,
+        /** 玩家选择杠碰胡吃 */
+        STATE_ROLE_CHOSEN_CARDLIST
     }
 
     /** 所有的牌型 */
@@ -112,7 +116,7 @@ public abstract class MajiangRule extends DefaultObservePattern {
      * @return
      * @author wcy 2017年8月22日
      */
-    public int getBaidaCard() {
+    public int getBaidaCard(RuleableGame game) {
         return 0;
     }
 
@@ -140,8 +144,8 @@ public abstract class MajiangRule extends DefaultObservePattern {
      * @param ruleableGame
      * @author wcy 2017年8月21日
      */
-    public void executeNextProcess(RuleableGame game) {
-        this.execute(game);
+    public void executeNextProcess(RuleableGame game, int currentSeat) {
+        this.execute(game, currentSeat);
 
         MajiangState state = this.getCurrentState(game);
 
@@ -154,8 +158,17 @@ public abstract class MajiangRule extends DefaultObservePattern {
      * @return
      * @author wcy 2017年8月21日
      */
-    protected abstract void execute(RuleableGame ruleableGame);
+    protected abstract void execute(RuleableGame ruleableGame, int currentSeat);
 
     protected abstract MajiangState getCurrentState(RuleableGame ruleableGame);
 
+    public abstract int getGangStateIndex();
+
+    public abstract int getPengStateIndex();
+
+    public abstract int getChiStateIndex();
+
+    public abstract int getHuStateIndex();
+
+    public abstract int getGuoStateIndex();
 }
