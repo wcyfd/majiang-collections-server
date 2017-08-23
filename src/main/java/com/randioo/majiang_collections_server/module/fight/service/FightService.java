@@ -5,6 +5,7 @@ import java.util.List;
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.bo.Role;
 import com.randioo.majiang_collections_server.entity.po.CallCardList;
+import com.randioo.majiang_collections_server.entity.po.RoleGameInfo;
 import com.randioo.majiang_collections_server.protocol.Entity.ClientCard;
 import com.randioo.majiang_collections_server.protocol.Entity.FightVoteApplyExit;
 import com.randioo.randioo_server_base.service.ObserveBaseServiceInterface;

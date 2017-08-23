@@ -10,12 +10,14 @@ import com.randioo.majiang_collections_server.cache.file.GameRoundConfigCache;
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.bo.Role;
 import com.randioo.majiang_collections_server.entity.file.GameRoundConfig;
+import com.randioo.majiang_collections_server.entity.po.CallCardList;
 import com.randioo.majiang_collections_server.entity.po.RoleGameInfo;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Chi;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Gang;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Hu;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Peng;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.ZLPBaiDaHu;
+import com.randioo.majiang_collections_server.module.fight.service.FightService;
 import com.randioo.majiang_collections_server.module.role.service.RoleService;
 import com.randioo.majiang_collections_server.protocol.Entity.GameConfigData;
 import com.randioo.majiang_collections_server.protocol.Entity.GameOverMethod;
@@ -41,6 +43,15 @@ public class HongZhongMajiangRule extends MajiangRule {
     @Autowired
     private RandiooPlatformSdk randiooPlatformSdk;
 
+    @Autowired
+    private FightService fightService;
+
+    @Autowired
+    private RoleGameInfoGetter roleGameInfoGetter;
+
+    @Autowired
+    private GameSeat gameSeat;
+
     private final int[] cards = { 101, 102, 103, 104, 105, 106, 107, 108, 109, // 条
             101, 102, 103, 104, 105, 106, 107, 108, 109, // 条
             101, 102, 103, 104, 105, 106, 107, 108, 109, // 条
@@ -60,104 +71,107 @@ public class HongZhongMajiangRule extends MajiangRule {
             // 601, 601, 601, 601,// 西
             // 701, 701, 701, 701,// 北
             801, 801, 801, 801,// 中
-    // 901, 901, 901, 901,// 发
-    // 1001, 1001, 1001, 1001,// 白
-    // 1101,// 春
-    // 1102,// 夏
-    // 1103,// 秋
-    // 1104,// 冬
-    // 1105,// 梅
-    // 1106,// 兰
-    // 1107,// 竹
-    // 1108,// 菊
-    // B9,// 财神
-    // BA,// 猫
-    // BB,// 老鼠
-    // BC,// 聚宝盆
-    // C1,// 白搭
-    // C1,// 白搭
-    // C1,// 白搭
-    // C1,// 白搭
+            // 901, 901, 901, 901,// 发
+            // 1001, 1001, 1001, 1001,// 白
+            // 1101,// 春
+            // 1102,// 夏
+            // 1103,// 秋
+            // 1104,// 冬
+            // 1105,// 梅
+            // 1106,// 兰
+            // 1107,// 竹
+            // 1108,// 菊
+            // B9,// 财神
+            // BA,// 猫
+            // BB,// 老鼠
+            // BC,// 聚宝盆
+            // C1,// 白搭
+            // C1,// 白搭
+            // C1,// 白搭
+            // C1,// 白搭
 
-    // 11, 12, 13, 14, 15, 16, 17, 18, 19, // 条
-    // 11, 12, 13, 14, 15, 16, 17, 18, 19, // 条
-    // 11, 12, 13, 14, 15, 16, 17, 18, 19, // 条
-    // 11, 12, 13, 14, 15, 16, 17, 18, 19, // 条
-    //
-    // 21, 22, 23, 24, 25, 26, 27, 28, 29, // 筒
-    // 21, 22, 23, 24, 25, 26, 27, 28, 29, // 筒
-    // 21, 22, 23, 24, 25, 26, 27, 28, 29, // 筒
-    // 21, 22, 23, 24, 25, 26, 27, 28, 29, // 筒
-    //
-    // 31, 32, 33, 34, 35, 36, 37, 38, 39, // 万
-    // 31, 32, 33, 34, 35, 36, 37, 38, 39, // 万
-    // 31, 32, 33, 34, 35, 36, 37, 38, 39, // 万
-    // 31, 32, 33, 34, 35, 36, 37, 38, 39, // 万
-    // // 41, 41, 41, 41,// 东
-    // // 51, 51, 51, 51,// 南
-    // // 61, 61, 61, 61,// 西
-    // // 71, 71, 71, 71,// 北
-    // 81, 81, 81, 81,// 中
-    // 91, 91, 91, 91,// 发
-    // A1, A1, A1, A1,// 白
-    // B1,// 梅
-    // B2,// 兰
-    // B3,// 竹
-    // B4,// 菊
-    // B5,// 春
-    // B6,// 夏
-    // B7,// 秋
-    // B8,// 冬
-    // B9,// 财神
-    // BA,// 猫
-    // BB,// 老鼠
-    // BC,// 聚宝盆
-    // C1,// 白搭
-    // C1,// 白搭
-    // C1,// 白搭
-    // C1,// 白搭
+            // 11, 12, 13, 14, 15, 16, 17, 18, 19, // 条
+            // 11, 12, 13, 14, 15, 16, 17, 18, 19, // 条
+            // 11, 12, 13, 14, 15, 16, 17, 18, 19, // 条
+            // 11, 12, 13, 14, 15, 16, 17, 18, 19, // 条
+            //
+            // 21, 22, 23, 24, 25, 26, 27, 28, 29, // 筒
+            // 21, 22, 23, 24, 25, 26, 27, 28, 29, // 筒
+            // 21, 22, 23, 24, 25, 26, 27, 28, 29, // 筒
+            // 21, 22, 23, 24, 25, 26, 27, 28, 29, // 筒
+            //
+            // 31, 32, 33, 34, 35, 36, 37, 38, 39, // 万
+            // 31, 32, 33, 34, 35, 36, 37, 38, 39, // 万
+            // 31, 32, 33, 34, 35, 36, 37, 38, 39, // 万
+            // 31, 32, 33, 34, 35, 36, 37, 38, 39, // 万
+            // // 41, 41, 41, 41,// 东
+            // // 51, 51, 51, 51,// 南
+            // // 61, 61, 61, 61,// 西
+            // // 71, 71, 71, 71,// 北
+            // 81, 81, 81, 81,// 中
+            // 91, 91, 91, 91,// 发
+            // A1, A1, A1, A1,// 白
+            // B1,// 梅
+            // B2,// 兰
+            // B3,// 竹
+            // B4,// 菊
+            // B5,// 春
+            // B6,// 夏
+            // B7,// 秋
+            // B8,// 冬
+            // B9,// 财神
+            // BA,// 猫
+            // BB,// 老鼠
+            // BC,// 聚宝盆
+            // C1,// 白搭
+            // C1,// 白搭
+            // C1,// 白搭
+            // C1,// 白搭
     };
 
     private MajiangState states[] = { //
-    // //////////////////
+            // //////////////////
             MajiangState.STATE_GAME_READY, // 0
             MajiangState.STATE_GAME_START, // 1
             MajiangState.STATE_CHECK_ZHUANG, // 2
             MajiangState.STATE_DISPATCH, // 3
             MajiangState.STATE_SC_GAME_START, // 4
             MajiangState.STATE_TOUCH_CARD, // 5
-            MajiangState.STATE_SC_TOUCH_CARD, // 6
-            MajiangState.STATE_CHECK_MINE_CARDLIST, // 7
-            MajiangState.STATE_SC_SEND_CARD, // 8
+            MajiangState.STATE_CHECK_MINE_CARDLIST, // 6
+            MajiangState.STATE_SC_SEND_CARD, // 7
             // ///////////////////////////////////
-            MajiangState.STATE_SC_SEND_CARDLIST_2_ROLE, // 9
-            MajiangState.STATE_ROLE_CHOSEN_CARDLIST,// 10
+            MajiangState.STATE_SC_SEND_CARDLIST_2_ROLE, // 8
+            MajiangState.STATE_ROLE_CHOSEN_CARDLIST, // 9
             // ///////////////////////////////////
-            MajiangState.STATE_ROUND_OVER, // 11
-            MajiangState.STATE_INIT_READY, // 12
+            MajiangState.STATE_ROUND_OVER, // 10
+            MajiangState.STATE_INIT_READY, // 11
             // ///////////////////////////////////
-            MajiangState.STATE_GAME_OVER, // 13
+            MajiangState.STATE_GAME_OVER, // 12
             // ///////////////////////////////////
-            MajiangState.STATE_GANG, // 14
-            MajiangState.STATE_PENG, // 15
-            MajiangState.STATE_CHI, // 16
-            MajiangState.STATE_HU, // 17
-            MajiangState.STATE_GUO // 18
+            MajiangState.STATE_GANG, // 13
+            MajiangState.STATE_PENG, // 14
+            MajiangState.STATE_CHI, // 15
+            MajiangState.STATE_HU, // 16
+            MajiangState.STATE_GUO, // 17
+
+            // ///////////////////////////////////
+            MajiangState.STATE_NEXT_SEAT, // 18
+            MajiangState.STATE_TOUCH_CARD,// 19
     };
 
     private static final int STATE_GAME_READY = 0;
     private static final int STATE_TOUCH_CARD = 5;
-    private static final int STATE_CHECK_MINE_CARDLIST = 7;
-    private static final int STATE_SC_SEND_CARD = 8;
-    private static final int STATE_SC_SEND_CARDLIST_2_ROLE = 9;
-    private static final int STATE_ROUND_OVER = 11;
-    private static final int STATE_INIT_READY = 12;
-    private static final int STATE_GAME_OVER = 13;
-    private static final int STATE_GANG = 14;
-    private static final int STATE_PENG = 15;
-    private static final int STATE_CHI = 16;
-    private static final int STATE_HU = 17;
-    private static final int STATE_GUO = 18;
+    private static final int STATE_CHECK_MINE_CARDLIST = 6;
+    private static final int STATE_SC_SEND_CARD = 7;
+    private static final int STATE_SC_SEND_CARDLIST_2_ROLE = 8;
+    private static final int STATE_ROUND_OVER = 10;
+    private static final int STATE_INIT_READY = 11;
+    private static final int STATE_GAME_OVER = 12;
+    private static final int STATE_GANG = 13;
+    private static final int STATE_PENG = 14;
+    private static final int STATE_CHI = 15;
+    private static final int STATE_HU = 16;
+    private static final int STATE_GUO = 17;
 
     @Override
     public int getChiStateIndex() {
@@ -234,7 +248,32 @@ public class HongZhongMajiangRule extends MajiangRule {
             afterStateIndex = STATE_ROUND_OVER;
             break;
         case STATE_GUO:
-
+            if (game.getCurrentRoleIdIndex() == currentSeat) {
+                afterStateIndex = STATE_SC_SEND_CARD;
+            } else {
+                CallCardList preCallCardList = fightService.getPreviousCallCardList(game.getCallCardLists());
+                if (preCallCardList == null) {
+                    RoleGameInfo currentRoleGameInfo = roleGameInfoGetter.getCurrentRoleGameInfo(game);
+                    if (currentRoleGameInfo.qiangGang != null) {
+                        this.addGangSuccess(currentRoleGameInfo, currentRoleGameInfo.qiangGang);
+                        Gang gang = currentRoleGameInfo.qiangGang;
+                        currentRoleGameInfo.qiangGang = null;
+                        this.gangProcess2(game, game.getCurrentRoleIdIndex(), roleGameInfo, gang);
+                    } else {
+                        gameSeat.nextSeat(game);
+                        afterStateIndex = STATE_TOUCH_CARD;
+                        // this.nextIndex(game);
+                        // this.touchCard(game);
+                    }
+                } else {
+                    if (preCallCardList.call) {
+                        gameSeat.jumpSeat(game, preCallCardList.masterSeat);
+                        afterStateIndex = STATE_TOUCH_CARD;
+                        // this.jumpToIndex(game, preCallCardList.masterSeat);
+                        // this.touchCard(game);
+                    }
+                }
+            }
         default:
             afterStateIndex = preStateIndex + 1;
 

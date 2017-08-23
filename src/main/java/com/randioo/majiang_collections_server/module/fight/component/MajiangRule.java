@@ -71,7 +71,9 @@ public abstract class MajiangRule extends DefaultObservePattern {
         /** 过 */
         STATE_GUO,
         /** 玩家选择杠碰胡吃 */
-        STATE_ROLE_CHOSEN_CARDLIST
+        STATE_ROLE_CHOSEN_CARDLIST,
+        /** 下一个人 */
+        STATE_NEXT_SEAT
     }
 
     /** 所有的牌型 */
