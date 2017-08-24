@@ -24,7 +24,7 @@ import com.randioo.majiang_collections_server.entity.po.RoleGameInfo;
 import com.randioo.majiang_collections_server.entity.po.RoleMatchRule;
 import com.randioo.majiang_collections_server.module.ServiceConstant;
 import com.randioo.majiang_collections_server.module.fight.component.HongZhongMajiangRule;
-import com.randioo.majiang_collections_server.module.fight.component.MajiangRule.MajiangState;
+import com.randioo.majiang_collections_server.module.fight.component.MajiangRule.MajiangStateEnum;
 import com.randioo.majiang_collections_server.module.login.service.LoginService;
 import com.randioo.majiang_collections_server.module.match.MatchConstant;
 import com.randioo.majiang_collections_server.module.role.service.RoleService;

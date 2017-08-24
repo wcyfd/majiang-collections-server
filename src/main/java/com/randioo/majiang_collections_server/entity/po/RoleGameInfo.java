@@ -29,7 +29,7 @@ public class RoleGameInfo {
     public boolean isGang;
     /** 胡牌记录 */
     public RoundCardsData roundCardsData;
-    /** 是否要摸牌 */
+    /** 抢杠 */
     public Gang qiangGang = null;
     /** 听的牌 */
     public List<Integer> tingCards = new ArrayList<>();

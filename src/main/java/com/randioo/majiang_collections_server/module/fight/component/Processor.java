@@ -2,6 +2,12 @@ package com.randioo.majiang_collections_server.module.fight.component;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * 流程控制器
+ * 
+ * @author wcy 2017年8月24日
+ *
+ */
 @Component
 public class Processor {
     /**
@@ -25,4 +31,5 @@ public class Processor {
         MajiangRule majiangRule = game.getRule();
         majiangRule.execute(game, currentSeat);
     }
+
 }

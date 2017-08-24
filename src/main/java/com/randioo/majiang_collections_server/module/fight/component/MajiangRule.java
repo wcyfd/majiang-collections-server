@@ -23,15 +23,13 @@ public abstract class MajiangRule extends DefaultObservePattern {
      * @author wcy 2017年8月21日
      *
      */
-    public enum MajiangState {
+    public enum MajiangStateEnum {
         /** 通知游戏准备 */
         STATE_INIT_READY,
         /** 游戏准备 */
         STATE_GAME_READY,
         /** 游戏开始 */
         STATE_GAME_START,
-        /** 游戏初始化 */
-        STATE_GAME_INIT,
         /** 检查庄家 */
         STATE_CHECK_ZHUANG,
         /** 发牌 */
@@ -61,7 +59,9 @@ public abstract class MajiangRule extends DefaultObservePattern {
         /** 增加燃点活动点数 */
         STATE_ADD_RANDIOO_ACTIVE,
         /** 杠 */
-        STATE_GANG,
+        STATE_GANG1,
+        /** 杠流程2 */
+        STATE_GANG2,
         /** 碰 */
         STATE_PENG,
         /** 吃 */
@@ -147,9 +147,15 @@ public abstract class MajiangRule extends DefaultObservePattern {
      * @author wcy 2017年8月21日
      */
     public void executeNextProcess(RuleableGame game, int currentSeat) {
-        this.execute(game, currentSeat);
+        List<Integer> flows = game.getFlows();
+        // 流程数量为0直接跳出
+        if (flows.size() == 0) {
+            return;
+        }
+        int flowId = flows.remove(0);
+        this.execute(game, flowId, currentSeat);
 
-        MajiangState state = this.getCurrentState(game);
+        MajiangStateEnum state = this.getCurrentState(flowId);
 
         this.notifyObservers(state.toString(), game);
     }
@@ -160,9 +166,9 @@ public abstract class MajiangRule extends DefaultObservePattern {
      * @return
      * @author wcy 2017年8月21日
      */
-    protected abstract void execute(RuleableGame ruleableGame, int currentSeat);
+    public abstract void execute(RuleableGame ruleableGame, int currentFlowId, int currentSeat);
 
-    protected abstract MajiangState getCurrentState(RuleableGame ruleableGame);
+    public abstract MajiangStateEnum getCurrentState(int flowId);
 
     public abstract int getGangStateIndex();
 

@@ -32,7 +32,7 @@ public class RoleGameInfoGetter {
      * @param seat
      * @return
      */
-    private RoleGameInfo getRoleGameInfoBySeat(Game game, int seat) {
+    public RoleGameInfo getRoleGameInfoBySeat(Game game, int seat) {
         String gameRoleId = game.getRoleIdList().get(seat);
         return game.getRoleIdMap().get(gameRoleId);
     }
