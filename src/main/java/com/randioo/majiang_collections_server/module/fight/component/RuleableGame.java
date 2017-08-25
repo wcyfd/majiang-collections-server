@@ -1,7 +1,8 @@
 package com.randioo.majiang_collections_server.module.fight.component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Stack;
+
+import com.randioo.majiang_collections_server.module.fight.component.MajiangRule.MajiangStateEnum;
 
 /**
  * 有规则的游戏
@@ -12,7 +13,7 @@ import java.util.List;
 public class RuleableGame {
 
     /** 游戏状态 */
-    private List<Integer> flows = new ArrayList<>();
+    private Stack<MajiangStateEnum> operations = new Stack<>();
     /** 麻将规则 */
     private MajiangRule rule;
 
@@ -24,8 +25,13 @@ public class RuleableGame {
         this.rule = rule;
     }
 
-    public List<Integer> getFlows() {
-        return flows;
+    /**
+     * 
+     * @return
+     * @author wcy 2017年8月25日
+     */
+    public Stack<MajiangStateEnum> getOperations() {
+        return operations;
     }
 
 }

@@ -36,4 +36,16 @@ public class GameSeat {
         game.setCurrentRoleIdIndex(seat);
         gameAccumlator.accumlate(game);
     }
+
+    /**
+     * 查看下一个位置
+     * 
+     * @param game
+     * @return
+     * @author wcy 2017年8月25日
+     */
+    public int seekNextSeat(Game game) {
+        int index = game.getCurrentCardSeatIndex();
+        return (index + 1) >= game.getRoleIdList().size() ? 0 : index + 1;
+    }
 }

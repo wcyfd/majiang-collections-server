@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.CardList;
-import com.randioo.majiang_collections_server.util.DefaultObservePattern;
 
 /**
  * 麻将规则
@@ -15,7 +15,7 @@ import com.randioo.majiang_collections_server.util.DefaultObservePattern;
  * @author wcy 2017年8月21日
  *
  */
-public abstract class MajiangRule extends DefaultObservePattern {
+public abstract class MajiangRule {
 
     /**
      * 麻将状态
@@ -48,6 +48,8 @@ public abstract class MajiangRule extends DefaultObservePattern {
         STATE_CHECK_OTHER_CARDLIST,
         /** 检查自己的杠碰吃胡 */
         STATE_CHECK_MINE_CARDLIST,
+        /** 检查自己的杠碰吃胡（外检） */
+        STATE_CHECK_MINE_CARDLIST_OUTER,
         /** 通知卡组到玩家 */
         STATE_SC_SEND_CARDLIST_2_ROLE,
         /** 回合结束 */
@@ -59,9 +61,7 @@ public abstract class MajiangRule extends DefaultObservePattern {
         /** 增加燃点活动点数 */
         STATE_ADD_RANDIOO_ACTIVE,
         /** 杠 */
-        STATE_GANG1,
-        /** 杠流程2 */
-        STATE_GANG2,
+        STATE_GANG,
         /** 碰 */
         STATE_PENG,
         /** 吃 */
@@ -73,7 +73,15 @@ public abstract class MajiangRule extends DefaultObservePattern {
         /** 玩家选择杠碰胡吃 */
         STATE_ROLE_CHOSEN_CARDLIST,
         /** 下一个人 */
-        STATE_NEXT_SEAT
+        STATE_NEXT_SEAT,
+        /** 跳转到一个人 */
+        STATE_JUMP_SEAT,
+        /** 等待操作 */
+        STATE_WAIT_OPERATION,
+        /** 玩家出牌 */
+        STATE_ROLE_SEND_CARD,
+        /** 补花 */
+        STATE_ADD_FLOWERS
     }
 
     /** 所有的牌型 */
@@ -140,25 +148,28 @@ public abstract class MajiangRule extends DefaultObservePattern {
         return mineCardListSequence;
     }
 
-    /**
-     * 执行下一条流程
-     * 
-     * @param ruleableGame
-     * @author wcy 2017年8月21日
-     */
-    public void executeNextProcess(RuleableGame game, int currentSeat) {
-        List<Integer> flows = game.getFlows();
-        // 流程数量为0直接跳出
-        if (flows.size() == 0) {
-            return;
-        }
-        int flowId = flows.remove(0);
-        this.execute(game, flowId, currentSeat);
+    // /**
+    // * 执行下一条流程
+    // *
+    // * @param ruleableGame
+    // * @author wcy 2017年8月21日
+    // */
+    // public void execute(RuleableGame game, int currentSeat) {
+    // // List<Integer> flows = game.getFlows();
+    // // // 流程数量为0直接跳出
+    // // if (flows.size() == 0) {
+    // // return;
+    // // }
+    // // int flowId = flows.remove(0);
+    // // this.execute(game, flowId, currentSeat);
+    // //
+    // // MajiangStateEnum state = this.getCurrentState(flowId);
+    // //
+    // // this.notifyObservers(state.toString(), game);
+    //
+    // }
 
-        MajiangStateEnum state = this.getCurrentState(flowId);
-
-        this.notifyObservers(state.toString(), game);
-    }
+    public abstract Set<Integer> getFlowers(Game game);
 
     /**
      * 
@@ -166,17 +177,14 @@ public abstract class MajiangRule extends DefaultObservePattern {
      * @return
      * @author wcy 2017年8月21日
      */
-    public abstract void execute(RuleableGame ruleableGame, int currentFlowId, int currentSeat);
+    public abstract List<MajiangStateEnum> afterStateExecute(RuleableGame ruleableGame,
+            MajiangStateEnum majiangStateEnum, int currentSeat);
 
-    public abstract MajiangStateEnum getCurrentState(int flowId);
-
-    public abstract int getGangStateIndex();
-
-    public abstract int getPengStateIndex();
-
-    public abstract int getChiStateIndex();
-
-    public abstract int getHuStateIndex();
-
-    public abstract int getGuoStateIndex();
+    /**
+     * 游戏结束流程
+     * 
+     * @return
+     * @author wcy 2017年8月25日
+     */
+    public abstract List<MajiangStateEnum> getOverProcess();
 }

@@ -189,4 +189,14 @@ public interface FightService extends ObserveBaseServiceInterface {
      */
     void gangProcess2(Game game, int seat, RoleGameInfo roleGameInfo, Gang gang);
 
+    /**
+     * 是否有花
+     * 
+     * @param game
+     * @param roleGameInfo
+     * @return
+     * @author wcy 2017年8月25日
+     */
+    boolean containsFlowers(Game game, RoleGameInfo roleGameInfo);
+
 }

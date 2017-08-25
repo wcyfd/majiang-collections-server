@@ -1,8 +1,11 @@
 package com.randioo.majiang_collections_server.module.fight.component;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,7 +14,6 @@ import com.randioo.majiang_collections_server.cache.file.GameRoundConfigCache;
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.bo.Role;
 import com.randioo.majiang_collections_server.entity.file.GameRoundConfig;
-import com.randioo.majiang_collections_server.entity.po.CallCardList;
 import com.randioo.majiang_collections_server.entity.po.RoleGameInfo;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Chi;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Gang;
@@ -24,7 +26,6 @@ import com.randioo.majiang_collections_server.protocol.Entity.GameConfigData;
 import com.randioo.majiang_collections_server.protocol.Entity.GameOverMethod;
 import com.randioo.randioo_platform_sdk.RandiooPlatformSdk;
 import com.randioo.randioo_server_base.cache.RoleCache;
-import com.randioo.randioo_server_base.template.Observer;
 import com.randioo.randioo_server_base.utils.ReflectUtils;
 import com.randioo.randioo_server_base.utils.TimeUtils;
 
@@ -130,174 +131,259 @@ public class HongZhongMajiangRule extends MajiangRule {
     // C1,// 白搭
     };
 
-    private MajiangStateEnum majiangStates[] = { //
-    // //////////////////
-            MajiangStateEnum.STATE_GAME_READY, // 0
-            MajiangStateEnum.STATE_GAME_START, // 1
+    /** 开始流程 */
+    private List<MajiangStateEnum> startProcesses = Arrays.asList(//
             MajiangStateEnum.STATE_CHECK_ZHUANG, // 2
             MajiangStateEnum.STATE_DISPATCH, // 3
-            MajiangStateEnum.STATE_SC_GAME_START, // 4
-            MajiangStateEnum.STATE_TOUCH_CARD, // 5
-            MajiangStateEnum.STATE_CHECK_MINE_CARDLIST, // 6
-            MajiangStateEnum.STATE_SC_SEND_CARD, // 7
-            // ///////////////////////////////////
-            MajiangStateEnum.STATE_SC_SEND_CARDLIST_2_ROLE, // 8
-            MajiangStateEnum.STATE_ROLE_CHOSEN_CARDLIST, // 9
-            // ///////////////////////////////////
-            MajiangStateEnum.STATE_ROUND_OVER, // 10
-            MajiangStateEnum.STATE_INIT_READY, // 11
-            // ///////////////////////////////////
-            MajiangStateEnum.STATE_GAME_OVER, // 12
-            // ///////////////////////////////////
-            MajiangStateEnum.STATE_GANG1, // 13
-            MajiangStateEnum.STATE_PENG, // 14
-            MajiangStateEnum.STATE_CHI, // 15
-            MajiangStateEnum.STATE_HU, // 16
-            MajiangStateEnum.STATE_GUO, // 17
+            MajiangStateEnum.STATE_SC_GAME_START // 4
+            );
 
-            // ///////////////////////////////////
-            MajiangStateEnum.STATE_NEXT_SEAT, // 18
-            MajiangStateEnum.STATE_TOUCH_CARD,// 19
-    };
+    /** 摸牌流程 */
+    private List<MajiangStateEnum> touchCardProcesses = Arrays.asList(//
+            MajiangStateEnum.STATE_TOUCH_CARD,// 摸牌
+            MajiangStateEnum.STATE_CHECK_MINE_CARDLIST,// 检查我自己的手牌
+            MajiangStateEnum.STATE_CHECK_MINE_CARDLIST_OUTER// 加上别人的牌再检查一次
+            // MajiangStateEnum.STATE_SC_SEND_CARD,// 通知出牌
+            // MajiangStateEnum.STATE_WAIT_OPERATION// 玩家等待
+            );
 
-    private static final int STATE_GAME_READY = 0;
-    private static final int STATE_TOUCH_CARD = 5;
-    private static final int STATE_CHECK_MINE_CARDLIST = 6;
-    private static final int STATE_SC_SEND_CARD = 7;
-    private static final int STATE_SC_SEND_CARDLIST_2_ROLE = 8;
-    private static final int STATE_ROUND_OVER = 10;
-    private static final int STATE_INIT_READY = 11;
-    private static final int STATE_GAME_OVER = 12;
-    private static final int STATE_GANG = 13;
-    private static final int STATE_PENG = 14;
-    private static final int STATE_CHI = 15;
-    private static final int STATE_HU = 16;
-    private static final int STATE_GUO = 17;
+    /** 出牌流程 */
+    private List<MajiangStateEnum> sendCardProcesses = Arrays.asList(//
+            MajiangStateEnum.STATE_SC_SEND_CARD,// 通知出牌
+            MajiangStateEnum.STATE_WAIT_OPERATION// 玩家等待
+            );
 
-    @Override
-    public int getChiStateIndex() {
-        return STATE_CHI;
-    }
+    /** 检查别人的卡牌 */
+    private List<MajiangStateEnum> checkOtherCardListProcesses = Arrays.asList(//
+            MajiangStateEnum.STATE_CHECK_OTHER_CARDLIST//
+            );
 
-    @Override
-    public int getGangStateIndex() {
-        return STATE_GANG;
-    }
+    /** 自己有胡杠碰吃 */
+    private List<MajiangStateEnum> noticeCardListProcesses = Arrays.asList(//
+            MajiangStateEnum.STATE_SC_SEND_CARDLIST_2_ROLE,//
+            MajiangStateEnum.STATE_WAIT_OPERATION//
+            );
 
-    @Override
-    public int getPengStateIndex() {
-        return STATE_PENG;
-    }
+    /** 下一个人 */
+    private List<MajiangStateEnum> nextOneProcesses = Arrays.asList(//
+            MajiangStateEnum.STATE_NEXT_SEAT//
+            );
+
+    /** 跳转座位 */
+    private List<MajiangStateEnum> jumpSeatProcess = Arrays.asList(//
+            MajiangStateEnum.STATE_JUMP_SEAT//
+            );
+
+    /** 下家流程 */
+    private List<MajiangStateEnum> addFlowersProcess = Arrays.asList(//
+            MajiangStateEnum.STATE_ADD_FLOWERS,//
+            MajiangStateEnum.STATE_CHECK_MINE_CARDLIST,// 检查我自己的手牌
+            MajiangStateEnum.STATE_CHECK_MINE_CARDLIST_OUTER// 加上别人的牌再检查一次
+            );
+
+    private List<MajiangStateEnum> overProcess = Arrays.asList(//
+            MajiangStateEnum.STATE_ROUND_OVER,//
+            MajiangStateEnum.STATE_GAME_OVER//
+            );
 
     @Override
-    public int getGuoStateIndex() {
-        return STATE_GUO;
-    }
-
-    @Override
-    public int getHuStateIndex() {
-        return STATE_HU;
-    }
-
-    @Override
-    public void execute(RuleableGame ruleableGame, int preStateIndex, int seat) {
-
+    public List<MajiangStateEnum> afterStateExecute(RuleableGame ruleableGame, MajiangStateEnum currentState,
+            int currentSeat) {
         Game game = (Game) ruleableGame;
-        List<Integer> flows = game.getFlows();
-
-        // 跳转后的状态索引
-        int afterStateIndex = preStateIndex;
-
-        switch (preStateIndex) {
-        case STATE_INIT_READY:
-            afterStateIndex = STATE_GAME_READY;
+        RoleGameInfo roleGameInfo = roleGameInfoGetter.getCurrentRoleGameInfo(game);
+        List<MajiangStateEnum> list = new ArrayList<>();
+        switch (currentState) {
+        case STATE_GAME_START:
+            list = startProcesses;
             break;
-        case STATE_TOUCH_CARD:
-            if (game.getRemainCards().size() <= 0) {
-                afterStateIndex = STATE_ROUND_OVER;
-            } else {
-                afterStateIndex = preStateIndex + 1;
-            }
+        case STATE_SC_GAME_START:
+            list = touchCardProcesses;
             break;
-        case STATE_ROUND_OVER:
-            // 消耗燃点币
-            // this.consumeRandiooCoin(game);
-            if (this.isGameOver(game)) {
-                afterStateIndex = STATE_GAME_OVER;
-            } else {
-                afterStateIndex = preStateIndex + 1;
-            }
+        case STATE_ROLE_SEND_CARD:
+            list = checkOtherCardListProcesses;
             break;
         case STATE_CHECK_MINE_CARDLIST:
             if (game.getCallCardLists().size() > 0) {
-                afterStateIndex = STATE_SC_SEND_CARDLIST_2_ROLE;
-            } else {
-                afterStateIndex = preStateIndex + 1;
+                list = noticeCardListProcesses;
             }
             break;
-        case STATE_GAME_OVER:
-            // 增加活跃度
-            // this.addRandiooActive(game);
-            break;
-        case STATE_GANG:
-            afterStateIndex = STATE_TOUCH_CARD;
-            break;
-        case STATE_PENG:
-            afterStateIndex = STATE_SC_SEND_CARD;
-            break;
-        case STATE_HU:
-            afterStateIndex = STATE_ROUND_OVER;
-            break;
-        case STATE_GUO:
-            if (game.getCurrentRoleIdIndex() == seat) {
-                afterStateIndex = STATE_SC_SEND_CARD;
+        case STATE_CHECK_MINE_CARDLIST_OUTER: {
+            if (game.getCallCardLists().size() > 0) {
+                list = noticeCardListProcesses;
             } else {
-                CallCardList preCallCardList = fightService.getPreviousCallCardList(game.getCallCardLists());
-                if (preCallCardList == null) {
-                    RoleGameInfo roleGameInfo = roleGameInfoGetter.getRoleGameInfoBySeat(game, seat);
-                    RoleGameInfo currentRoleGameInfo = roleGameInfoGetter.getCurrentRoleGameInfo(game);
-
-                    if (currentRoleGameInfo.qiangGang != null) {
-                        fightService.addGangSuccess(currentRoleGameInfo, currentRoleGameInfo.qiangGang);
-                        Gang gang = currentRoleGameInfo.qiangGang;
-                        currentRoleGameInfo.qiangGang = null;
-                        fightService.gangProcess2(game, game.getCurrentRoleIdIndex(), roleGameInfo, gang);
-                    } else {
-                        gameSeat.nextSeat(game);
-                        afterStateIndex = STATE_TOUCH_CARD;
-                        // this.nextIndex(game);
-                        // this.touchCard(game);
-                    }
+                int size = roleGameInfo.cards.size();
+                int cardListSize = roleGameInfo.showCardLists.size();
+                int totalSize = size + cardListSize * 3;
+                // 牌数量不够，就要继续摸牌，否则直接出牌
+                if (totalSize < 14) {
+                    list = touchCardProcesses;
                 } else {
-                    if (preCallCardList.call) {
-                        gameSeat.jumpSeat(game, preCallCardList.masterSeat);
-                        afterStateIndex = STATE_TOUCH_CARD;
-                        // this.jumpToIndex(game, preCallCardList.masterSeat);
-                        // this.touchCard(game);
-                    }
+                    list = sendCardProcesses;
                 }
             }
-        default:
-            afterStateIndex = preStateIndex + 1;
-
-            flows.add(afterStateIndex);
+        }
+            break;
+        case STATE_CHECK_OTHER_CARDLIST:
+            if (game.getCallCardLists().size() > 0) {
+                list = noticeCardListProcesses;
+            } else {
+                list = nextOneProcesses;
+            }
+            break;
+        case STATE_NEXT_SEAT: {
+            if (fightService.containsFlowers(game, roleGameInfo)) {
+                list.addAll(addFlowersProcess);
+            }
+            list.addAll(touchCardProcesses);
         }
 
-        // game.setStateIndex(afterStateIndex);
-        // MajiangStateEnum state = majiangStates[afterStateIndex];
-        // System.out.println(state);
+            break;
+        case STATE_GANG: {
+            list.addAll(jumpSeatProcess);
+            list.addAll(touchCardProcesses);
+            if (fightService.containsFlowers(game, roleGameInfo)) {
+                list.addAll(addFlowersProcess);
+            }
+        }
+            break;
+        case STATE_PENG:
+        case STATE_CHI: {
+            list = jumpSeatProcess;
+            if (fightService.containsFlowers(game, roleGameInfo)) {
+                list.addAll(addFlowersProcess);
+            }
+        }
+            break;
+        case STATE_HU:
+            break;
 
+        default:
+        }
+
+        return list;
+
+        // if (list != null && list.size() > 0) {
+        // this.addProcesses(operations, list);
+        // }
     }
 
     @Override
-    public MajiangStateEnum getCurrentState(int flowId) {
-        return majiangStates[flowId];
+    public Set<Integer> getFlowers(Game game) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
-    @Override
-    public void update(Observer paramObserver, String paramString, Object... paramArrayOfObject) {
-        System.out.println(paramString);
-    }
+    // /**
+    // * 添加流程 例子：<br>
+    // * p1,p2,p3->p3,p2,p1<br>
+    // *
+    // * @param stack
+    // * @param list
+    // * @author wcy 2017年8月25日
+    // */
+    // private void addProcesses(Stack<MajiangStateEnum> stack,
+    // List<MajiangStateEnum> list) {
+    // for (int i = list.size() - 1; i >= 0; i--) {
+    // MajiangStateEnum state = list.get(i);
+    // stack.push(state);
+    // }
+    // }
+
+    // @Override
+    // public void execute(RuleableGame ruleableGame, int preStateIndex, int
+    // seat) {
+    //
+    // Game game = (Game) ruleableGame;
+    // List<Integer> flows = game.getFlows();
+    //
+    // // 跳转后的状态索引
+    // int afterStateIndex = preStateIndex;
+    //
+    // switch (preStateIndex) {
+    // case STATE_INIT_READY:
+    // afterStateIndex = STATE_GAME_READY;
+    // break;
+    // case STATE_TOUCH_CARD:
+    // if (game.getRemainCards().size() <= 0) {
+    // afterStateIndex = STATE_ROUND_OVER;
+    // } else {
+    // afterStateIndex = preStateIndex + 1;
+    // }
+    // break;
+    // case STATE_ROUND_OVER:
+    // // 消耗燃点币
+    // // this.consumeRandiooCoin(game);
+    // if (this.isGameOver(game)) {
+    // afterStateIndex = STATE_GAME_OVER;
+    // } else {
+    // afterStateIndex = preStateIndex + 1;
+    // }
+    // break;
+    // case STATE_CHECK_MINE_CARDLIST:
+    // if (game.getCallCardLists().size() > 0) {
+    // afterStateIndex = STATE_SC_SEND_CARDLIST_2_ROLE;
+    // } else {
+    // afterStateIndex = preStateIndex + 1;
+    // }
+    // break;
+    // case STATE_GAME_OVER:
+    // // 增加活跃度
+    // // this.addRandiooActive(game);
+    // break;
+    // case STATE_GANG:
+    // afterStateIndex = STATE_TOUCH_CARD;
+    // break;
+    // case STATE_PENG:
+    // afterStateIndex = STATE_SC_SEND_CARD;
+    // break;
+    // case STATE_HU:
+    // afterStateIndex = STATE_ROUND_OVER;
+    // break;
+    // case STATE_GUO:
+    // if (game.getCurrentRoleIdIndex() == seat) {
+    // afterStateIndex = STATE_SC_SEND_CARD;
+    // } else {
+    // CallCardList preCallCardList =
+    // fightService.getPreviousCallCardList(game.getCallCardLists());
+    // if (preCallCardList == null) {
+    // RoleGameInfo roleGameInfo =
+    // roleGameInfoGetter.getRoleGameInfoBySeat(game, seat);
+    // RoleGameInfo currentRoleGameInfo =
+    // roleGameInfoGetter.getCurrentRoleGameInfo(game);
+    //
+    // if (currentRoleGameInfo.qiangGang != null) {
+    // fightService.addGangSuccess(currentRoleGameInfo,
+    // currentRoleGameInfo.qiangGang);
+    // Gang gang = currentRoleGameInfo.qiangGang;
+    // currentRoleGameInfo.qiangGang = null;
+    // fightService.gangProcess2(game, game.getCurrentRoleIdIndex(),
+    // roleGameInfo, gang);
+    // } else {
+    // gameSeat.nextSeat(game);
+    // afterStateIndex = STATE_TOUCH_CARD;
+    // // this.nextIndex(game);
+    // // this.touchCard(game);
+    // }
+    // } else {
+    // if (preCallCardList.call) {
+    // gameSeat.jumpSeat(game, preCallCardList.masterSeat);
+    // afterStateIndex = STATE_TOUCH_CARD;
+    // // this.jumpToIndex(game, preCallCardList.masterSeat);
+    // // this.touchCard(game);
+    // }
+    // }
+    // }
+    // default:
+    // afterStateIndex = preStateIndex + 1;
+    //
+    // flows.add(afterStateIndex);
+    // }
+
+    // game.setStateIndex(afterStateIndex);
+    // MajiangStateEnum state = majiangStates[afterStateIndex];
+    // System.out.println(state);
+
+    // }
 
     public HongZhongMajiangRule() {
         allCardListMap.put(Gang.class, ReflectUtils.newInstance(Gang.class));
@@ -334,71 +420,9 @@ public class HongZhongMajiangRule extends MajiangRule {
         return 801;
     }
 
-    private boolean isGameOver(Game game) {
-        GameConfigData gameConfigData = game.getGameConfig();
-        GameOverMethod gameOverMethod = gameConfigData.getGameOverMethod();
-
-        // 回合制方式游戏结束
-        if (gameOverMethod == GameOverMethod.GAME_OVER_ROUND) {
-            int roundCount = gameConfigData.getRoundCount();
-            int finshRoundCount = game.getFinishRoundCount();
-
-            return finshRoundCount >= roundCount;
-        } else {
-            String endTimeStr = gameConfigData.getEndTime();
-            String nowTimeStr = TimeUtils.get_HHmmss_DateFormat().format(new Date());
-            boolean isPassTime = false;
-            try {
-                isPassTime = TimeUtils.compareHHmmss(nowTimeStr, endTimeStr) >= 0;
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            return isPassTime;
-        }
-    }
-
-    /**
-     * 消费燃点币
-     * 
-     * @param game
-     * @author wcy 2017年8月23日
-     */
-    private void consumeRandiooCoin(Game game) {
-        if (game.getFinishRoundCount() != 1) {
-            return;
-        }
-
-        // 大于一局就扣除燃点币
-        GameRoundConfig config = GameRoundConfigCache.getGameRoundByRoundCount(game.getGameConfig().getRoundCount());
-        Role role = (Role) RoleCache.getRoleById(game.getMasterRoleId());
-
-        roleService.addRandiooMoney(role, -config.needMoney);
-    }
-
-    /**
-     * 增加活跃度
-     * 
-     * @param game
-     * @author wcy 2017年8月23日
-     */
-    private void addRandiooActive(Game game) {
-
-        for (RoleGameInfo roleGameInfo : game.getRoleIdMap().values()) {
-            if (roleGameInfo.roleId == 0) {
-                continue;
-            }
-
-            Role role = (Role) RoleCache.getRoleById(roleGameInfo.roleId);
-            if (role == null) {
-                continue;
-            }
-
-            try {
-                randiooPlatformSdk.addActive(role.getAccount());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+    @Override
+    public List<MajiangStateEnum> getOverProcess() {
+        return overProcess;
     }
 
 }

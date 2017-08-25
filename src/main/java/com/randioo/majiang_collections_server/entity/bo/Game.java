@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import com.randioo.majiang_collections_server.entity.po.CallCardList;
 import com.randioo.majiang_collections_server.entity.po.RoleGameInfo;
+import com.randioo.majiang_collections_server.module.fight.component.MajiangRule.MajiangStateEnum;
 import com.randioo.majiang_collections_server.module.fight.component.RuleableGame;
 import com.randioo.majiang_collections_server.module.fight.component.score.round.GameOverResult;
 import com.randioo.majiang_collections_server.protocol.Entity.ClientCard;
@@ -17,7 +19,7 @@ import com.randioo.majiang_collections_server.protocol.Entity.GameType;
 import com.randioo.majiang_collections_server.util.key.Key;
 import com.randioo.majiang_collections_server.util.vote.VoteBox;
 
-public class Game extends RuleableGame{
+public class Game extends RuleableGame {
     private int gameId;
     /** 玩家id集合 */
     private Map<String, RoleGameInfo> roleIdMap = new LinkedHashMap<>();
@@ -71,6 +73,10 @@ public class Game extends RuleableGame{
     private int baidaCard;
     /** 第一次产生的白打牌 */
     private int fristBaidaCard;
+    /** 出的牌 */
+    private int sendCard;
+    /** 出牌的座位 */
+    private int sendCardSeat;
 
     public VoteBox getVoteBox() {
         return voteBox;
@@ -257,6 +263,22 @@ public class Game extends RuleableGame{
 
     public void setFristBaidaCard(int fristBaidaCard) {
         this.fristBaidaCard = fristBaidaCard;
+    }
+
+    public int getSendCard() {
+        return sendCard;
+    }
+
+    public void setSendCard(int sendCard) {
+        this.sendCard = sendCard;
+    }
+
+    public int getSendCardSeat() {
+        return sendCardSeat;
+    }
+
+    public void setSendCardSeat(int sendCardSeat) {
+        this.sendCardSeat = sendCardSeat;
     }
 
     @Override
