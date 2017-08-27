@@ -12,7 +12,7 @@
 	<param type="boolean" key="client_dispatch">false</param>
 	<param type="boolean" key="client_touch_card">false</param>
 	<!-- 庄家 -->
-	<param type="boolean" key="zhuang">false</param>
+	<param type="boolean" key="zhuang">true</param>
 	<param type="boolean" key="racedebug">false</param>
 	<!-- 使用平台头像 -->
 	<param type="boolean" key="platform_head_image_url">false</param>

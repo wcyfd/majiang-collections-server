@@ -45,7 +45,7 @@ public class GameSeat {
      * @author wcy 2017年8月25日
      */
     public int seekNextSeat(Game game) {
-        int index = game.getCurrentCardSeatIndex();
+        int index = game.getCurrentRoleIdIndex();
         return (index + 1) >= game.getRoleIdList().size() ? 0 : index + 1;
     }
 }

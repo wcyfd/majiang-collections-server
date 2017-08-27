@@ -2,8 +2,10 @@ package com.randioo.majiang_collections_server.entity.po;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import com.randioo.majiang_collections_server.entity.bo.VideoData;
+import com.randioo.majiang_collections_server.module.fight.component.MajiangRule.MajiangStateEnum;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.CardList;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Gang;
 import com.randioo.majiang_collections_server.module.fight.component.score.round.RoundOverResult;
@@ -41,6 +43,8 @@ public class RoleGameInfo {
     public List<SC> roundSCList = new ArrayList<>();
     /** 申请退出时间 */
     public int lastRejectedExitTime;
+    /** 个人缓存的操作栈 */
+    public Stack<MajiangStateEnum> operations = new Stack<>();
 
     @Override
     public String toString() {
@@ -55,6 +59,7 @@ public class RoleGameInfo {
         sb.append(t).append("newCard=>").append(newCard).append(n);
         sb.append(t).append("showCardLists=>").append(showCardLists).append(n);
         sb.append(t).append("qiangGang=>").append(qiangGang).append(n);
+        sb.append(t).append("operation=>").append(operations).append(n);
         sb.append(t).append("]");
 
         return sb.toString();

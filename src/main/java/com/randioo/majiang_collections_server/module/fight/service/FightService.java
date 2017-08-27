@@ -12,6 +12,14 @@ import com.randioo.majiang_collections_server.protocol.Entity.FightVoteApplyExit
 import com.randioo.randioo_server_base.service.ObserveBaseServiceInterface;
 
 public interface FightService extends ObserveBaseServiceInterface {
+    /**
+     * 全部准备完成
+     * 
+     * @param game
+     * @return
+     */
+    boolean checkAllReady(Game game);
+
     public void readyGame(Role role);
 
     /**
@@ -198,5 +206,13 @@ public interface FightService extends ObserveBaseServiceInterface {
      * @author wcy 2017年8月25日
      */
     boolean containsFlowers(Game game, RoleGameInfo roleGameInfo);
+
+    /**
+     * 游戏结束
+     * 
+     * @param game
+     * @return
+     */
+    boolean isGameOver(Game game);
 
 }

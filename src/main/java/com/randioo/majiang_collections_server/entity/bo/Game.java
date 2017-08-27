@@ -5,11 +5,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
 import com.randioo.majiang_collections_server.entity.po.CallCardList;
 import com.randioo.majiang_collections_server.entity.po.RoleGameInfo;
-import com.randioo.majiang_collections_server.module.fight.component.MajiangRule.MajiangStateEnum;
 import com.randioo.majiang_collections_server.module.fight.component.RuleableGame;
 import com.randioo.majiang_collections_server.module.fight.component.score.round.GameOverResult;
 import com.randioo.majiang_collections_server.protocol.Entity.ClientCard;
@@ -39,8 +37,6 @@ public class Game extends RuleableGame {
     private List<String> roleIdList = new ArrayList<>();
     /** 当前玩家id */
     private int currentRoleIdIndex;
-    /** 当前指针指向的目标牌 */
-    private int currentCardSeatIndex;
     /** 出牌计数 */
     private int sendCardCount;
     /** 出牌的时间戳 */
@@ -74,9 +70,9 @@ public class Game extends RuleableGame {
     /** 第一次产生的白打牌 */
     private int fristBaidaCard;
     /** 出的牌 */
-    private int sendCard;
+    public int sendCard;
     /** 出牌的座位 */
-    private int sendCardSeat;
+    public int sendCardSeat;
 
     public VoteBox getVoteBox() {
         return voteBox;
@@ -207,20 +203,6 @@ public class Game extends RuleableGame {
         return callCardLists;
     }
 
-    /**
-     * 当前指针指向的目标牌
-     * 
-     * @return
-     * @author wcy 2017年6月16日
-     */
-    public int getCurrentCardSeatIndex() {
-        return currentCardSeatIndex;
-    }
-
-    public void setCurrentCardSeatIndex(int currentCardSeatIndex) {
-        this.currentCardSeatIndex = currentCardSeatIndex;
-    }
-
     public List<CallCardList> getHuCallCardLists() {
         return huCallCardLists;
     }
@@ -265,22 +247,6 @@ public class Game extends RuleableGame {
         this.fristBaidaCard = fristBaidaCard;
     }
 
-    public int getSendCard() {
-        return sendCard;
-    }
-
-    public void setSendCard(int sendCard) {
-        this.sendCard = sendCard;
-    }
-
-    public int getSendCardSeat() {
-        return sendCardSeat;
-    }
-
-    public void setSendCardSeat(int sendCardSeat) {
-        this.sendCardSeat = sendCardSeat;
-    }
-
     @Override
     public String toString() {
         String n = System.getProperty("line.separator");
@@ -301,7 +267,6 @@ public class Game extends RuleableGame {
             sb.append(t).append(callCardList).append(n);
         }
         sb.append(t).append("currentRoleIndex=>").append(currentRoleIdIndex).append(n);
-        sb.append(t).append("currentCardIndex=>").append(currentCardSeatIndex).append(n);
         sb.append(t).append("sendCardCount=>").append(sendCardCount).append(n);
         sb.append(t).append("remainCards=>").append(remainCards).append(n);
         sb.append(t).append("]").append(n);

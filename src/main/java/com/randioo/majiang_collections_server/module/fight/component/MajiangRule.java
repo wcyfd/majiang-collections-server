@@ -56,32 +56,25 @@ public abstract class MajiangRule {
         STATE_ROUND_OVER,
         /** 游戏结束 */
         STATE_GAME_OVER,
-        /** 消费燃点币 */
-        STATE_CONSUME_MONEY,
-        /** 增加燃点活动点数 */
-        STATE_ADD_RANDIOO_ACTIVE,
-        /** 杠 */
-        STATE_GANG,
+
         /** 碰 */
         STATE_PENG,
-        /** 吃 */
-        STATE_CHI,
-        /** 胡 */
-        STATE_HU,
-        /** 过 */
-        STATE_GUO,
-        /** 玩家选择杠碰胡吃 */
-        STATE_ROLE_CHOSEN_CARDLIST,
+        /** 杠 */
+        STATE_GANG,
+
         /** 下一个人 */
         STATE_NEXT_SEAT,
         /** 跳转到一个人 */
         STATE_JUMP_SEAT,
         /** 等待操作 */
         STATE_WAIT_OPERATION,
+        /** 补花 */
+        STATE_ADD_FLOWERS,
+
+        /** 玩家选择了卡组 */
+        STATE_ROLE_CHOSEN_CARDLIST,
         /** 玩家出牌 */
         STATE_ROLE_SEND_CARD,
-        /** 补花 */
-        STATE_ADD_FLOWERS
     }
 
     /** 所有的牌型 */
@@ -148,28 +141,18 @@ public abstract class MajiangRule {
         return mineCardListSequence;
     }
 
-    // /**
-    // * 执行下一条流程
-    // *
-    // * @param ruleableGame
-    // * @author wcy 2017年8月21日
-    // */
-    // public void execute(RuleableGame game, int currentSeat) {
-    // // List<Integer> flows = game.getFlows();
-    // // // 流程数量为0直接跳出
-    // // if (flows.size() == 0) {
-    // // return;
-    // // }
-    // // int flowId = flows.remove(0);
-    // // this.execute(game, flowId, currentSeat);
-    // //
-    // // MajiangStateEnum state = this.getCurrentState(flowId);
-    // //
-    // // this.notifyObservers(state.toString(), game);
-    //
-    // }
-
     public abstract Set<Integer> getFlowers(Game game);
+
+    /**
+     * 执行前的处理
+     * 
+     * @param ruleGame
+     * @param majiangStateEnum
+     * @param currentSeat
+     * @return
+     */
+    public abstract List<MajiangStateEnum> beforeStateExecute(RuleableGame ruleableGame,
+            MajiangStateEnum majiangStateEnum, int currentSeat);
 
     /**
      * 
@@ -180,11 +163,4 @@ public abstract class MajiangRule {
     public abstract List<MajiangStateEnum> afterStateExecute(RuleableGame ruleableGame,
             MajiangStateEnum majiangStateEnum, int currentSeat);
 
-    /**
-     * 游戏结束流程
-     * 
-     * @return
-     * @author wcy 2017年8月25日
-     */
-    public abstract List<MajiangStateEnum> getOverProcess();
 }
