@@ -98,6 +98,7 @@ public class HongZhongMajiangRule extends MajiangRule {
         switch (majiangStateEnum) {
         case STATE_TOUCH_CARD:
             if (game.getRemainCards().size() == 0) {
+                operations.clear();
                 list.add(MajiangStateEnum.STATE_ROUND_OVER);
             }
             break;
