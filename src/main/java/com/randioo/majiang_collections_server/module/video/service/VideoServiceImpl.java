@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.GeneratedMessage;
+import com.randioo.mahjong_public_server.protocol.Entity.GameVideoData;
+import com.randioo.mahjong_public_server.protocol.Entity.RoundVideoData;
+import com.randioo.mahjong_public_server.protocol.ServerMessage.SC;
 import com.randioo.majiang_collections_server.dao.VideoDao;
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.bo.Role;
@@ -17,9 +20,6 @@ import com.randioo.majiang_collections_server.module.fight.FightConstant;
 import com.randioo.majiang_collections_server.module.fight.service.FightService;
 import com.randioo.majiang_collections_server.module.match.MatchConstant;
 import com.randioo.majiang_collections_server.module.match.service.MatchService;
-import com.randioo.majiang_collections_server.protocol.Entity.GameVideoData;
-import com.randioo.majiang_collections_server.protocol.Entity.RoundVideoData;
-import com.randioo.majiang_collections_server.protocol.ServerMessage.SC;
 import com.randioo.majiang_collections_server.util.VideoUtils;
 import com.randioo.randioo_server_base.cache.RoleCache;
 import com.randioo.randioo_server_base.db.GameDB;
@@ -216,8 +216,10 @@ public class VideoServiceImpl extends ObserveBaseService implements VideoService
     /**
      * 获取当前局数的SC列表，对应录像green hat的那一局
      * 
-     * @param roleGameInfo 玩家对象
-     * @param finishRound 当前的局数,开始局数是0
+     * @param roleGameInfo
+     *            玩家对象
+     * @param finishRound
+     *            当前的局数,开始局数是0
      * @return
      * @author wcy 2017年7月27日
      */

@@ -27,9 +27,11 @@ public abstract class MajiangRule {
         /** 通知游戏准备 */
         STATE_INIT_READY,
         /** 游戏准备 */
-        STATE_GAME_READY,
+        STATE_ROLE_GAME_READY,
         /** 游戏开始 */
         STATE_GAME_START,
+        /** 产生百搭牌 */
+        STATE_CREATE_BAIDA_CARD,
         /** 检查庄家 */
         STATE_CHECK_ZHUANG,
         /** 发牌 */
@@ -44,6 +46,8 @@ public abstract class MajiangRule {
         STATE_TOUCH_CARD,
         /** 通知摸到的牌 */
         STATE_SC_TOUCH_CARD,
+        /** 摸花 */
+        STATE_TOUCH_FLOWER,
         /** 检查别人的杠碰吃胡 */
         STATE_CHECK_OTHER_CARDLIST,
         /** 检查自己的杠碰吃胡 */
@@ -61,6 +65,10 @@ public abstract class MajiangRule {
         STATE_PENG,
         /** 杠 */
         STATE_GANG,
+        /** 杠算分 */
+        STATE_GANG_CAL_SCORE,
+        /** 胡 */
+        STATE_HU,
 
         /** 下一个人 */
         STATE_NEXT_SEAT,
@@ -141,6 +149,10 @@ public abstract class MajiangRule {
         return mineCardListSequence;
     }
 
+    public Map<Class<? extends CardList>, CardList> getCardListMap() {
+        return allCardListMap;
+    }
+
     public abstract Set<Integer> getFlowers(Game game);
 
     /**
@@ -163,4 +175,19 @@ public abstract class MajiangRule {
     public abstract List<MajiangStateEnum> afterStateExecute(RuleableGame ruleableGame,
             MajiangStateEnum majiangStateEnum, int currentSeat);
 
+    /**
+     * 回合结束
+     * 
+     * @param game
+     * @author wcy 2017年8月28日
+     */
+    public abstract void executeRoundOverProcess(Game game, boolean checkHu);
+
+    /**
+     * 游戏结束
+     * 
+     * @param game
+     * @author wcy 2017年8月28日
+     */
+    public abstract void executeGameOverProcess(Game game);
 }

@@ -2,13 +2,13 @@ package com.randioo.majiang_collections_server.module.fight.service;
 
 import java.util.List;
 
+import com.randioo.mahjong_public_server.protocol.Entity.ClientCard;
+import com.randioo.mahjong_public_server.protocol.Entity.FightVoteApplyExit;
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.bo.Role;
 import com.randioo.majiang_collections_server.entity.po.CallCardList;
 import com.randioo.majiang_collections_server.entity.po.RoleGameInfo;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Gang;
-import com.randioo.majiang_collections_server.protocol.Entity.ClientCard;
-import com.randioo.majiang_collections_server.protocol.Entity.FightVoteApplyExit;
 import com.randioo.randioo_server_base.service.ObserveBaseServiceInterface;
 
 public interface FightService extends ObserveBaseServiceInterface {
@@ -187,17 +187,6 @@ public interface FightService extends ObserveBaseServiceInterface {
     void addGangSuccess(RoleGameInfo roleGameInfo, Gang gang);
 
     /**
-     * 杠的第2个流程
-     * 
-     * @param game
-     * @param seat
-     * @param roleGameInfo
-     * @param gang
-     * @author wcy 2017年8月24日
-     */
-    void gangProcess2(Game game, int seat, RoleGameInfo roleGameInfo, Gang gang);
-
-    /**
      * 是否有花
      * 
      * @param game
@@ -214,5 +203,18 @@ public interface FightService extends ObserveBaseServiceInterface {
      * @return
      */
     boolean isGameOver(Game game);
+
+    /**
+     * 检查抢杠
+     * 
+     * @param game
+     * @return
+     * @author wcy 2017年8月28日
+     */
+    boolean checkQiangGang(Game game);
+
+    void roundOverHongZhong(Game game, boolean checkHu);
+
+    void gameOverHongZhong(Game game);
 
 }

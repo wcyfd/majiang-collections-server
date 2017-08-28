@@ -1,6 +1,7 @@
 package com.randioo.majiang_collections_server.module.fight.component.dispatch;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -8,22 +9,22 @@ import org.springframework.stereotype.Component;
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.util.CardTools;
 import com.randioo.majiang_collections_server.util.Lists;
-import com.randioo.randioo_server_base.utils.RandomUtils;
 
 @Component
 public class RandomDispatcher implements Dispatcher {
 
     @Override
     public List<CardPart> dispatch(Game game, List<Integer> cards, int partCount, int everyPartCount) {
+        // 打乱牌的顺序
+        Collections.shuffle(cards);
 
         List<CardPart> cardParts = new ArrayList<>(partCount);
         for (int i = 0; i < partCount; i++) {
             CardPart cardPart = new CardPart();
             cardParts.add(cardPart);
             for (int j = 0; j < everyPartCount; j++) {
-                int index = RandomUtils.getRandomNum(cards.size());
-                cardPart.add(cards.get(index));
-                cards.remove(index);
+                int card = cards.remove(j);
+                cardPart.add(card);
             }
         }
         return cardParts;

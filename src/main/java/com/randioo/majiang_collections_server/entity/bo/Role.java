@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.google.protobuf.ByteString;
 import com.randioo.majiang_collections_server.entity.po.RoleRaceInfo;
-import com.randioo.majiang_collections_server.protocol.ServerMessage.SC;
 import com.randioo.randioo_server_base.entity.DefaultRole;
 
 public class Role extends DefaultRole {

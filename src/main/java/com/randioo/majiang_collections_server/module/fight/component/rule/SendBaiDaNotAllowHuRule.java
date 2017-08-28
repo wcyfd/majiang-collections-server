@@ -2,8 +2,8 @@ package com.randioo.majiang_collections_server.module.fight.component.rule;
 
 import org.springframework.stereotype.Component;
 
+import com.randioo.mahjong_public_server.protocol.Entity.GameConfigData;
 import com.randioo.majiang_collections_server.entity.bo.Game;
-import com.randioo.majiang_collections_server.protocol.Entity.GameConfigData;
 
 @Component
 public class SendBaiDaNotAllowHuRule extends AbstractRule {

@@ -39,8 +39,7 @@ public class Processor {
      * 执行下一个动作
      * 
      * @param game
-     * @param currentSeat
-     *            执行者的座位
+     * @param currentSeat 执行者的座位
      * @author wcy 2017年8月23日
      */
     public void process(Game game, int currentSeat) {
@@ -68,12 +67,12 @@ public class Processor {
                 // 执行流过程
                 flow.execute(game, currentSeat);
             } else {
-                StringBuilder sb = new StringBuilder();
-                sb.append("\n");
-                sb.append("==========================================================\n");
-                sb.append("====== no flow : ").append(topOperation).append(" ====\n");
-                sb.append("==========================================================\n");
-                System.out.println(sb);
+                this.noFlowException(topOperation);
+            }
+
+            // 游戏结束标识,直接结束
+            if (topOperation == MajiangStateEnum.STATE_GAME_OVER) {
+                break;
             }
 
             {
@@ -83,10 +82,6 @@ public class Processor {
                 System.out.println("remain process" + operations);
             }
 
-        }
-
-        if (operations.peek() == MajiangStateEnum.STATE_WAIT_OPERATION) {
-            System.out.println("等待用户操作");
         }
 
     }
@@ -124,6 +119,27 @@ public class Processor {
             MajiangStateEnum state = list.get(i);
             stack.push(state);
         }
+    }
+
+    private void noFlowException(MajiangStateEnum majiangStateEnum) {
+        String equals = "==========================================================";
+        String context = " no flow : " + majiangStateEnum + " ";
+        int len1 = equals.length();
+        int len2 = context.length();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n");
+        sb.append(equals).append("\n");
+        for (int i = 0; i < (len1 - len2) / 2; i++) {
+            sb.append("=");
+        }
+        sb.append(context);
+        for (int i = 0; i < (len1 - len2) / 2; i++) {
+            sb.append("=");
+        }
+        sb.append("\n");
+        sb.append(equals).append("\n");
+        System.out.println(sb);
     }
 
 }

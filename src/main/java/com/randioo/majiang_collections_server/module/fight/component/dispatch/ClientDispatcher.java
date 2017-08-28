@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.randioo.mahjong_public_server.protocol.Entity.ClientCard;
 import com.randioo.majiang_collections_server.entity.bo.Game;
-import com.randioo.majiang_collections_server.protocol.Entity.ClientCard;
 import com.randioo.randioo_server_base.utils.RandomUtils;
 
 /**

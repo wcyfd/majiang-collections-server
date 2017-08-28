@@ -264,3 +264,7 @@ message FightClientTouchCardRequest{
 message FightClientTouchCardResponse{
 	optional int32 errorCode = 1;
 }
+
+message SCFightFillFlower{
+	repeated FillFlowerUnit fillFlowerCards = 1;
+}

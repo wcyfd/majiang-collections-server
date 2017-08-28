@@ -196,3 +196,8 @@ message FightStartRoleData{
 message ClientCard{
 	repeated int32 cards = 1;
 }
+
+message FillFlowerUnit{
+	repeated int32 flowerCards = 1 ;//花牌
+	repeated int32 ordinaryCards = 2;//普通牌
+}

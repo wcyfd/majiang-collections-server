@@ -15,6 +15,59 @@ import org.apache.mina.core.session.IoSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.randioo.mahjong_public_server.protocol.Entity.CallCardListData;
+import com.randioo.mahjong_public_server.protocol.Entity.CallHuData;
+import com.randioo.mahjong_public_server.protocol.Entity.CardListData;
+import com.randioo.mahjong_public_server.protocol.Entity.CardListType;
+import com.randioo.mahjong_public_server.protocol.Entity.ClientCard;
+import com.randioo.mahjong_public_server.protocol.Entity.FightStartRoleData;
+import com.randioo.mahjong_public_server.protocol.Entity.FightVoteApplyExit;
+import com.randioo.mahjong_public_server.protocol.Entity.GameConfigData;
+import com.randioo.mahjong_public_server.protocol.Entity.GameOverMethod;
+import com.randioo.mahjong_public_server.protocol.Entity.GameRoleData;
+import com.randioo.mahjong_public_server.protocol.Entity.GameState;
+import com.randioo.mahjong_public_server.protocol.Entity.GameType;
+import com.randioo.mahjong_public_server.protocol.Entity.OverMethod;
+import com.randioo.mahjong_public_server.protocol.Entity.RoleGameOverInfoData;
+import com.randioo.mahjong_public_server.protocol.Entity.RoleRoundOverInfoData;
+import com.randioo.mahjong_public_server.protocol.Entity.RoundCardsData;
+import com.randioo.mahjong_public_server.protocol.Entity.ScoreData;
+import com.randioo.mahjong_public_server.protocol.Error.ErrorCode;
+import com.randioo.mahjong_public_server.protocol.Fight.FightAgreeExitGameResponse;
+import com.randioo.mahjong_public_server.protocol.Fight.FightApplyExitGameResponse;
+import com.randioo.mahjong_public_server.protocol.Fight.FightClientDispatchResponse;
+import com.randioo.mahjong_public_server.protocol.Fight.FightClientTouchCardResponse;
+import com.randioo.mahjong_public_server.protocol.Fight.FightConfirmGameOverResponse;
+import com.randioo.mahjong_public_server.protocol.Fight.FightExitGameResponse;
+import com.randioo.mahjong_public_server.protocol.Fight.FightGangResponse;
+import com.randioo.mahjong_public_server.protocol.Fight.FightGuoResponse;
+import com.randioo.mahjong_public_server.protocol.Fight.FightHuResponse;
+import com.randioo.mahjong_public_server.protocol.Fight.FightPengResponse;
+import com.randioo.mahjong_public_server.protocol.Fight.FightQueryGameConfigResponse;
+import com.randioo.mahjong_public_server.protocol.Fight.FightReadyResponse;
+import com.randioo.mahjong_public_server.protocol.Fight.FightSendCardResponse;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightApplyExitGame;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightApplyExitResult;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightCardList;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightChooseCardListOver;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightClearRoomId;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightCountdown;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightDisconnect;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightExitGame;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightGameOver;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightHu;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeChooseCardList;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSendCard;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightPointSeat;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightReady;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightRoomDismiss;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightRoundOver;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightScore;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightSendCard;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightStart;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightTouchCard;
+import com.randioo.mahjong_public_server.protocol.ServerMessage;
+import com.randioo.mahjong_public_server.protocol.ServerMessage.SC;
 import com.randioo.majiang_collections_server.GlobleConstant;
 import com.randioo.majiang_collections_server.cache.file.GameRoundConfigCache;
 import com.randioo.majiang_collections_server.cache.local.GameCache;
@@ -29,10 +82,12 @@ import com.randioo.majiang_collections_server.entity.po.AIChooseCallCardListTime
 import com.randioo.majiang_collections_server.entity.po.AISendCardTimeEvent;
 import com.randioo.majiang_collections_server.entity.po.CallCardList;
 import com.randioo.majiang_collections_server.entity.po.CardSort;
+import com.randioo.majiang_collections_server.entity.po.FillFlowerBox;
 import com.randioo.majiang_collections_server.entity.po.Race;
 import com.randioo.majiang_collections_server.entity.po.RoleGameInfo;
 import com.randioo.majiang_collections_server.module.ServiceConstant;
 import com.randioo.majiang_collections_server.module.fight.FightConstant;
+import com.randioo.majiang_collections_server.module.fight.component.FillFlower;
 import com.randioo.majiang_collections_server.module.fight.component.Flow;
 import com.randioo.majiang_collections_server.module.fight.component.GameSeat;
 import com.randioo.majiang_collections_server.module.fight.component.HongZhongMajiangRule;
@@ -63,59 +118,6 @@ import com.randioo.majiang_collections_server.module.fight.component.score.round
 import com.randioo.majiang_collections_server.module.login.service.LoginService;
 import com.randioo.majiang_collections_server.module.match.service.MatchService;
 import com.randioo.majiang_collections_server.module.role.service.RoleService;
-import com.randioo.majiang_collections_server.protocol.Entity.CallCardListData;
-import com.randioo.majiang_collections_server.protocol.Entity.CallHuData;
-import com.randioo.majiang_collections_server.protocol.Entity.CardListData;
-import com.randioo.majiang_collections_server.protocol.Entity.CardListType;
-import com.randioo.majiang_collections_server.protocol.Entity.ClientCard;
-import com.randioo.majiang_collections_server.protocol.Entity.FightStartRoleData;
-import com.randioo.majiang_collections_server.protocol.Entity.FightVoteApplyExit;
-import com.randioo.majiang_collections_server.protocol.Entity.GameConfigData;
-import com.randioo.majiang_collections_server.protocol.Entity.GameOverMethod;
-import com.randioo.majiang_collections_server.protocol.Entity.GameRoleData;
-import com.randioo.majiang_collections_server.protocol.Entity.GameState;
-import com.randioo.majiang_collections_server.protocol.Entity.GameType;
-import com.randioo.majiang_collections_server.protocol.Entity.OverMethod;
-import com.randioo.majiang_collections_server.protocol.Entity.RoleGameOverInfoData;
-import com.randioo.majiang_collections_server.protocol.Entity.RoleRoundOverInfoData;
-import com.randioo.majiang_collections_server.protocol.Entity.RoundCardsData;
-import com.randioo.majiang_collections_server.protocol.Entity.ScoreData;
-import com.randioo.majiang_collections_server.protocol.Error.ErrorCode;
-import com.randioo.majiang_collections_server.protocol.Fight.FightAgreeExitGameResponse;
-import com.randioo.majiang_collections_server.protocol.Fight.FightApplyExitGameResponse;
-import com.randioo.majiang_collections_server.protocol.Fight.FightClientDispatchResponse;
-import com.randioo.majiang_collections_server.protocol.Fight.FightClientTouchCardResponse;
-import com.randioo.majiang_collections_server.protocol.Fight.FightConfirmGameOverResponse;
-import com.randioo.majiang_collections_server.protocol.Fight.FightExitGameResponse;
-import com.randioo.majiang_collections_server.protocol.Fight.FightGangResponse;
-import com.randioo.majiang_collections_server.protocol.Fight.FightGuoResponse;
-import com.randioo.majiang_collections_server.protocol.Fight.FightHuResponse;
-import com.randioo.majiang_collections_server.protocol.Fight.FightPengResponse;
-import com.randioo.majiang_collections_server.protocol.Fight.FightQueryGameConfigResponse;
-import com.randioo.majiang_collections_server.protocol.Fight.FightReadyResponse;
-import com.randioo.majiang_collections_server.protocol.Fight.FightSendCardResponse;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightApplyExitGame;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightApplyExitResult;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightCardList;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightChooseCardListOver;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightClearRoomId;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightCountdown;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightDisconnect;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightExitGame;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightGameOver;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightHu;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightNoticeChooseCardList;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightNoticeChooseCardList.Builder;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightNoticeSendCard;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightPointSeat;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightReady;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightRoomDismiss;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightRoundOver;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightScore;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightSendCard;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightStart;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightTouchCard;
-import com.randioo.majiang_collections_server.protocol.ServerMessage.SC;
 import com.randioo.majiang_collections_server.util.Lists;
 import com.randioo.majiang_collections_server.util.key.Key;
 import com.randioo.majiang_collections_server.util.key.KeyStore;
@@ -199,6 +201,9 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
     @Autowired
     private RoleGameInfoGetter roleGameInfoGetter;
 
+    @Autowired
+    private FillFlower fillFlower;
+
     private Scanner in = new Scanner(System.in);
 
     @Override
@@ -263,7 +268,7 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         GameCache.getNoticeChooseCardListFunctionMap().put(Chi.class, new Function() {
             @Override
             public Object apply(Object... params) {
-                SCFightNoticeChooseCardList.Builder builder = (Builder) params[0];
+                SCFightNoticeChooseCardList.Builder builder = (SCFightNoticeChooseCardList.Builder) params[0];
                 int callId = (Integer) params[1];
                 CardListData chiData = (CardListData) params[2];
                 builder.addCallCardListData(CallCardListData.newBuilder().setCallId(callId).setCardListData(chiData));
@@ -273,7 +278,7 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         GameCache.getNoticeChooseCardListFunctionMap().put(Peng.class, new Function() {
             @Override
             public Object apply(Object... params) {
-                SCFightNoticeChooseCardList.Builder builder = (Builder) params[0];
+                SCFightNoticeChooseCardList.Builder builder = (SCFightNoticeChooseCardList.Builder) params[0];
                 int callId = (Integer) params[1];
                 CardListData pengData = (CardListData) params[2];
                 builder.addCallCardListData(CallCardListData.newBuilder().setCallId(callId).setCardListData(pengData));
@@ -283,7 +288,7 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         GameCache.getNoticeChooseCardListFunctionMap().put(Gang.class, new Function() {
             @Override
             public Object apply(Object... params) {
-                SCFightNoticeChooseCardList.Builder builder = (Builder) params[0];
+                SCFightNoticeChooseCardList.Builder builder = (SCFightNoticeChooseCardList.Builder) params[0];
                 int callId = (Integer) params[1];
                 CardListData gangData = (CardListData) params[2];
                 builder.addCallCardListData(CallCardListData.newBuilder().setCallId(callId).setCardListData(gangData));
@@ -293,7 +298,7 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         GameCache.getNoticeChooseCardListFunctionMap().put(Hu.class, new Function() {
             @Override
             public Object apply(Object... params) {
-                SCFightNoticeChooseCardList.Builder builder = (Builder) params[0];
+                SCFightNoticeChooseCardList.Builder builder = (SCFightNoticeChooseCardList.Builder) params[0];
                 int callId = (Integer) params[1];
                 RoundCardsData huData = (RoundCardsData) params[2];
                 builder.addCallHuData(CallHuData.newBuilder().setHuData(huData).setCallId(callId));
@@ -322,30 +327,30 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
             return;
         }
 
-        if (FightConstant.FIGHT_GANG_MING.equals(msg)) {
-            Game game = (Game) args[0];
-            RoleGameInfo roleGameInfo = (RoleGameInfo) args[1];
-            RoleGameInfo targetRoleGameInfo = (RoleGameInfo) args[2];
-
-            this.calcMingGangScore(game, roleGameInfo, targetRoleGameInfo);
-            return;
-        }
-
-        if (FightConstant.FIGHT_GANG_DARK.equals(msg)) {
-            Game game = (Game) args[0];
-            RoleGameInfo roleGameInfo = (RoleGameInfo) args[1];
-
-            this.calcDarkGangScore(game, roleGameInfo);
-            return;
-        }
-
-        if (FightConstant.FIGHT_GANG_ADD.equals(msg)) {
-            Game game = (Game) args[0];
-            RoleGameInfo roleGameInfo = (RoleGameInfo) args[1];
-
-            this.calcAddGangScore(game, roleGameInfo);
-            return;
-        }
+        // if (FightConstant.FIGHT_GANG_MING.equals(msg)) {
+        // Game game = (Game) args[0];
+        // RoleGameInfo roleGameInfo = (RoleGameInfo) args[1];
+        // RoleGameInfo targetRoleGameInfo = (RoleGameInfo) args[2];
+        //
+        // this.calcMingGangScore(game, roleGameInfo, targetRoleGameInfo);
+        // return;
+        // }
+        //
+        // if (FightConstant.FIGHT_GANG_DARK.equals(msg)) {
+        // Game game = (Game) args[0];
+        // RoleGameInfo roleGameInfo = (RoleGameInfo) args[1];
+        //
+        // this.calcDarkGangScore(game, roleGameInfo);
+        // return;
+        // }
+        //
+        // if (FightConstant.FIGHT_GANG_ADD.equals(msg)) {
+        // Game game = (Game) args[0];
+        // RoleGameInfo roleGameInfo = (RoleGameInfo) args[1];
+        //
+        // this.calcAddGangScore(game, roleGameInfo);
+        // return;
+        // }
 
         if (FightConstant.FIGHT_APPLY_LEAVE.equals(msg)) {
             Game game = (Game) args[0];
@@ -365,6 +370,15 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
     @Override
     public void initService() {
         this.addObserver(this);
+
+        processor.regist(MajiangStateEnum.STATE_INIT_READY, new Flow() {
+
+            @Override
+            public void execute(Game game, int operateSeat) {
+                System.out.println();
+                initReady(game);
+            }
+        });
 
         processor.regist(MajiangStateEnum.STATE_GAME_START, new Flow() {
 
@@ -448,14 +462,7 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
                 initReady(game);
             }
         });
-        processor.regist(MajiangStateEnum.STATE_ROUND_OVER, new Flow() {
 
-            @Override
-            public void execute(Game game, int seat) {
-                System.out.println("roundOver(game, true);");
-                roundOver(game, true);
-            }
-        });
         processor.regist(MajiangStateEnum.STATE_SC_SEND_CARD, new Flow() {
 
             @Override
@@ -490,20 +497,84 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         processor.regist(MajiangStateEnum.STATE_PENG, new Flow() {
 
             @Override
-            public void execute(Game game, int operateSeat) {
+            public void execute(Game game, int seat) {
                 pengProgress(game);
             }
 
         });
 
+        processor.regist(MajiangStateEnum.STATE_GANG, new Flow() {
+
+            @Override
+            public void execute(Game game, int seat) {
+                gangProcess(game);
+            }
+
+        });
+
+        processor.regist(MajiangStateEnum.STATE_GANG_CAL_SCORE, new Flow() {
+
+            @Override
+            public void execute(Game game, int seat) {
+                calHongzhongGangScore(game);
+            }
+
+        });
+
+        processor.regist(MajiangStateEnum.STATE_ROUND_OVER, new Flow() {
+
+            @Override
+            public void execute(Game game, int seat) {
+                System.out.println("game.getRule().executeRoundOver(game, true);");
+                game.getRule().executeRoundOverProcess(game, true);
+            }
+        });
         processor.regist(MajiangStateEnum.STATE_GAME_OVER, new Flow() {
 
             @Override
             public void execute(Game game, int operateSeat) {
-                gameOver(game);
+                System.out.println("game.getRule().executeGameOver(game);");
+                game.getRule().executeGameOverProcess(game);
             }
 
         });
+        processor.regist(MajiangStateEnum.STATE_TOUCH_FLOWER, new Flow() {
+
+            @Override
+            public void execute(Game game, int operateSeat) {
+                System.out.println("touchFlower(game);");
+                touchFlower(game, operateSeat);
+            }
+
+        });
+        processor.regist(MajiangStateEnum.STATE_ADD_FLOWERS, new Flow() {
+
+            @Override
+            public void execute(Game game, int operateSeat) {
+                System.out.println("addFlowers(game);");
+                addFlowers(game, operateSeat);
+            }
+        });
+
+        processor.regist(MajiangStateEnum.STATE_HU, new Flow() {
+
+            @Override
+            public void execute(Game game, int operateSeat) {
+                huProgress(game);
+            }
+        });
+    }
+
+    /**
+     * 补花
+     * 
+     * @param game
+     * @param operateSeat
+     */
+    protected void addFlowers(Game game, int operateSeat) {
+        RoleGameInfo roleGameInfo = roleGameInfoGetter.getCurrentRoleGameInfo(game);
+        FillFlowerBox box = fillFlower.fill(game.getRemainCards(), roleGameInfo);
+        List<ServerMessage.SC> scList = box.toProtocol();
 
     }
 
@@ -571,6 +642,11 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
             matchService.fillAI(game);
         }
 
+        processor.pop(game);
+        processor.push(game, MajiangStateEnum.STATE_ROLE_GAME_READY);
+
+        processor.process(game);
+
         // if (this.checkAllReady(game)) {
         // loggerinfo("game=>" + game.getGameId() + "=>startGame");
         // processor.process(game);
@@ -603,68 +679,55 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
     public void gameStart(Game game) {
 
         loggerinfo("gameStart=>game:" + game.getGameId());
-        GameConfigData gameConfigData = game.getGameConfig();
 
         game.setGameState(GameState.GAME_START_START);
-        // 游戏初始化
-        this.gameInit(game);
+        GameConfigData config = game.getGameConfig();
 
-        // // 检查庄家
-        // this.checkZhuang(game);
-        //
-        // // 发牌
-        // this.dispatchCard(game);
+        // 卡牌初始化
+        for (RoleGameInfo info : game.getRoleIdMap().values()) {
+            // 杠标记附空
+            info.isGang = false;
+            // 清除手牌
+            info.cards.clear();
+            // 抢杠清空
+            info.qiangGang = null;
+            // 听牌清理
+            info.tingCards.clear();
+            // 清空已经组成的牌组
+            info.showCardLists.clear();
+            // 新拿的牌清空
+            info.newCard = 0;
+            // 清空操作栈
+            info.operations.clear();
 
-        // int baida = GameCache.getBaiDaCardNumSet().size() > 0 ?
-        // GameCache.getBaiDaCardNumSet().iterator().next() : 0;
-        // // 获得百搭牌
-        // int baida = game.getRule().getBaidaCard();
-        // // 每个人的分数
-        // SCFightScore.Builder scFightScoreBuilder = SCFightScore.newBuilder();
-        // // 设置每个人的座位和卡牌的数量
-        // SCFightStart.Builder scFightStartBuilder = SCFightStart.newBuilder();
-        // scFightStartBuilder.setRemainCardCount(game.getRemainCards().size());
-        // scFightStartBuilder.setZhuangSeat(game.getZhuangSeat());
-        // scFightStartBuilder.setMaxRound(gameConfigData.getRoundCount());
-        // scFightStartBuilder.setCurrentRoundNum(game.getFinishRoundCount());
-        // scFightStartBuilder.setBaidaCard(baida);
-        // for (int i = 0; i < gameConfigData.getMaxCount(); i++) {
-        // RoleGameInfo gameRoleInfo =
-        // game.getRoleIdMap().get(game.getRoleIdList().get(i));
-        //
-        // // 准备一下所有人的分数
-        // GameOverResult gameOverResult =
-        // game.getStatisticResultMap().get(gameRoleInfo.gameRoleId);
-        // scFightScoreBuilder.addScoreData(ScoreData.newBuilder().setScore(gameOverResult.score).setSeat(i));
-        // }
-        // SCFightStart scFightStart = scFightStartBuilder.build();
-        //
-        // // 发给玩家别人的卡组
-        // List<Integer> hideCards = new
-        // ArrayList<>(FightConstant.EVERY_INIT_CARD_COUNT);
-        // // 默认牌为0
-        // for (int j = 0; j < FightConstant.EVERY_INIT_CARD_COUNT; j++) {
-        // hideCards.add(0);
-        // }
-        // // 发送给每个玩家
-        // for (int i = 0; i < gameConfigData.getMaxCount(); i++) {
-        // RoleGameInfo roleGameInfo = this.getRoleGameInfoBySeat(game, i);
-        //
-        // SCFightStart.Builder builder = scFightStart.toBuilder();
-        // // 隐藏别人的卡组
-        // this.hideOtherGameRoleInfoCards(roleGameInfo.cards, hideCards, i,
-        // gameConfigData.getMaxCount(), builder);
-        //
-        // SC sc = SC.newBuilder().setSCFightStart(builder).build();
-        // // 通知所有人游戏开始，并把自己的牌告诉场上的玩家
-        // SessionUtils.sc(roleGameInfo.roleId, sc);
-        //
-        // this.notifyObservers(FightConstant.FIGHT_START, sc, game,
-        // roleGameInfo);
-        // }
+            // 如果该玩家没有结果集,则创建结果集
+            Map<String, GameOverResult> resultMap = game.getStatisticResultMap();
+            if (!resultMap.containsKey(info.gameRoleId)) {
+                GameOverResult result = this.createRoleGameResult(info);
+                resultMap.put(info.gameRoleId, result);
+            }
+        }
 
-        // 庄家发一张牌
-        // this.touchCard(game);
+        // 重置发牌数据
+        this.resetSendCard(game);
+
+        // 剩余牌清空
+        game.getRemainCards().clear();
+
+        // 清空桌上的牌
+        Map<Integer, List<Integer>> sendDesktopCardMap = game.getSendDesktopCardMap();
+        for (int i = 0; i < config.getMaxCount(); i++) {
+            if (!sendDesktopCardMap.containsKey(i)) {
+                List<Integer> sendList = new ArrayList<>();
+                sendDesktopCardMap.put(i, sendList);
+            }
+
+            sendDesktopCardMap.get(i).clear();
+        }
+
+        // 临时列表清空
+        game.getCallCardLists().clear();
+        game.getHuCallCardLists().clear();
 
     }
 
@@ -739,63 +802,6 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
             FightStartRoleData fightStartRoleData = FightStartRoleData.newBuilder().addAllPai(cards).setSeat(i).build();
             scFightStartBuilder.addFightStartRoleData(fightStartRoleData);
         }
-    }
-
-    /**
-     * 游戏初始化
-     * 
-     * @param gameId
-     * @author wcy 2017年5月31日
-     */
-    private void gameInit(Game game) {
-        GameConfigData config = game.getGameConfig();
-
-        // 卡牌初始化
-        for (RoleGameInfo info : game.getRoleIdMap().values()) {
-            // 杠标记附空
-            info.isGang = false;
-            // 清除手牌
-            info.cards.clear();
-            // 抢杠清空
-            info.qiangGang = null;
-            // 听牌清理
-            info.tingCards.clear();
-            // 清空已经组成的牌组
-            info.showCardLists.clear();
-            // 新拿的牌清空
-            info.newCard = 0;
-            // 清空操作栈
-            info.operations.clear();
-
-            // 如果该玩家没有结果集,则创建结果集
-            Map<String, GameOverResult> resultMap = game.getStatisticResultMap();
-            if (!resultMap.containsKey(info.gameRoleId)) {
-                GameOverResult result = this.createRoleGameResult(info);
-                resultMap.put(info.gameRoleId, result);
-            }
-        }
-
-        // 重置发牌数据
-        this.resetSendCard(game);
-
-        // 剩余牌清空
-        game.getRemainCards().clear();
-
-        // 清空桌上的牌
-        Map<Integer, List<Integer>> sendDesktopCardMap = game.getSendDesktopCardMap();
-        for (int i = 0; i < config.getMaxCount(); i++) {
-            if (!sendDesktopCardMap.containsKey(i)) {
-                List<Integer> sendList = new ArrayList<>();
-                sendDesktopCardMap.put(i, sendList);
-            }
-
-            sendDesktopCardMap.get(i).clear();
-        }
-
-        // 临时列表清空
-        game.getCallCardLists().clear();
-        game.getHuCallCardLists().clear();
-
     }
 
     /**
@@ -906,8 +912,8 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         // return;
         // }
 
-        SessionUtils.sc(role.getRoleId(),
-                SC.newBuilder().setFightExitGameResponse(FightExitGameResponse.newBuilder()).build());
+        SessionUtils.sc(role.getRoleId(), SC.newBuilder().setFightExitGameResponse(FightExitGameResponse.newBuilder())
+                .build());
 
         // 如果游戏没有开始则可以随时退出,如果是好友对战,并且是房主,则解散
         // 若是房主，则直接解散
@@ -945,8 +951,8 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
             String gameRoleId = matchService.getGameRoleId(game.getGameId(), role.getRoleId());
             // 该玩家直接退出
             // 清除房间号
-            SessionUtils.sc(role.getRoleId(),
-                    SC.newBuilder().setSCFightClearRoomId(SCFightClearRoomId.newBuilder()).build());
+            SessionUtils.sc(role.getRoleId(), SC.newBuilder().setSCFightClearRoomId(SCFightClearRoomId.newBuilder())
+                    .build());
 
             SC scExit = SC.newBuilder()
                     .setSCFightExitGame(SCFightExitGame.newBuilder().setSeat(game.getRoleIdList().indexOf(gameRoleId)))
@@ -983,10 +989,12 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
     public void agreeExit(Role role, FightVoteApplyExit vote, int voteId) {
         Game game = GameCache.getGameMap().get(role.getGameId());
         if (game == null) {
-            SessionUtils.sc(role.getRoleId(),
-                    SC.newBuilder().setFightAgreeExitGameResponse(
-                            FightAgreeExitGameResponse.newBuilder().setErrorCode(ErrorCode.GAME_NOT_EXIST.getNumber()))
-                            .build());
+            SessionUtils.sc(
+                    role.getRoleId(),
+                    SC.newBuilder()
+                            .setFightAgreeExitGameResponse(
+                                    FightAgreeExitGameResponse.newBuilder().setErrorCode(
+                                            ErrorCode.GAME_NOT_EXIST.getNumber())).build());
             return;
         }
 
@@ -1027,8 +1035,8 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
                     boolean value = entrySet.getValue();
                     RoleGameInfo roleGameInfo = game.getRoleIdMap().get(key);
                     Role role = (Role) RoleCache.getRoleById(roleGameInfo.roleId);
-                    String name = role == null ? ServiceConstant.ROBOT_PREFIX_NAME + game.getRoleIdList().indexOf(key)
-                            : role.getName();
+                    String name = role == null ? ServiceConstant.ROBOT_PREFIX_NAME + game.getRoleIdList().indexOf(key) : role
+                            .getName();
 
                     if (value)
                         builder.addAgreeName(name);
@@ -1067,10 +1075,8 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
 
                 game.setGameState(GameState.GAME_START_END);
 
-                this.roundOver(game, false);
-                this.gameOver(game);
-
-                this.destroyGame(game);
+                this.roundOverHongZhong(game, false);
+                this.gameOverHongZhong(game);
             }
         }
 
@@ -1097,9 +1103,12 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         // 是否允许申请退出
         try {
             if (!isAllowApplyExit(nowTime, game, gameRoleId, deltaTime)) {
-                SessionUtils.sc(role.getRoleId(), SC.newBuilder().setFightApplyExitGameResponse(
-                        FightApplyExitGameResponse.newBuilder().setErrorCode(ErrorCode.GAME_EXITING.getNumber()))
-                        .build());
+                SessionUtils.sc(
+                        role.getRoleId(),
+                        SC.newBuilder()
+                                .setFightApplyExitGameResponse(
+                                        FightApplyExitGameResponse.newBuilder().setErrorCode(
+                                                ErrorCode.GAME_EXITING.getNumber())).build());
                 return;
             }
         } catch (Exception e) {
@@ -1119,8 +1128,11 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         // 设置申请退出的玩家id
         int voteId = voteBox.applyVote(gameRoleId);
 
-        SC scApplyExit = SC.newBuilder().setSCFightApplyExitGame(SCFightApplyExitGame.newBuilder()
-                .setName(role.getName()).setApplyExitId(voteId).setCountDown(FightConstant.COUNTDOWN)).build();
+        SC scApplyExit = SC
+                .newBuilder()
+                .setSCFightApplyExitGame(
+                        SCFightApplyExitGame.newBuilder().setName(role.getName()).setApplyExitId(voteId)
+                                .setCountDown(FightConstant.COUNTDOWN)).build();
 
         for (RoleGameInfo info : game.getRoleIdMap().values()) {
             // 申请人跳过
@@ -1181,8 +1193,8 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         }
         loggerinfo(role, "applyExitGameRoleId->" + voteBox.getApplyer());
         if (StringUtils.isNullOrEmpty(voteBox.getApplyer())) {
-            loggerinfo(role,
-                    "nowTime - lastRejectExitTime <= deltaTime" + nowTime + " " + lastRejectExitTime + " " + deltaTime);
+            loggerinfo(role, "nowTime - lastRejectExitTime <= deltaTime" + nowTime + " " + lastRejectExitTime + " "
+                    + deltaTime);
             if (nowTime - lastRejectExitTime <= deltaTime) {
                 return false;
             }
@@ -1270,7 +1282,7 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
                 }
                 roleGameInfo.newCard = remainCards.remove(index);
             } else {
-                roleGameInfo.newCard = remainCards.remove(RandomUtils.getRandomNum(remainCards.size()));
+                roleGameInfo.newCard = remainCards.remove(0);
             }
             this.noticeTouchCard(game);
         }
@@ -1518,37 +1530,43 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         int gameId = role.getGameId();
         Game game = this.getGameById(gameId);
         if (game == null) {
-            SessionUtils.sc(role.getRoleId(),
-                    SC.newBuilder().setFightSendCardResponse(
-                            FightSendCardResponse.newBuilder().setErrorCode(ErrorCode.GAME_NOT_EXIST.getNumber()))
-                            .build());
+            SessionUtils.sc(
+                    role.getRoleId(),
+                    SC.newBuilder()
+                            .setFightSendCardResponse(
+                                    FightSendCardResponse.newBuilder().setErrorCode(
+                                            ErrorCode.GAME_NOT_EXIST.getNumber())).build());
             return;
         }
         String gameRoleId = matchService.getGameRoleId(gameId, role.getRoleId());
         RoleGameInfo roleGameInfo = game.getRoleIdMap().get(gameRoleId);
 
         if (roleGameInfo.roleId != role.getRoleId()) {
-            SessionUtils.sc(role.getRoleId(),
-                    SC.newBuilder().setFightSendCardResponse(
-                            FightSendCardResponse.newBuilder().setErrorCode(ErrorCode.NOT_YOUR_TURN.getNumber()))
-                            .build());
+            SessionUtils.sc(
+                    role.getRoleId(),
+                    SC.newBuilder()
+                            .setFightSendCardResponse(
+                                    FightSendCardResponse.newBuilder()
+                                            .setErrorCode(ErrorCode.NOT_YOUR_TURN.getNumber())).build());
             return;
         }
 
         if (!roleGameInfo.cards.contains(card)) {
             if (roleGameInfo.newCard != card) {
-                SessionUtils.sc(role.getRoleId(),
-                        SC.newBuilder().setFightSendCardResponse(
-                                FightSendCardResponse.newBuilder().setErrorCode(ErrorCode.FIGHT_MORE_CARD.getNumber()))
-                                .build());
+                SessionUtils.sc(
+                        role.getRoleId(),
+                        SC.newBuilder()
+                                .setFightSendCardResponse(
+                                        FightSendCardResponse.newBuilder().setErrorCode(
+                                                ErrorCode.FIGHT_MORE_CARD.getNumber())).build());
                 return;
             }
         }
 
         // 发送卡牌
         loggerinfo(role, SC.newBuilder().setFightSendCardResponse(FightSendCardResponse.newBuilder()).build());
-        SessionUtils.sc(role.getRoleId(),
-                SC.newBuilder().setFightSendCardResponse(FightSendCardResponse.newBuilder()).build());
+        SessionUtils.sc(role.getRoleId(), SC.newBuilder().setFightSendCardResponse(FightSendCardResponse.newBuilder())
+                .build());
 
         // 自动出牌解除
         roleGameInfo.auto = 0;
@@ -1730,8 +1748,7 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
      * @param callCardLists
      * @param seatIndex
      * @param callCardListId
-     * @param allDelete
-     *            如果为true，则全部删除
+     * @param allDelete 如果为true，则全部删除
      * @author wcy 2017年6月17日
      */
     private CallCardList deleteCallCardListBySeatBesidesCallCardListId(List<CallCardList> callCardLists, int seatIndex,
@@ -1791,8 +1808,8 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
                 return;
             }
 
-            SessionUtils.sc(roleGameInfo.roleId,
-                    SC.newBuilder().setFightPengResponse(FightPengResponse.newBuilder()).build());
+            SessionUtils.sc(roleGameInfo.roleId, SC.newBuilder().setFightPengResponse(FightPengResponse.newBuilder())
+                    .build());
 
             CallCardList callCardList = this.deleteCallCardListBySeatBesidesCallCardListId(game.getCallCardLists(),
                     seat, callCardListId);
@@ -1819,7 +1836,8 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         processor.pop(game);
         processor.push(game, MajiangStateEnum.STATE_ROLE_CHOSEN_CARDLIST);
 
-        processor.process(game, seat);
+        List<CallCardList> callCardLists = game.getCallCardLists();
+        processor.process(game, callCardLists.size() > 0 ? callCardLists.get(0).masterSeat : 0);
 
         // this.resetSendCard(game);
         //
@@ -1893,8 +1911,8 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
 
         CardListData pengData = this.parsePeng(peng);
 
-        SC sc = SC.newBuilder().setSCFightCardList(SCFightCardList.newBuilder().setCardListData(pengData).setSeat(seat))
-                .build();
+        SC sc = SC.newBuilder()
+                .setSCFightCardList(SCFightCardList.newBuilder().setCardListData(pengData).setSeat(seat)).build();
         // 通知其他玩家自己碰
         this.sendAllSeatSC(game, sc);
         // 发送通知
@@ -1939,8 +1957,8 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
                 return;
             }
 
-            SessionUtils.sc(roleGameInfo.roleId,
-                    SC.newBuilder().setFightGangResponse(FightGangResponse.newBuilder()).build());
+            SessionUtils.sc(roleGameInfo.roleId, SC.newBuilder().setFightGangResponse(FightGangResponse.newBuilder())
+                    .build());
 
             CallCardList callCardList = this.deleteCallCardListBySeatBesidesCallCardListId(game.getCallCardLists(),
                     seat, callCardListId);
@@ -1951,87 +1969,107 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
 
             this.sendChooseCardListOver(game, roleGameInfo);
 
-            // if (needWaitOtherCallCardListAction(game.getCallCardLists(),
-            // seat)) {
-            // return;
-            // }
-
             if (waitOtherCallCardListChecker.needWaitOtherChoice(game.getCallCardLists(), seat)) {
                 return;
             }
 
             this.sendAllChooseCardListOver(game);
 
-            // 检查是否可以胡,别人可以胡就不算杠，这种情况是，自己可杠可胡，好死不死的选了个杠，结果就让别人胡了
-            CallCardList prevCallCardList = this.getPreviousCallCardList(game.getCallCardLists());
-            if (prevCallCardList.cardList instanceof Hu) {
-                this.huProgress(game, seat, roleGameInfo, prevCallCardList);
-                return;
-            }
-
-            // 牌归自己
-            Gang gang = (Gang) callCardList.cardList;
-            // 如果是补杠或者暗杠,就要把别人的牌清空
-            if (gang.dark || gang.peng != null) {
-                this.resetSendCard(game);
-            }
-            if (gang.peng != null) {
-                // 检查抢杠
-                if (this.checkQiangGang(game, seat, roleGameInfo, gang))
-                    return;
-
-                this.addGangSuccess(roleGameInfo, gang);
-            } else {
-                // 明杠或暗杠
-                if (!gang.dark) {
-                    // 明杠
-                    roleGameInfo.cards.add(gang.card);
-                } else {
-                    // 暗杠
-                    // 如果新摸得牌是用于暗杠,则新摸得牌赋值成空，否则新摸的牌加入手牌
-                    if (roleGameInfo.newCard == gang.card) {
-                        roleGameInfo.cards.add(gang.card);
-                        roleGameInfo.newCard = 0;
-                    } else {
-                        this.newCardAdd2Cards(roleGameInfo);
-                    }
-                }
-                Lists.removeElementByList(roleGameInfo.cards, gang.getCards());
-            }
-
-            this.accumlateSendCardCount(game);
-            this.gangProcess2(game, seat, roleGameInfo, gang);
+            this.resetSendCard(game);
         }
+
+        processor.pop(game);
+        processor.push(game, MajiangStateEnum.STATE_ROLE_CHOSEN_CARDLIST);
+
+        List<CallCardList> callCardLists = game.getCallCardLists();
+        processor.process(game, callCardLists.size() > 0 ? callCardLists.get(0).masterSeat : 0);
     }
 
-    @Override
-    public void gangProcess2(Game game, int seat, RoleGameInfo roleGameInfo, Gang gang) {
+    /**
+     * 刚
+     * 
+     * @param game
+     * @author wcy 2017年8月28日
+     */
+    private void gangProcess(Game game) {
+
+        this.accumlateSendCardCount(game);
+        // 牌归自己
+        CallCardList callCardList = game.getCallCardLists().get(0);
+        int seat = callCardList.masterSeat;
+        RoleGameInfo roleGameInfo = roleGameInfoGetter.getRoleGameInfoBySeat(game, seat);
+        Gang gang = (Gang) callCardList.cardList;
+
+        if (gang.peng != null) {
+            this.addGangSuccess(roleGameInfo, gang);
+        } else {
+            // 明杠或暗杠
+            if (!gang.dark) {
+                // 明杠
+                roleGameInfo.cards.add(gang.card);
+            } else {
+                // 暗杠
+                // 如果新摸得牌是用于暗杠,则新摸得牌赋值成空，否则新摸的牌加入手牌
+                if (roleGameInfo.newCard == gang.card) {
+                    roleGameInfo.cards.add(gang.card);
+                    roleGameInfo.newCard = 0;
+                } else {
+                    this.newCardAdd2Cards(roleGameInfo);
+                }
+            }
+            Lists.removeElementByList(roleGameInfo.cards, gang.getCards());
+        }
+
+        // ////////////////////////////////////
         roleGameInfo.showCardLists.add(gang);
         // 标记杠
         roleGameInfo.isGang = true;
 
         CardListData gangData = this.parseGang(gang);
-        CardListType cardListType = gangData.getCardListType();
+
+        SC sc = SC.newBuilder()
+                .setSCFightCardList(SCFightCardList.newBuilder().setCardListData(gangData).setSeat(seat)).build();
+        // 通知其他玩家自己杠
+        this.sendAllSeatSC(game, sc);
+
+        this.notifyObservers(FightConstant.FIGHT_GANG, sc, game);
+    }
+
+    /**
+     * 计算杠分
+     * 
+     * @param game
+     * @author wcy 2017年8月28日
+     */
+    private void calHongzhongGangScore(Game game) {
+        RoleGameInfo roleGameInfo = roleGameInfoGetter.getCurrentRoleGameInfo(game);
+        List<CardList> cardLists = roleGameInfo.showCardLists;
+        // 获取当前这个人的最后一个杠，必定就是刚刚的杠
+        Gang gang = (Gang) cardLists.get(cardLists.size() - 1);
+        // 获得杠的类型
+        CardListType cardListType = gang.dark ? CardListType.CARD_LIST_TYPE_GANG_DARK : gang.peng == null ? CardListType.CARD_LIST_TYPE_GANG_LIGHT : CardListType.CARD_LIST_TYPE_GANG_ADD;
+
         // 明杠
         if (cardListType == CardListType.CARD_LIST_TYPE_GANG_LIGHT) {
             int targetSeat = gang.getTargetSeat();
             RoleGameInfo targetRoleGameInfo = this.getRoleGameInfoBySeat(game, targetSeat);
 
-            this.notifyObservers(FightConstant.FIGHT_GANG_MING, game, roleGameInfo, targetRoleGameInfo);
+            this.calcMingGangScore(game, roleGameInfo, targetRoleGameInfo);
+            // this.notifyObservers(FightConstant.FIGHT_GANG_MING, game,
+            // roleGameInfo, targetRoleGameInfo);
         }
         // 补杠
         if (cardListType == CardListType.CARD_LIST_TYPE_GANG_ADD) {
-            this.notifyObservers(FightConstant.FIGHT_GANG_ADD, game, roleGameInfo);
+            this.calcAddGangScore(game, roleGameInfo);
+            // this.notifyObservers(FightConstant.FIGHT_GANG_ADD, game,
+            // roleGameInfo);
         }
         // 暗杠
         if (cardListType == CardListType.CARD_LIST_TYPE_GANG_DARK) {
-            this.notifyObservers(FightConstant.FIGHT_GANG_DARK, game, roleGameInfo);
+            this.calcDarkGangScore(game, roleGameInfo);
+            // this.notifyObservers(FightConstant.FIGHT_GANG_DARK, game,
+            // roleGameInfo);
         }
-
-        SC sc = SC.newBuilder().setSCFightCardList(SCFightCardList.newBuilder().setCardListData(gangData).setSeat(seat))
-                .build();
-        // 通知其他玩家自己杠
-        this.sendAllSeatSC(game, sc);
 
         // 发送分数变化
         SCFightScore.Builder scFightScoreBuilder = SCFightScore.newBuilder();
@@ -2044,22 +2082,168 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         // 通知所有玩家
         this.sendAllSeatSC(game, scFightScoreSC);
 
-        this.notifyObservers(FightConstant.FIGHT_GANG, sc, game);
         this.notifyObservers(FightConstant.FIGHT_SCORE, scFightScoreSC, game);
-
-        // 跳转到当前杠的人
-        this.jumpToIndex(game, seat);
-        // 通知转向
-        this.noticePointSeat(game, seat);
-
-        processor.pop(game);
-        processor.push(game, MajiangStateEnum.STATE_ROLE_CHOSEN_CARDLIST);
-
-        processor.process(game, seat);
-        // 摸一张牌
-        // this.touchCard(game);
-
     }
+
+    //
+    // private void gang(Game game, int seat, int gameSendCount, int
+    // callCardListId) {
+    // RoleGameInfo roleGameInfo = this.getRoleGameInfoBySeat(game, seat);
+    // // 出牌数必须相同
+    // if (game.getSendCardCount() != gameSendCount) {
+    // FightGangResponse.Builder responseBuilder =
+    // FightGangResponse.newBuilder();
+    // FightGangResponse response =
+    // responseBuilder.setErrorCode(ErrorCode.FIGHT_TIME_PASS.getNumber()).build();
+    // SC responseSC = SC.newBuilder().setFightGangResponse(response).build();
+    // SessionUtils.sc(roleGameInfo.roleId, responseSC);
+    // return;
+    // }
+    // synchronized (game.getCallCardLists()) {
+    // if (game.getSendCardCount() != gameSendCount) {
+    // FightGangResponse.Builder responseBuilder =
+    // FightGangResponse.newBuilder();
+    // FightGangResponse response =
+    // responseBuilder.setErrorCode(ErrorCode.FIGHT_TIME_PASS.getNumber())
+    // .build();
+    // SC responseSC = SC.newBuilder().setFightGangResponse(response).build();
+    // SessionUtils.sc(roleGameInfo.roleId, responseSC);
+    // return;
+    // }
+    //
+    // SessionUtils.sc(roleGameInfo.roleId,
+    // SC.newBuilder().setFightGangResponse(FightGangResponse.newBuilder())
+    // .build());
+    //
+    // CallCardList callCardList =
+    // this.deleteCallCardListBySeatBesidesCallCardListId(game.getCallCardLists(),
+    // seat, callCardListId);
+    // this.deleteAllCallCardListBySeat(game.getHuCallCardLists(), seat);
+    //
+    // // 标记为已经叫过了
+    // callCardList.call = true;
+    //
+    // this.sendChooseCardListOver(game, roleGameInfo);
+    //
+    // // if (needWaitOtherCallCardListAction(game.getCallCardLists(),
+    // // seat)) {
+    // // return;
+    // // }
+    //
+    // if
+    // (waitOtherCallCardListChecker.needWaitOtherChoice(game.getCallCardLists(),
+    // seat)) {
+    // return;
+    // }
+    //
+    // this.sendAllChooseCardListOver(game);
+    //
+    // // 检查是否可以胡,别人可以胡就不算杠，这种情况是，自己可杠可胡，好死不死的选了个杠，结果就让别人胡了
+    // CallCardList prevCallCardList =
+    // this.getPreviousCallCardList(game.getCallCardLists());
+    // if (prevCallCardList.cardList instanceof Hu) {
+    // this.huProgress(game, seat, roleGameInfo, prevCallCardList);
+    // return;
+    // }
+    //
+    // // 牌归自己
+    // Gang gang = (Gang) callCardList.cardList;
+    // // 如果是补杠或者暗杠,就要把别人的牌清空
+    // if (gang.dark || gang.peng != null) {
+    // this.resetSendCard(game);
+    // }
+    // if (gang.peng != null) {
+    // // 检查抢杠
+    // if (this.checkQiangGang(game, seat, roleGameInfo, gang))
+    // return;
+    //
+    // this.addGangSuccess(roleGameInfo, gang);
+    // } else {
+    // // 明杠或暗杠
+    // if (!gang.dark) {
+    // // 明杠
+    // roleGameInfo.cards.add(gang.card);
+    // } else {
+    // // 暗杠
+    // // 如果新摸得牌是用于暗杠,则新摸得牌赋值成空，否则新摸的牌加入手牌
+    // if (roleGameInfo.newCard == gang.card) {
+    // roleGameInfo.cards.add(gang.card);
+    // roleGameInfo.newCard = 0;
+    // } else {
+    // this.newCardAdd2Cards(roleGameInfo);
+    // }
+    // }
+    // Lists.removeElementByList(roleGameInfo.cards, gang.getCards());
+    // }
+    //
+    // this.accumlateSendCardCount(game);
+    // this.gangProcess2(game, seat, roleGameInfo, gang);
+    // }
+    // }
+
+    //
+    // @Override
+    // public void gangProcess2(Game game, int seat, RoleGameInfo roleGameInfo,
+    // Gang gang) {
+    // roleGameInfo.showCardLists.add(gang);
+    // // 标记杠
+    // roleGameInfo.isGang = true;
+    //
+    // CardListData gangData = this.parseGang(gang);
+    // CardListType cardListType = gangData.getCardListType();
+    // // 明杠
+    // if (cardListType == CardListType.CARD_LIST_TYPE_GANG_LIGHT) {
+    // int targetSeat = gang.getTargetSeat();
+    // RoleGameInfo targetRoleGameInfo = this.getRoleGameInfoBySeat(game,
+    // targetSeat);
+    //
+    // this.notifyObservers(FightConstant.FIGHT_GANG_MING, game, roleGameInfo,
+    // targetRoleGameInfo);
+    // }
+    // // 补杠
+    // if (cardListType == CardListType.CARD_LIST_TYPE_GANG_ADD) {
+    // this.notifyObservers(FightConstant.FIGHT_GANG_ADD, game, roleGameInfo);
+    // }
+    // // 暗杠
+    // if (cardListType == CardListType.CARD_LIST_TYPE_GANG_DARK) {
+    // this.notifyObservers(FightConstant.FIGHT_GANG_DARK, game, roleGameInfo);
+    // }
+    //
+    // SC sc = SC.newBuilder()
+    // .setSCFightCardList(SCFightCardList.newBuilder().setCardListData(gangData).setSeat(seat)).build();
+    // // 通知其他玩家自己杠
+    // this.sendAllSeatSC(game, sc);
+    //
+    // // 发送分数变化
+    // SCFightScore.Builder scFightScoreBuilder = SCFightScore.newBuilder();
+    // for (int i = 0; i < game.getRoleIdList().size(); i++) {
+    // RoleGameInfo info = this.getRoleGameInfoBySeat(game, i);
+    // int score = info.roundOverResult.score;
+    // scFightScoreBuilder.addScoreData(ScoreData.newBuilder().setScore(score).setSeat(i));
+    // }
+    // SC scFightScoreSC =
+    // SC.newBuilder().setSCFightScore(scFightScoreBuilder).build();
+    // // 通知所有玩家
+    // this.sendAllSeatSC(game, scFightScoreSC);
+    //
+    // this.notifyObservers(FightConstant.FIGHT_GANG, sc, game);
+    // this.notifyObservers(FightConstant.FIGHT_SCORE, scFightScoreSC, game);
+    //
+    // // 跳转到当前杠的人
+    // this.jumpToIndex(game, seat);
+    // // 通知转向
+    // this.noticePointSeat(game, seat);
+    //
+    // processor.pop(game);
+    // processor.push(game, MajiangStateEnum.STATE_ROLE_CHOSEN_CARDLIST);
+    //
+    // List<CallCardList> callCardLists = game.getCallCardLists();
+    // processor.process(game, callCardLists.size() > 0 ?
+    // callCardLists.get(0).masterSeat : 0);
+    // // 摸一张牌
+    // // this.touchCard(game);
+    //
+    // }
 
     /**
      * 计算明牌分数
@@ -2168,6 +2352,44 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         }
     }
 
+    @Override
+    public boolean checkQiangGang(Game game) {
+        CallCardList callCardList0 = game.getCallCardLists().get(0);
+        int seat = callCardList0.masterSeat;
+        RoleGameInfo roleGameInfo = roleGameInfoGetter.getRoleGameInfoBySeat(game, seat);
+        Gang gang = (Gang) callCardList0.cardList;
+
+        // 有红中不能抢杠
+        if (hasBaiDa(roleGameInfo, 0)) {
+            return false;
+        }
+
+        // 清空
+        game.getCallCardLists().clear();
+        game.getHuCallCardLists().clear();
+
+        List<Class<? extends CardList>> huLists = new ArrayList<>(1);
+        huLists.add(Hu.class);
+        for (int i = 0; i < game.getRoleIdList().size(); i++) {
+            if (seat == i)
+                continue;
+            this.checkOtherCallCardList(game, i, gang.card, huLists);
+        }
+        List<CallCardList> callCardLists = game.getCallCardLists();
+        if (callCardLists.size() != 0) {
+            roleGameInfo.qiangGang = gang;
+            List<CallCardList> huCallCardList = game.getHuCallCardLists();
+            for (CallCardList callCardList : huCallCardList) {
+                Hu hu = (Hu) callCardList.cardList;
+                hu.gangChong = true;
+                hu.gangChongTargetSeat = seat;
+            }
+            return true;
+        }
+        return false;
+
+    }
+
     /**
      * 检查抢杠(杠冲)
      * 
@@ -2182,26 +2404,6 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         // 清空
         game.getCallCardLists().clear();
         game.getHuCallCardLists().clear();
-        // boolean superQiangGang = true;
-        // boolean zhuaHu = false;
-        // boolean baiDaZhuaHu = false;
-        // boolean baiDaQiangGang = false;
-        //
-        // if (!hasBaiDa(roleGameInfo, 0)) {
-        // if (baiDaZhuaHu) {
-        //
-        // } else if (superQiangGang) {
-        //
-        // } else if (zhuaHu) {
-        //
-        // } else {
-        // return false;
-        // }
-        // } else if (baiDaQiangGang) {
-        //
-        // } else {
-        // return false;
-        // }
 
         // 有红中不能抢杠
         if (hasBaiDa(roleGameInfo, 0)) {
@@ -2258,8 +2460,8 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
                 return;
             }
 
-            SessionUtils.sc(roleGameInfo.roleId,
-                    SC.newBuilder().setFightHuResponse(FightHuResponse.newBuilder()).build());
+            SessionUtils.sc(roleGameInfo.roleId, SC.newBuilder().setFightHuResponse(FightHuResponse.newBuilder())
+                    .build());
 
             // 移除自己除了选定的牌型id之外的所有牌
             CallCardList callCardList = this.deleteCallCardListBySeatBesidesCallCardListId(game.getCallCardLists(),
@@ -2270,16 +2472,19 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
 
             this.sendChooseCardListOver(game, roleGameInfo);
 
-            // if (!needWaitOtherCallCardListAction(game.getCallCardLists(),
-            // seat)) {
             // 检查是否要等待其他人做选择
             if (waitOtherCallCardListChecker.needWaitOtherChoice(game.getCallCardLists(), seat)) {
                 return;
             }
 
-            // 通知其他玩家自己胡
-            this.huProgress(game, seat, roleGameInfo, callCardList);
+            this.sendAllChooseCardListOver(game);
         }
+
+        processor.pop(game);
+        processor.push(game, MajiangStateEnum.STATE_ROLE_CHOSEN_CARDLIST);
+
+        List<CallCardList> callCardLists = game.getCallCardLists();
+        processor.process(game, callCardLists.size() > 0 ? callCardLists.get(0).masterSeat : 0);
     }
 
     /**
@@ -2291,7 +2496,10 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
      * @param callCardList
      * @author wcy 2017年8月3日
      */
-    private void huProgress(Game game, int seat, RoleGameInfo roleGameInfo, CallCardList callCardList) {
+    private void huProgress(Game game) {
+        CallCardList callCardList = game.getCallCardLists().get(0);
+        int seat = callCardList.masterSeat;
+        RoleGameInfo roleGameInfo = roleGameInfoGetter.getRoleGameInfoBySeat(game, seat);
         Hu hu = (Hu) callCardList.cardList;
         // 如果前面玩家杠了又胡则为杠开
         hu.gangKai = roleGameInfo.isGang;
@@ -2317,16 +2525,6 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
                 this.removeGangTargetCard(info, info.qiangGang);
             }
         }
-
-        this.sendAllChooseCardListOver(game);
-        // 通知转向
-        this.noticePointSeat(game, seat);
-
-        processor.pop(game);
-        processor.push(game, MajiangStateEnum.STATE_ROLE_CHOSEN_CARDLIST);
-
-        processor.process(game, seat);
-        // this.over(game, seat);
     }
 
     @Override
@@ -2431,10 +2629,8 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
     /**
      * 
      * @param gameId
-     * @param seatIndex
-     *            发送过的人的座位号
-     * @param gameSendCount
-     *            有客户端传送过来进行验证的标记
+     * @param seatIndex 发送过的人的座位号
+     * @param gameSendCount 有客户端传送过来进行验证的标记
      * @author wcy 2017年6月17日
      */
     private void guo(Game game, int seatIndex, int gameSendCount) {
@@ -2459,8 +2655,8 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
                 return;
             }
 
-            SessionUtils.sc(roleGameInfo.roleId,
-                    SC.newBuilder().setFightGuoResponse(FightGuoResponse.newBuilder()).build());
+            SessionUtils.sc(roleGameInfo.roleId, SC.newBuilder().setFightGuoResponse(FightGuoResponse.newBuilder())
+                    .build());
 
             // 喊过就删除自己所有的叫牌
             this.deleteAllCallCardListBySeat(game.getCallCardLists(), seatIndex);
@@ -2491,54 +2687,6 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         }
 
         return null;
-    }
-
-    /**
-     * 结束
-     * 
-     * @param game
-     * @param seat
-     * @author wcy 2017年6月22日
-     */
-    private void over(Game game, int seat) {
-        loggerinfo("game=>" + game.getGameId() + " over");
-
-        // game.setFinishRoundCount(game.getFinishRoundCount() + 1);
-        // if (game.getFinishRoundCount() == 1) {
-        // // 大于一局就扣除燃点币
-        // GameRoundConfig config = GameRoundConfigCache
-        // .getGameRoundByRoundCount(game.getGameConfig().getRoundCount());
-        // Role role = (Role) RoleCache.getRoleById(game.getMasterRoleId());
-        // roleService.addRandiooMoney(role, -config.needMoney);
-        // }
-
-        this.roundOver(game, true);
-
-        boolean isGameOver = isGameOver(game);
-        if (isGameOver) {
-
-            if (game.getGameState() == GameState.GAME_START_END)
-                return;
-            synchronized (game) {
-                if (game.getGameState() == GameState.GAME_START_END)
-                    return;
-
-                game.setGameState(isGameOver ? GameState.GAME_START_END : GameState.GAME_STATE_PREPARE);
-                this.gameOver(game);
-
-                this.destroyGame(game);
-            }
-
-        } else {
-            // 除npc外所有玩家重置准备
-            for (RoleGameInfo info : game.getRoleIdMap().values()) {
-                if (info.roleId == 0) {
-                    continue;
-                }
-                info.ready = false;
-            }
-
-        }
     }
 
     /**
@@ -2644,7 +2792,8 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
      * @param checkHu
      * @author wcy 2017年8月16日
      */
-    private void roundOver(Game game, boolean checkHu) {
+    @Override
+    public void roundOverHongZhong(Game game, boolean checkHu) {
         // 完成回合数+1
         game.setFinishRoundCount(game.getFinishRoundCount() + 1);
 
@@ -2792,7 +2941,8 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
      * @param game
      * @author wcy 2017年6月22日
      */
-    private void gameOver(Game game) {
+    @Override
+    public void gameOverHongZhong(Game game) {
         if (!isGameOver(game)) {
             return;
         }
@@ -2806,6 +2956,8 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         // this.notifyObservers(FightConstant.FIGHT_GAME_OVER, scFightGameOver,
         // game);
         this.notifyObservers(FightConstant.FIGHT_GAME_OVER, fightGameOverSC, game);
+
+        this.destroyGame(game);
     }
 
     @Override
@@ -2890,9 +3042,11 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
 
     private RoundCardsData parseRoundCardsData(Game game, RoleGameInfo roleGameInfo) {
         List<CardList> cardLists = roleGameInfo.showCardLists;
-        RoundCardsData.Builder gameCardsDataBuilder = RoundCardsData.newBuilder().setHuCard(
-                roleGameInfo.roundCardsData == null ? roleGameInfo.newCard : roleGameInfo.roundCardsData.getHuCard())
-                .addAllHandCards(roleGameInfo.cards);
+        RoundCardsData.Builder gameCardsDataBuilder = RoundCardsData
+                .newBuilder()
+                .setHuCard(
+                        roleGameInfo.roundCardsData == null ? roleGameInfo.newCard : roleGameInfo.roundCardsData
+                                .getHuCard()).addAllHandCards(roleGameInfo.cards);
         for (CardList cardList : cardLists) {
             Function function = GameCache.getParseCardListToProtoFunctionMap().get(cardList.getClass());
             CardListData cardListData = (CardListData) function.apply(cardList);
@@ -3024,8 +3178,8 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
     public void checkOtherCardList(Game game) {
         GameConfigData gameConfigData = game.getGameConfig();
         boolean zhuaHu = gameConfigData.getZhuaHu() ? gameConfigData.getBaidaZhuaHu() ? true : false : false;
-        List<Class<? extends CardList>> checkList = zhuaHu ? GameCache.getCheckCardListSequence()
-                : GameCache.getCheckCardListOnlyMoHuSequence();
+        List<Class<? extends CardList>> checkList = zhuaHu ? GameCache.getCheckCardListSequence() : GameCache
+                .getCheckCardListOnlyMoHuSequence();
 
         int card = game.sendCard;
         int nextSeat = gameSeat.seekNextSeat(game);
@@ -3087,27 +3241,6 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         }
 
         return false;
-    }
-
-    /**
-     * 其他人杠碰胡过或下一个人
-     * 
-     * @param game
-     * @author wcy 2017年7月10日
-     */
-    private void otherRoleGangPengHuOrNextOne(Game game) {
-        // 如果没有可以杠碰胡则通知下一个人，如果有则发送通知并等待反馈
-        if (game.getCallCardLists().size() == 0) {
-            // 下一个人
-            this.nextIndex(game);
-            // 摸牌
-            this.touchCard(game);
-
-        } else {
-            loggerinfo("gameId=>" + game.getGameId() + "=>sendGangPengHuMsg2Role");
-            this.noticeCountDown(game, 10);
-            this.sendGangPengHuMsg2Role(game);
-        }
     }
 
     /**
@@ -3177,8 +3310,10 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
      * @author wcy 2017年6月21日
      */
     private void noticePointSeat(Game game, int seat) {
-        SC sc = SC.newBuilder().setSCFightPointSeat(
-                SCFightPointSeat.newBuilder().setSeat(seat).setTempGameCount(game.getSendCardCount())).build();
+        SC sc = SC
+                .newBuilder()
+                .setSCFightPointSeat(
+                        SCFightPointSeat.newBuilder().setSeat(seat).setTempGameCount(game.getSendCardCount())).build();
         this.sendAllSeatSC(game, sc);
         this.notifyObservers(FightConstant.FIGHT_POINT_SEAT, sc, game);
 
@@ -3190,8 +3325,7 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
      * @param game
      * @param hasGangPengHuSeatedIndex
      * @param card
-     * @param list
-     *            需要获得的牌绿型
+     * @param list 需要获得的牌绿型
      * @author wcy 2017年6月14日
      */
     private void checkMineCallCardList(Game game, int hasGangPengHuSeatedIndex, int card,
@@ -3241,8 +3375,7 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
      * @param game
      * @param hasGangPengHuSeatedIndex
      * @param card
-     * @param list
-     *            需要获得的绿牌型
+     * @param list 需要获得的绿牌型
      * @author wcy 2017年6月14日
      */
     private void checkOtherCallCardList(Game game, int hasGangPengHuSeatedIndex, int card,
@@ -3263,9 +3396,11 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         List<CallCardList> callCardLists = game.getCallCardLists();
         List<CallCardList> huCallCardLists = game.getHuCallCardLists();
 
+        Map<Class<? extends CardList>, CardList> map = game.getRule().getCardListMap();
+
         for (Class<? extends CardList> clazz : list) {
 
-            CardList templateCardList = GameCache.getCardLists().get(clazz);
+            CardList templateCardList = map.get(clazz);
             templateCardList.check(game.getGameConfig(), cardLists, cardSort, card, roleGameInfo.showCardLists, false);
 
             for (CardList cardList : cardLists) {
@@ -3370,8 +3505,8 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         gangDataBuilder.setCard(gang.card);
         gangDataBuilder.setTargetCard(gang.card);
         gangDataBuilder.setTargetSeat(gang.getTargetSeat());
-        gangDataBuilder.setCardListType(gang.dark ? CardListType.CARD_LIST_TYPE_GANG_DARK
-                : gang.peng == null ? CardListType.CARD_LIST_TYPE_GANG_LIGHT : CardListType.CARD_LIST_TYPE_GANG_ADD);
+        gangDataBuilder
+                .setCardListType(gang.dark ? CardListType.CARD_LIST_TYPE_GANG_DARK : gang.peng == null ? CardListType.CARD_LIST_TYPE_GANG_LIGHT : CardListType.CARD_LIST_TYPE_GANG_ADD);
 
         return gangDataBuilder.build();
     }
@@ -3413,6 +3548,33 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         race.getRoleIdQueue().remove(0);
         race.getRoleIdQueue().add(roleId);
 
+    }
+
+    /**
+     * 摸到花
+     * 
+     * @param game
+     * @param operateSeat
+     */
+    protected void touchFlower(Game game, int seat) {
+        RoleGameInfo roleGameInfo = roleGameInfoGetter.getCurrentRoleGameInfo(game);
+        // 摸到花之后再摸一张牌，胡了就是杠开
+        roleGameInfo.isGang = true;
+        int card = game.getRemainCards().remove(0);
+        // 加入花牌集合
+        roleGameInfo.sendFlowrCards.add(card);
+
+        SC sc = SC
+                .newBuilder()
+                .setSCFightTouchCard(
+                        SCFightTouchCard.newBuilder().setSeat(seat).setIsFlower(true)
+                                .setRemainCardCount(game.getRemainCards().size()).setTouchCard(card)).build();
+        // 通知摸到花牌
+        for (RoleGameInfo info : game.getRoleIdMap().values()) {
+            SessionUtils.sc(info.roleId, sc);
+            notifyObservers(FightConstant.FIGHT_TOUCH_CARD, sc, game, info);
+        }
+        roleGameInfo.flowerCount++;
     }
 
     @Override
@@ -3576,9 +3738,9 @@ public class FightServiceImpl extends ObserveBaseService implements FightService
         //
         // fightService.init();
         // fightService.initService();
-        FightService fightService = SpringContext.getBean("fightService");
 
         long t1 = System.currentTimeMillis();
+        r1.ready = true;
 
         Processor processor = SpringContext.getBean(Processor.class);
         processor.push(game, MajiangStateEnum.STATE_GAME_START);

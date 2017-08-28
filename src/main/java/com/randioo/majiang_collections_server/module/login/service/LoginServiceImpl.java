@@ -9,6 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.GeneratedMessage;
+import com.randioo.mahjong_public_server.protocol.Entity.GameState;
+import com.randioo.mahjong_public_server.protocol.Entity.RoleData;
+import com.randioo.mahjong_public_server.protocol.Error.ErrorCode;
+import com.randioo.mahjong_public_server.protocol.Login.LoginGetRoleDataResponse;
+import com.randioo.mahjong_public_server.protocol.Login.SCLoginOtherSide;
+import com.randioo.mahjong_public_server.protocol.ServerMessage.SC;
 import com.randioo.majiang_collections_server.cache.local.GameCache;
 import com.randioo.majiang_collections_server.dao.RoleDao;
 import com.randioo.majiang_collections_server.entity.bo.Game;
@@ -18,12 +24,6 @@ import com.randioo.majiang_collections_server.module.login.component.LoginConfig
 import com.randioo.majiang_collections_server.module.match.service.MatchService;
 import com.randioo.majiang_collections_server.module.race.service.RaceService;
 import com.randioo.majiang_collections_server.module.role.service.RoleService;
-import com.randioo.majiang_collections_server.protocol.Entity.GameState;
-import com.randioo.majiang_collections_server.protocol.Entity.RoleData;
-import com.randioo.majiang_collections_server.protocol.Error.ErrorCode;
-import com.randioo.majiang_collections_server.protocol.Login.LoginGetRoleDataResponse;
-import com.randioo.majiang_collections_server.protocol.Login.SCLoginOtherSide;
-import com.randioo.majiang_collections_server.protocol.ServerMessage.SC;
 import com.randioo.majiang_collections_server.util.Tool;
 import com.randioo.randioo_server_base.cache.RoleCache;
 import com.randioo.randioo_server_base.db.GameDB;
@@ -200,12 +200,12 @@ public class LoginServiceImpl extends ObserveBaseService implements LoginService
     public RoleData getRoleData(Role role) {
         roleService.roleInit(role);
 
-        int roleId = Tool.regExpression(role.getAccount(), "[0-9]*") ? Integer.parseInt(role.getAccount()) : role
-                .getRoleId();
+        int roleId = Tool.regExpression(role.getAccount(), "[0-9]*") ? Integer.parseInt(role.getAccount())
+                : role.getRoleId();
         Game game = GameCache.getGameMap().get(role.getGameId());
         // 游戏不存在或游戏已经结束,钥匙不存在
-        String lockString = game == null || game.getGameState() == GameState.GAME_START_END ? null : matchService
-                .getLockString(game.getLockKey());
+        String lockString = game == null || game.getGameState() == GameState.GAME_START_END ? null
+                : matchService.getLockString(game.getLockKey());
         RoleData.Builder builder = RoleData.newBuilder().setRoleId(roleId).setPoint(1000).setSex(1)
                 .setName(role.getName()).setHeadImageUrl(role.getHeadImgUrl() != null ? role.getHeadImgUrl() : "")
                 .setRandiooCoin(role.getRandiooMoney());

@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import com.randioo.mahjong_public_server.protocol.Entity.OverMethod;
 import com.randioo.majiang_collections_server.module.fight.component.score.round.RoundOverResult;
-import com.randioo.majiang_collections_server.protocol.Entity.OverMethod;
 
 @Component
 public class ZhuangJudger {

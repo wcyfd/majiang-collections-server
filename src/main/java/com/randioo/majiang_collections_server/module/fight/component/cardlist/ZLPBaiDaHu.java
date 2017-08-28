@@ -10,9 +10,9 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.randioo.mahjong_public_server.protocol.Entity.GameConfigData;
 import com.randioo.majiang_collections_server.cache.local.GameCache;
 import com.randioo.majiang_collections_server.entity.po.CardSort;
-import com.randioo.majiang_collections_server.protocol.Entity.GameConfigData;
 import com.randioo.majiang_collections_server.util.Lists;
 import com.randioo.majiang_collections_server.util.Sets;
 import com.randioo.randioo_server_base.template.Ref;
@@ -308,7 +308,8 @@ public class ZLPBaiDaHu extends Hu {
      * 找到没有使用过的指定对象索引
      * 
      * @param cards
-     * @param indexSet 使用过的对象索引
+     * @param indexSet
+     *            使用过的对象索引
      * @param startIndex
      * @param card
      * @return

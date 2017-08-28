@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import com.randioo.mahjong_public_server.protocol.Entity.RoundCardsData;
+import com.randioo.mahjong_public_server.protocol.ServerMessage.SC;
 import com.randioo.majiang_collections_server.entity.bo.VideoData;
 import com.randioo.majiang_collections_server.module.fight.component.MajiangRule.MajiangStateEnum;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.CardList;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Gang;
 import com.randioo.majiang_collections_server.module.fight.component.score.round.RoundOverResult;
-import com.randioo.majiang_collections_server.protocol.Entity.RoundCardsData;
-import com.randioo.majiang_collections_server.protocol.ServerMessage.SC;
 
 public class RoleGameInfo {
     /** 游戏中的玩家id */
@@ -21,6 +21,8 @@ public class RoleGameInfo {
     public List<Integer> cards = new ArrayList<>();
     /** 已经碰过或杠过的牌 */
     public List<CardList> showCardLists = new ArrayList<>();
+    /** 出过的花牌 */
+    public List<Integer> sendFlowrCards = new ArrayList<>();
     /** 新拿的牌 */
     public int newCard;
     /** 是否准备完成 */
@@ -43,6 +45,8 @@ public class RoleGameInfo {
     public List<SC> roundSCList = new ArrayList<>();
     /** 申请退出时间 */
     public int lastRejectedExitTime;
+    /** 当前一局花数量的计数 */
+    public int flowerCount;
     /** 个人缓存的操作栈 */
     public Stack<MajiangStateEnum> operations = new Stack<>();
 
@@ -56,8 +60,10 @@ public class RoleGameInfo {
         sb.append(t).append("roleId=>").append(roleId).append(n);
         sb.append(t).append("ready=>").append(ready).append(n);
         sb.append(t).append("cards=>").append(cards).append(n);
+        sb.append(t).append("sendFlowerCards=>").append(sendFlowrCards).append(n);
         sb.append(t).append("newCard=>").append(newCard).append(n);
         sb.append(t).append("showCardLists=>").append(showCardLists).append(n);
+        sb.append(t).append("flowerCount=>").append(flowerCount).append(n);
         sb.append(t).append("qiangGang=>").append(qiangGang).append(n);
         sb.append(t).append("operation=>").append(operations).append(n);
         sb.append(t).append("]");

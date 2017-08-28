@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.randioo.mahjong_public_server.protocol.Entity.GameConfigData;
 import com.randioo.majiang_collections_server.cache.local.GameCache;
 import com.randioo.majiang_collections_server.entity.po.CardSort;
-import com.randioo.majiang_collections_server.protocol.Entity.GameConfigData;
 
 public class Gang extends AbstractCardList {
     public int card;

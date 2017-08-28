@@ -6,11 +6,11 @@ import org.apache.mina.core.session.IoSession;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.GeneratedMessage;
+import com.randioo.mahjong_public_server.protocol.Entity.GameConfigData;
+import com.randioo.mahjong_public_server.protocol.Entity.GameRoleData;
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.bo.Role;
 import com.randioo.majiang_collections_server.entity.po.RoleGameInfo;
-import com.randioo.majiang_collections_server.protocol.Entity.GameConfigData;
-import com.randioo.majiang_collections_server.protocol.Entity.GameRoleData;
 import com.randioo.majiang_collections_server.util.key.Key;
 import com.randioo.randioo_server_base.service.ObserveBaseServiceInterface;
 

@@ -14,6 +14,19 @@ import org.springframework.stereotype.Service;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.GeneratedMessage;
+import com.randioo.mahjong_public_server.protocol.Entity.GameConfigData;
+import com.randioo.mahjong_public_server.protocol.Entity.GameRoleData;
+import com.randioo.mahjong_public_server.protocol.Entity.GameState;
+import com.randioo.mahjong_public_server.protocol.Entity.GameType;
+import com.randioo.mahjong_public_server.protocol.Entity.RoundVideoData;
+import com.randioo.mahjong_public_server.protocol.Error.ErrorCode;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeReady;
+import com.randioo.mahjong_public_server.protocol.Match.MatchCheckRoomResponse;
+import com.randioo.mahjong_public_server.protocol.Match.MatchCreateGameResponse;
+import com.randioo.mahjong_public_server.protocol.Match.MatchJoinGameResponse;
+import com.randioo.mahjong_public_server.protocol.Match.MatchPreJoinResponse;
+import com.randioo.mahjong_public_server.protocol.Match.SCMatchJoinGame;
+import com.randioo.mahjong_public_server.protocol.ServerMessage.SC;
 import com.randioo.majiang_collections_server.cache.file.GameRoundConfigCache;
 import com.randioo.majiang_collections_server.cache.local.GameCache;
 import com.randioo.majiang_collections_server.entity.bo.Game;
@@ -24,23 +37,12 @@ import com.randioo.majiang_collections_server.entity.po.RoleGameInfo;
 import com.randioo.majiang_collections_server.entity.po.RoleMatchRule;
 import com.randioo.majiang_collections_server.module.ServiceConstant;
 import com.randioo.majiang_collections_server.module.fight.component.HongZhongMajiangRule;
+import com.randioo.majiang_collections_server.module.fight.component.MajiangRule.MajiangStateEnum;
+import com.randioo.majiang_collections_server.module.fight.component.Processor;
 import com.randioo.majiang_collections_server.module.login.service.LoginService;
 import com.randioo.majiang_collections_server.module.match.MatchConstant;
 import com.randioo.majiang_collections_server.module.role.service.RoleService;
 import com.randioo.majiang_collections_server.module.video.service.VideoService;
-import com.randioo.majiang_collections_server.protocol.Entity.GameConfigData;
-import com.randioo.majiang_collections_server.protocol.Entity.GameRoleData;
-import com.randioo.majiang_collections_server.protocol.Entity.GameState;
-import com.randioo.majiang_collections_server.protocol.Entity.GameType;
-import com.randioo.majiang_collections_server.protocol.Entity.RoundVideoData;
-import com.randioo.majiang_collections_server.protocol.Error.ErrorCode;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightNoticeReady;
-import com.randioo.majiang_collections_server.protocol.Match.MatchCheckRoomResponse;
-import com.randioo.majiang_collections_server.protocol.Match.MatchCreateGameResponse;
-import com.randioo.majiang_collections_server.protocol.Match.MatchJoinGameResponse;
-import com.randioo.majiang_collections_server.protocol.Match.MatchPreJoinResponse;
-import com.randioo.majiang_collections_server.protocol.Match.SCMatchJoinGame;
-import com.randioo.majiang_collections_server.protocol.ServerMessage.SC;
 import com.randioo.majiang_collections_server.util.key.Key;
 import com.randioo.majiang_collections_server.util.key.KeyStore;
 import com.randioo.majiang_collections_server.util.key.RoomKey;
@@ -80,6 +82,9 @@ public class MatchServiceImpl extends ObserveBaseService implements MatchService
 
     @Autowired
     private HongZhongMajiangRule hongZhongMajiangRule;
+
+    @Autowired
+    private Processor processor;
 
     @Override
     public void init() {
@@ -190,6 +195,9 @@ public class MatchServiceImpl extends ObserveBaseService implements MatchService
 
         // 发送创建游戏的通知
         this.notifyObservers(MatchConstant.MATCH_CREATE_GAME, game, roleGameInfo);
+
+        processor.push(game, MajiangStateEnum.STATE_WAIT_OPERATION);
+        processor.process(game);
 
         // 当收到创建房间的主推时就要显示准备按钮
         // SessionUtils.sc(
@@ -573,12 +581,9 @@ public class MatchServiceImpl extends ObserveBaseService implements MatchService
             // 通知自己当前房间里面其他玩家的信息
             GameRoleData gameRoleData = this.parseGameRoleData(info, game);
 
-            SessionUtils
-                    .sc(role.getRoleId(),
-                            SC.newBuilder()
-                                    .setSCMatchJoinGame(
-                                            SCMatchJoinGame.newBuilder().setGameRoleData(gameRoleData).setIsMe(false))
-                                    .build());
+            SessionUtils.sc(role.getRoleId(), SC.newBuilder()
+                    .setSCMatchJoinGame(SCMatchJoinGame.newBuilder().setGameRoleData(gameRoleData).setIsMe(false))
+                    .build());
 
             // 告诉其他玩家自己进入房间
             SessionUtils.sc(info.roleId,

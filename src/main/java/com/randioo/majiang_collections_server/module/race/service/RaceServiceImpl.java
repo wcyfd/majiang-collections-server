@@ -6,6 +6,14 @@ import java.util.concurrent.locks.Lock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.randioo.mahjong_public_server.protocol.Entity.GameConfigData;
+import com.randioo.mahjong_public_server.protocol.Entity.GameRoleData;
+import com.randioo.mahjong_public_server.protocol.Error.ErrorCode;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeReady;
+import com.randioo.mahjong_public_server.protocol.Match.SCMatchMineInfo;
+import com.randioo.mahjong_public_server.protocol.Race.RaceJoinRaceResponse;
+import com.randioo.mahjong_public_server.protocol.Race.SCRaceJoinRace;
+import com.randioo.mahjong_public_server.protocol.ServerMessage.SC;
 import com.randioo.majiang_collections_server.GlobleConstant;
 import com.randioo.majiang_collections_server.cache.local.GameCache;
 import com.randioo.majiang_collections_server.cache.local.RaceCache;
@@ -21,14 +29,6 @@ import com.randioo.majiang_collections_server.module.fight.FightConstant;
 import com.randioo.majiang_collections_server.module.login.service.LoginService;
 import com.randioo.majiang_collections_server.module.match.service.MatchService;
 import com.randioo.majiang_collections_server.module.race.RaceConstant;
-import com.randioo.majiang_collections_server.protocol.Entity.GameConfigData;
-import com.randioo.majiang_collections_server.protocol.Entity.GameRoleData;
-import com.randioo.majiang_collections_server.protocol.Error.ErrorCode;
-import com.randioo.majiang_collections_server.protocol.Fight.SCFightNoticeReady;
-import com.randioo.majiang_collections_server.protocol.Match.SCMatchMineInfo;
-import com.randioo.majiang_collections_server.protocol.Race.RaceJoinRaceResponse;
-import com.randioo.majiang_collections_server.protocol.Race.SCRaceJoinRace;
-import com.randioo.majiang_collections_server.protocol.ServerMessage.SC;
 import com.randioo.majiang_collections_server.randioo_race_sdk.RaceExistResponse;
 import com.randioo.majiang_collections_server.randioo_race_sdk.RandiooRaceWebSdk;
 import com.randioo.randioo_server_base.config.GlobleMap;
@@ -143,8 +143,8 @@ public class RaceServiceImpl extends ObserveBaseService implements RaceService {
     @Override
     public void joinRace(Role role, int raceId) {
         loggerinfo(role, "race join " + raceId);
-        SessionUtils.sc(role.getRoleId(), SC.newBuilder().setRaceJoinRaceResponse(RaceJoinRaceResponse.newBuilder())
-                .build());
+        SessionUtils.sc(role.getRoleId(),
+                SC.newBuilder().setRaceJoinRaceResponse(RaceJoinRaceResponse.newBuilder()).build());
 
         SCRaceJoinRace.Builder scRaceJoinRaceBuilder = SCRaceJoinRace.newBuilder();
         Lock lock = CacheLockUtil.getLock(Race.class, raceId);
@@ -182,11 +182,8 @@ public class RaceServiceImpl extends ObserveBaseService implements RaceService {
                     String gameRoleId = matchService.getGameRoleId(game.getGameId(), firstRoleId);
                     RoleGameInfo roleGameInfo = game.getRoleIdMap().get(gameRoleId);
                     GameRoleData gameRoleData = matchService.parseGameRoleData(roleGameInfo, game);
-                    SessionUtils.sc(
-                            role.getRoleId(),
-                            SC.newBuilder()
-                                    .setSCMatchMineInfo(SCMatchMineInfo.newBuilder().setGameRoleData(gameRoleData))
-                                    .build());
+                    SessionUtils.sc(role.getRoleId(), SC.newBuilder()
+                            .setSCMatchMineInfo(SCMatchMineInfo.newBuilder().setGameRoleData(gameRoleData)).build());
                     SessionUtils.sc(role.getRoleId(),
                             SC.newBuilder().setSCFightNoticeReady(SCFightNoticeReady.newBuilder()).build());
                 }

@@ -3,13 +3,13 @@ package com.randioo.majiang_collections_server;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.filter.keepalive.KeepAliveFilter;
 
+import com.randioo.mahjong_public_server.protocol.ClientMessage.CS;
+import com.randioo.mahjong_public_server.protocol.Heart.CSHeart;
+import com.randioo.mahjong_public_server.protocol.Heart.HeartRequest;
+import com.randioo.mahjong_public_server.protocol.Heart.HeartResponse;
+import com.randioo.mahjong_public_server.protocol.Heart.SCHeart;
+import com.randioo.mahjong_public_server.protocol.ServerMessage.SC;
 import com.randioo.majiang_collections_server.handler.HeartTimeOutHandler;
-import com.randioo.majiang_collections_server.protocol.ClientMessage.CS;
-import com.randioo.majiang_collections_server.protocol.Heart.CSHeart;
-import com.randioo.majiang_collections_server.protocol.Heart.HeartRequest;
-import com.randioo.majiang_collections_server.protocol.Heart.HeartResponse;
-import com.randioo.majiang_collections_server.protocol.Heart.SCHeart;
-import com.randioo.majiang_collections_server.protocol.ServerMessage.SC;
 import com.randioo.randioo_platform_sdk.RandiooPlatformSdk;
 import com.randioo.randioo_server_base.config.ConfigLoader;
 import com.randioo.randioo_server_base.config.GlobleArgsLoader;
@@ -39,7 +39,7 @@ public class majiang_collections_serverApp {
         LogSystem.init(majiang_collections_serverApp.class);
 
         ConfigLoader.loadConfig("com.randioo.majiang_collections_server.entity.file", "./config.zip");
-        
+
         SensitiveWordDictionary.readAll("./sensitive.txt");
 
         SpringContext.initSpringCtx("ApplicationContext.xml");
@@ -52,7 +52,7 @@ public class majiang_collections_serverApp {
         GameServerInit gameServerInit = ((GameServerInit) SpringContext.getBean(GameServerInit.class));
         // 设置CS
         gameServerInit.setMessageLite(CS.getDefaultInstance());
-        
+
         // 心跳工厂
         ProtoHeartFactory protoHeartFactory = new ProtoHeartFactory();
         protoHeartFactory.setHeartRequest(CS.newBuilder().setHeartRequest(HeartRequest.newBuilder()).build());
@@ -61,8 +61,8 @@ public class majiang_collections_serverApp {
         protoHeartFactory.setCsHeart(CS.newBuilder().setCSHeart(CSHeart.newBuilder()).build());
 
         HeartTimeOutHandler heartTimeOutHandler = SpringContext.getBean(HeartTimeOutHandler.class);
-        gameServerInit.setKeepAliveFilter(new KeepAliveFilter(protoHeartFactory, IdleStatus.READER_IDLE,
-                heartTimeOutHandler, 5, 3));
+        gameServerInit.setKeepAliveFilter(
+                new KeepAliveFilter(protoHeartFactory, IdleStatus.READER_IDLE, heartTimeOutHandler, 5, 3));
         gameServerInit.start();
 
         // LiteHttpServer server = new LiteHttpServer();
