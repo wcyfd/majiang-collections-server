@@ -8,7 +8,7 @@ message RoleData{
 	optional int32 serverTime = 5;
 	optional string name = 6;
 	optional string headImageUrl = 7;
-	repeated bytes gameOverSC = 8;
+	optional bytes gameOverSC = 8;
 	optional int32 randiooCoin = 9;
 }
 
@@ -35,6 +35,9 @@ message GameConfigData{
 	optional int32 roomCard = 20;//房卡
 	optional string roomId = 21;//房间id
 	optional bool zhuaHu = 22;//能否抓胡
+	optional int32 moFlowerCount = 23; //几个花时才能自摸
+	optional int32 zhuaFlowerCount = 24;//几个花时才能抓胡
+
 }
 
 /**游戏结束的方式*/
@@ -107,12 +110,22 @@ message CallHuData{
 	optional RoundCardsData huData = 2;
 }
 enum HuType{
-	SI_BAI_DA = 1 ;   //  四百搭
-	WU_BAI_DA = 2; //无百搭
-	PAO_DAI_DA = 3;  //无百搭
+	//共有
 	GANG_KAI = 4;  // 杠开
 	MEN_QING = 5;  //门清
 	DA_DIAO_CHE = 6; //大吊
+	//百搭麻将
+	SI_BAI_DA = 1 ;   //  四百搭
+	WU_BAI_DA = 2; //无百搭
+	PAO_DAI_DA = 3;  //无百搭
+	//敲麻
+	QING_PENG = 7; //清碰
+	HUN_PENG = 8;//混碰
+	QING_YI_SE = 9;//清一色
+	PENG_PENG_HU = 10;//碰碰胡
+	HUN_YI_SE = 11;//混一色
+	WU_HUA_GUO = 12;//无花果
+	HAI_DI_LAO = 13;//海底捞
 }
 message RoleRoundOverInfoData{
 	optional GameRoleData gameRoleData = 1;
@@ -121,14 +134,17 @@ message RoleRoundOverInfoData{
 	optional bool gangKai = 4;
 	optional OverMethod overMethod = 5;
 	optional int32 roundScore = 6;
-	optional int32 mingGangScore = 7;
-	optional int32 mingGangCount = 8;
-	optional int32 anGangScore = 9;
-	optional int32 anGangCount = 10;
+	optional int32 mingGangScorePlus = 7;
+	optional int32 mingGangCountPlus = 8;
+	optional int32 anGangScorePlus = 9;
+	optional int32 anGangCountPlus = 10;
 	optional int32 moScore = 11;
 	repeated HuType huTypeList = 12;
 	optional int32 flowerCount = 13;  //赢家花的数量	
-	
+	optional int32 mingGangScoreMinus = 14;
+	optional int32 mingGangCountMinus = 15;
+	optional int32 anGangScoreMinus = 16;
+	optional int32 anGangCountMinus = 17;
 }
 
 enum OverMethod{
@@ -190,14 +206,9 @@ message GameVideoData{
 message FightStartRoleData{
 	repeated int32 pai = 1;
 	optional int32 seat = 2;
-	repeated int32 flowerCards = 3;
 }
 
 message ClientCard{
 	repeated int32 cards = 1;
 }
 
-message FillFlowerUnit{
-	repeated int32 flowerCards = 1 ;//花牌
-	repeated int32 ordinaryCards = 2;//普通牌
-}

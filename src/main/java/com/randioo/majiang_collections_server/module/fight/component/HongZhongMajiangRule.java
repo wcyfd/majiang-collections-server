@@ -2,9 +2,9 @@ package com.randioo.majiang_collections_server.module.fight.component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import java.util.Stack;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +14,12 @@ import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.po.CallCardList;
 import com.randioo.majiang_collections_server.entity.po.RoleGameInfo;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.CardList;
-import com.randioo.majiang_collections_server.module.fight.component.cardlist.Chi;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Gang;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Hu;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Peng;
-import com.randioo.majiang_collections_server.module.fight.component.cardlist.ZLPBaiDaHu;
+import com.randioo.majiang_collections_server.module.fight.component.cardlist.hongzhong.HongzhongGang;
+import com.randioo.majiang_collections_server.module.fight.component.cardlist.hongzhong.HongzhongHu;
+import com.randioo.majiang_collections_server.module.fight.component.cardlist.hongzhong.HongzhongPeng;
 import com.randioo.majiang_collections_server.module.fight.service.FightService;
 import com.randioo.randioo_server_base.utils.ReflectUtils;
 
@@ -38,7 +39,7 @@ public class HongZhongMajiangRule extends MajiangRule {
     @Autowired
     private RoleGameInfoGetter roleGameInfoGetter;
 
-    private final int[] cards = {//
+    private final List<Integer> cards = Arrays.asList(
     //
             101, 102, 103, 104, 105, 106, 107, 108, 109, // 条
             101, 102, 103, 104, 105, 106, 107, 108, 109, // 条
@@ -55,12 +56,17 @@ public class HongZhongMajiangRule extends MajiangRule {
             301, 302, 303, 304, 305, 306, 307, 308, 309, // 万
             301, 302, 303, 304, 305, 306, 307, 308, 309, // 万
 
-            801, 801, 801, 801,// 中
-    };
+            801, 801, 801, 801// 中
+            );
+
+    private List<Integer> flowers = Arrays.asList();
+
+    private int hongzhongCard;
 
     /** 摸牌流程 */
     private List<MajiangStateEnum> touchCardProcesses = Arrays.asList(//
             MajiangStateEnum.STATE_TOUCH_CARD, // 摸牌
+            MajiangStateEnum.STATE_SC_TOUCH_CARD, // 摸牌通知
             MajiangStateEnum.STATE_CHECK_MINE_CARDLIST // 检查我自己的手牌
             );
 
@@ -74,19 +80,6 @@ public class HongZhongMajiangRule extends MajiangRule {
     private List<MajiangStateEnum> noticeCardListProcesses = Arrays.asList(//
             MajiangStateEnum.STATE_SC_SEND_CARDLIST_2_ROLE, //
             MajiangStateEnum.STATE_WAIT_OPERATION//
-            );
-
-    private List<MajiangStateEnum> pengProcess = Arrays.asList(//
-            MajiangStateEnum.STATE_PENG, //
-            MajiangStateEnum.STATE_JUMP_SEAT//
-            );
-
-    private List<MajiangStateEnum> gangProcess = Arrays.asList(//
-            MajiangStateEnum.STATE_GANG, //
-            MajiangStateEnum.STATE_JUMP_SEAT//
-            );
-
-    private List<MajiangStateEnum> chiProcess = Arrays.asList(//
             );
 
     @Override
@@ -135,13 +128,32 @@ public class HongZhongMajiangRule extends MajiangRule {
             list.add(MajiangStateEnum.STATE_DISPATCH);
             list.add(MajiangStateEnum.STATE_SC_GAME_START);
             list.add(MajiangStateEnum.STATE_TOUCH_CARD);
+            list.add(MajiangStateEnum.STATE_SC_TOUCH_CARD);
             list.add(MajiangStateEnum.STATE_CHECK_MINE_CARDLIST);
             list.addAll(sendCardProcesses);
             list.add(MajiangStateEnum.STATE_NEXT_SEAT);
 
             break;
-        case STATE_ROLE_SEND_CARD:
+        case STATE_TOUCH_CARD: {
+            RoleGameInfo currentRoleGameInfo = roleGameInfoGetter.getCurrentRoleGameInfo(game);
+            for (RoleGameInfo roleGameInfo : game.getRoleIdMap().values()) {
+                if (currentRoleGameInfo.gameRoleId.equals(roleGameInfo.gameRoleId)) {
+                    continue;
+                }
+                roleGameInfo.everybodyTouchCard = 0;
+            }
+        }
+            break;
+        case STATE_ROLE_SEND_CARD: {// 出牌后
             list.add(MajiangStateEnum.STATE_CHECK_OTHER_CARDLIST);
+            game.checkOtherCardListSeats.clear();
+            int seat = game.getCurrentRoleIdIndex();
+            for (int i = 0; i < game.getRoleIdList().size(); i++) {
+                if (seat != i) {
+                    game.checkOtherCardListSeats.add(i);
+                }
+            }
+        }
             break;
         case STATE_CHECK_MINE_CARDLIST:
             if (game.getCallCardLists().size() > 0) {
@@ -187,24 +199,54 @@ public class HongZhongMajiangRule extends MajiangRule {
             if (callCardLists.size() > 0) {
                 CallCardList callCardList = game.getCallCardLists().get(0);
                 CardList cardList = callCardList.cardList;
+
                 if (cardList instanceof Peng) {
-                    list.addAll(pengProcess);
+                    list.add(MajiangStateEnum.STATE_PENG);
+                    // 如果需要跳转,则要填上出牌流程，实质上和下一家的流程差不多
+                    list.add(MajiangStateEnum.STATE_JUMP_SEAT);
                     list.addAll(sendCardProcesses);
                 } else if (cardList instanceof Gang) {
                     Gang gang = (Gang) cardList;
-                    if (gang.peng != null && fightService.checkQiangGang(game)) {
+
+                    int seat = callCardList.masterSeat;
+                    RoleGameInfo roleGameInfo = roleGameInfoGetter.getRoleGameInfoBySeat(game, seat);
+                    game.checkOtherCardListSeats.clear();
+                    for (int i = 0; i < game.getRoleIdList().size(); i++) {
+                        if (seat != i) {
+                            game.checkOtherCardListSeats.add(i);
+                        }
+                    }
+                    if (gang.peng != null && !hasHongzhong(game, roleGameInfo, 0) && fightService.checkQiangGang(game)) {
+                        // 显示已经杠了
+                        list.add(MajiangStateEnum.STATE_GANG);
                         list.addAll(noticeCardListProcesses);
                     } else {
-                        list.addAll(gangProcess);
-                        list.add(MajiangStateEnum.STATE_GANG_CAL_SCORE);
-                        list.addAll(touchCardProcesses);
-                        list.addAll(sendCardProcesses);
+                        list.add(MajiangStateEnum.STATE_GANG);
+                        // 如果需要跳转,则要填上出牌流程，实质上和下一家的流程差不多
+                        if (game.getCurrentRoleIdIndex() != callCardList.masterSeat) {
+                            list.add(MajiangStateEnum.STATE_JUMP_SEAT);
+                            list.add(MajiangStateEnum.STATE_GANG_CAL_SCORE);
+                            list.addAll(touchCardProcesses);
+                            list.addAll(sendCardProcesses);
+                        } else {
+                            list.add(MajiangStateEnum.STATE_GANG_CAL_SCORE);
+                            list.addAll(touchCardProcesses);
+                        }
+
                     }
-                } else if (cardList instanceof Chi) {
-                    list.addAll(chiProcess);
-                    list.addAll(sendCardProcesses);
                 } else if (cardList instanceof Hu) {
+                    // 如果前面是抢杠,则还原杠变为碰
+                    if (game.qiangGangCallCardList != null) {
+                        list.add(MajiangStateEnum.STATE_RECOVERY_PENG);
+                    }
                     list.add(MajiangStateEnum.STATE_HU);
+                }
+            } else {
+                if (game.qiangGangCallCardList != null) {
+                    // 如果需要跳转,则要填上出牌流程，实质上和下一家的流程差不多
+                    list.add(MajiangStateEnum.STATE_GANG_CAL_SCORE);
+                    list.addAll(touchCardProcesses);
+                    game.qiangGangCallCardList = null;
                 }
             }
             break;
@@ -226,44 +268,80 @@ public class HongZhongMajiangRule extends MajiangRule {
         return list;
     }
 
-    @Override
-    public Set<Integer> getFlowers(Game game) {
-        return new HashSet<Integer>();
-    }
+    /** 所有的牌型 */
+    private Map<Class<? extends CardList>, CardList> allCardListMap = new HashMap<>();
+
+    private List<Class<? extends CardList>> mineCardListSequence = new ArrayList<>();
+    private List<Class<? extends CardList>> otherCardListSequence = new ArrayList<>();
+
+    private List<Class<? extends CardList>> moCardListSequence = new ArrayList<>(2);
 
     public HongZhongMajiangRule() {
-        allCardListMap.put(Gang.class, ReflectUtils.newInstance(Gang.class));
-        allCardListMap.put(Peng.class, ReflectUtils.newInstance(Peng.class));
-        allCardListMap.put(Chi.class, ReflectUtils.newInstance(Chi.class));
-        allCardListMap.put(Hu.class, ReflectUtils.newInstance(ZLPBaiDaHu.class));
+        allCardListMap.put(Gang.class, ReflectUtils.newInstance(HongzhongGang.class));
+        allCardListMap.put(Peng.class, ReflectUtils.newInstance(HongzhongPeng.class));
+        allCardListMap.put(Hu.class, ReflectUtils.newInstance(HongzhongHu.class));
 
         otherCardListSequence.add(Hu.class);
         otherCardListSequence.add(Gang.class);
         otherCardListSequence.add(Peng.class);
 
+        moCardListSequence.add(Gang.class);
+        moCardListSequence.add(Peng.class);
+
         mineCardListSequence.add(Hu.class);
         mineCardListSequence.add(Gang.class);
+
+        hongzhongCard = 801;
     }
 
     @Override
-    public int[] getCards() {
+    public List<Integer> getCards() {
         return cards;
     }
 
     @Override
-    public boolean canZhuaHu(Game game) {
-        return false;
-    }
-
-    @Override
-    public boolean canBaiDaZhuaHu(Game game) {
-        return false;
+    public List<Integer> getFlowers() {
+        return flowers;
     }
 
     @Override
     public int getBaidaCard(RuleableGame game) {
         // 红中为百搭牌
-        return 801;
+        return hongzhongCard;
+    }
+
+    @Override
+    public List<Class<? extends CardList>> getOtherCardListSequence(RoleGameInfo roleGameInfo, Game game) {
+        boolean zhuaHu = game.getGameConfig().getZhuaHu();
+        // 能否抓胡判断
+        if (!zhuaHu) {
+            return moCardListSequence;
+        }
+
+        if (hasHongzhong(game, roleGameInfo, game.sendCard)) {
+            return moCardListSequence;
+        }
+        return otherCardListSequence;
+
+    }
+
+    private boolean hasHongzhong(Game game, RoleGameInfo roleGameInfo, int card) {
+
+        if (hongzhongCard == card || roleGameInfo.cards.contains(hongzhongCard)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public List<Class<? extends CardList>> getMineCardListSequence(RoleGameInfo roleGameInfo, Game game) {
+        return mineCardListSequence;
+    }
+
+    @Override
+    public Map<Class<? extends CardList>, CardList> getCardListMap() {
+        return allCardListMap;
     }
 
     @Override

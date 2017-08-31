@@ -266,5 +266,7 @@ message FightClientTouchCardResponse{
 }
 
 message SCFightFillFlower{
-	repeated FillFlowerUnit fillFlowerCards = 1;
+	repeated int32 cards = 1 ;//所有补的牌
+	repeated int32 counts = 2;//每一次补牌的计数
+	optional int32 seat = 3; //补花人的座位
 }

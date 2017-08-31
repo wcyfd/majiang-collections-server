@@ -11,8 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.randioo.mahjong_public_server.protocol.Entity.GameConfigData;
-import com.randioo.majiang_collections_server.cache.local.GameCache;
+import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.po.CardSort;
+import com.randioo.majiang_collections_server.module.fight.component.BaidaMajiangRule;
+import com.randioo.majiang_collections_server.module.fight.component.MajiangRule;
 import com.randioo.majiang_collections_server.util.Lists;
 import com.randioo.majiang_collections_server.util.Sets;
 import com.randioo.randioo_server_base.template.Ref;
@@ -21,18 +23,36 @@ public class ZLPBaiDaHu extends Hu {
     private Logger logger = LoggerFactory.getLogger(ZLPBaiDaHu.class.getSimpleName());
 
     @Override
-    public void check(GameConfigData gameConfigData, List<CardList> cardLists, CardSort cardSort, int card,
-            List<CardList> showCardList, boolean isMine) {
+    public void check(Game game, List<CardList> cardLists, CardSort cardSort, int card, List<CardList> showCardList,
+            boolean isMine) {
+        MajiangRule rule = game.getRule();
+        GameConfigData gameConfigData = game.getGameConfig();
 
-        Set<Integer> baiDaHu = new HashSet<>();
-        baiDaHu.add(801);
-
+        int baidaCard = rule.getBaidaCard(game);
+        // 是否时百搭麻将
+        boolean isBaidaMajiang = rule instanceof BaidaMajiangRule ? true : false;
+        // 是否时跑百搭
+        boolean isPaoBaida = true;
         // 如果手上有四个红中直接胡
-        int baidaCard = GameCache.getBaiDaCardNumSet().iterator().next();
-        if (!cardSort.get(3).contains(baidaCard)) {
-            boolean hasHu = this.checkHu(gameConfigData, cardSort);
+        boolean isBaida4Win = cardSort.get(3).contains(baidaCard) && gameConfigData.getBaida4Win() && !isBaidaMajiang;
+        if (!isBaida4Win) {
+            boolean hasHu = this.checkHu(gameConfigData, cardSort, baidaCard);
             if (!hasHu) {
                 return;
+            }
+        }
+
+        if (isBaidaMajiang) {
+            // 检测跑百搭
+            cardSort.remove(card);
+            for (int i : BaidaMajiangRule.TEST_BAI_DAI) {
+                cardSort.addCard(i);
+                if (!checkHu(gameConfigData, cardSort, baidaCard)) {
+                    // 有一个不能胡 就不是跑百搭
+                    isPaoBaida = false;
+                    break;
+                }
+                cardSort.remove(i);
             }
         }
 
@@ -41,6 +61,7 @@ public class ZLPBaiDaHu extends Hu {
         List<Integer> list = cardSort.toArray();
         hu.card = card;
         hu.isMine = isMine;
+        hu.isPaoBaiDa = isPaoBaida;
         Lists.removeElementByList(list, Arrays.asList(card));
         Collections.sort(list);
         hu.handCards.addAll(list);
@@ -50,7 +71,7 @@ public class ZLPBaiDaHu extends Hu {
 
     }
 
-    private boolean checkHu(GameConfigData gameConfigData, CardSort cardSort) {
+    private boolean checkHu(GameConfigData gameConfigData, CardSort cardSort, int baida) {
         boolean debug = true;
         // 1.克隆牌组
         CardSort cardSort1 = cardSort.clone();
@@ -60,7 +81,7 @@ public class ZLPBaiDaHu extends Hu {
         System.out.println(l);
 
         // 2.去除所有的白搭
-        int baiDaCount = cardSort1.removeAll(801);
+        int baiDaCount = cardSort1.removeAll(baida);
 
         // 只剩下百搭牌,肯定可以胡
         if (cardSort1.sumCard() == 0) {
@@ -429,8 +450,8 @@ public class ZLPBaiDaHu extends Hu {
     public static void main(String[] args) {
         ZLPBaiDaHu hu = new ZLPBaiDaHu();
         CardSort cardSort = new CardSort(4);
-        // cardSort.fillCardSort(Arrays.asList(101, 102, 103, 104, 105, 201,
-        // 302, 101, 102, 201, 302, 801, 801, 302));
+//        cardSort.fillCardSort(Arrays.asList(101, 102, 103, 104, 105, 201, 302, 101, 102, 201, 302, 801, 801, 302));
+        cardSort.fillCardSort(Arrays.asList(801,801,203,203,206,206,207,207,208,308,308));
 
         // List<Integer> cards = Arrays.asList(101, 102, 103, 104, 105, 201,
         // 302, 101, 102, 201, 302, 801, 801, 302);
@@ -450,12 +471,13 @@ public class ZLPBaiDaHu extends Hu {
         // 801, 207);
         // List<Integer> cards = Arrays.asList(108, 109, 201, 202, 203, 203,
         // 203, 801);
-        List<Integer> cards = Arrays.asList(102, 103, 104, 305, 306, 307, 307, 304);
+        // List<Integer> cards = Arrays.asList(102, 103, 104, 305, 306, 307,
+        // 307, 304);
 
-        cardSort.fillCardSort(cards);
+        // cardSort.fillCardSort(cards);
 
         long start = System.currentTimeMillis();
-        boolean b = hu.checkHu(null, cardSort);
+        boolean b = hu.checkHu(null, cardSort, 801);
         System.out.println(b);
         long end = System.currentTimeMillis();
         System.out.println(end - start);

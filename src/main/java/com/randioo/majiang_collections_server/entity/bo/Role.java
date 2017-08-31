@@ -1,7 +1,5 @@
 package com.randioo.majiang_collections_server.entity.bo;
 
-import java.util.List;
-
 import com.google.protobuf.ByteString;
 import com.randioo.majiang_collections_server.entity.po.RoleRaceInfo;
 import com.randioo.randioo_server_base.entity.DefaultRole;
@@ -19,7 +17,7 @@ public class Role extends DefaultRole {
     private int moneyExchangeNum;
     /** 玩家比赛信息 */
     private RoleRaceInfo roleRaceInfo;
-    private List<ByteString> gameOverSC = null;
+    private ByteString gameOverSC = null;
     /** 比赛底分 */
     private int raceScore;
     /** 积分 */
@@ -122,12 +120,12 @@ public class Role extends DefaultRole {
         this.roleRaceInfo = roleRaceInfo;
     }
 
-    public void setGameOverSC(List<ByteString> gameOverSC) {
-        this.gameOverSC = gameOverSC;
+    public ByteString getGameOverSC() {
+        return gameOverSC;
     }
 
-    public List<ByteString> getGameOverSC() {
-        return gameOverSC;
+    public void setGameOverSC(ByteString gameOverSC) {
+        this.gameOverSC = gameOverSC;
     }
 
     @Override

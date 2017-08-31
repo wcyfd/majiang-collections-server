@@ -8,13 +8,16 @@ import java.util.List;
 import java.util.Set;
 
 import com.randioo.mahjong_public_server.protocol.Entity.GameConfigData;
+import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.po.CardSort;
+import com.randioo.majiang_collections_server.module.fight.component.MajiangRule;
 import com.randioo.majiang_collections_server.util.Lists;
 
 public class Step5Hu extends Hu {
     @Override
-    public void check(GameConfigData gameConfigData, List<CardList> cardLists, CardSort cardSort, int card,
-            List<CardList> showCardList, boolean isMine) {
+    public void check(Game game, List<CardList> cardLists, CardSort cardSort, int card, List<CardList> showCardList,
+            boolean isMine) {
+        MajiangRule rule = game.getRule();
         this.isMine = isMine;
         CardSort copySort = cardSort.clone();
         for (int value : copySort.getList().get(1)) {
@@ -194,7 +197,7 @@ public class Step5Hu extends Hu {
         array1.add(12);
         array1.add(13);
 
-        hu.check(null, cardLists, cardSort, 0, null, false);
+        // hu.check(null, cardLists, cardSort, 0, null, false);
         // System.out.println(cardLists);
     }
 

@@ -3,13 +3,14 @@ package com.randioo.majiang_collections_server.module.fight.component;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.randioo.majiang_collections_server.entity.po.CallCardList;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.CardList;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Gang;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Hu;
-import com.randioo.majiang_collections_server.module.fight.component.cardlist.Peng;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Step5Hu;
 
 /**
@@ -34,6 +35,9 @@ import com.randioo.majiang_collections_server.module.fight.component.cardlist.St
 
 @Component
 public class WaitOtherCallCardListChecker {
+
+    private Logger logger = LoggerFactory.getLogger(WaitOtherCallCardListChecker.class);
+
     /**
      * 是否要等待他人选择
      * 
@@ -41,54 +45,106 @@ public class WaitOtherCallCardListChecker {
      * @param seatedIndex 当前的座位号
      * @return true 需要等待 false 不需要等待
      */
+    // public boolean needWaitOtherChoice(List<CallCardList> callCardLists, int
+    // seatedIndex) {
+    //
+    // logger.info("current callCardLists {}", callCardLists);
+    //
+    // // 等待的选择叫牌数量是0,则无需等待
+    // if (callCardLists.size() == 0) {
+    // return false;
+    // }
+    // // 先只查第一个，如果不是自己，并且不是胡则返回true
+    // CallCardList callCardList0 = callCardLists.get(0);
+    // CardList cardList = callCardList0.cardList;
+    //
+    // // 如果卡组是胡
+    // if (cardList instanceof Hu) {
+    // // 是否包含胡
+    // boolean containsHu = false;
+    // // 都叫了胡
+    // boolean allCallHu = true;
+    // // 检查是否有并列的胡,并且还没有叫过,则还需要等待
+    // for (int i = 0; i < callCardLists.size(); i++) {
+    // CallCardList callCardList = callCardLists.get(i);
+    // CardList targetCardList = callCardList.cardList;
+    // // 如果不是胡的类型了,说明没有胡牌类型了
+    // if (!this.checkHuInstance(targetCardList)) {
+    // if (containsHu && allCallHu)
+    // return false;
+    // else {
+    // // 不是胡类型的第一个叫牌不是自己
+    // if (seatedIndex != callCardList.masterSeat) {
+    // // 没叫就要等待
+    // return true;
+    // }
+    // }
+    //
+    // }
+    // containsHu = true;
+    // // 是胡牌 座位不是自己,并且还没有叫过的胡就要等待
+    // if (seatedIndex != callCardList.masterSeat) {
+    // if (!callCardList.call) {
+    // allCallHu = false;
+    // return true;
+    // }
+    // }
+    // }
+    //
+    // } else if (seatedIndex != callCardList0.masterSeat) {
+    // // 卡组不是胡，就不可能存在并列问题，直接检查位置是否是自己,不是就返回需要等待
+    // return true;
+    // }
+    //
+    // return false;
+    // }
+
     public boolean needWaitOtherChoice(List<CallCardList> callCardLists, int seatedIndex) {
 
-        // 等待的选择叫牌数量是0,则无需等待
-        if (callCardLists.size() == 0) {
+        logger.info("current callCardLists {}", callCardLists);
+
+        if (this.checkEmpty(callCardLists)) {
             return false;
         }
         // 先只查第一个，如果不是自己，并且不是胡则返回true
         CallCardList callCardList0 = callCardLists.get(0);
         CardList cardList = callCardList0.cardList;
 
-        // 如果卡组是胡
+        // 如果卡组是胡,要查有没有其他的胡
         if (cardList instanceof Hu) {
-            // 是否包含胡
-            boolean containsHu = false;
-            // 都叫了胡
-            boolean allCallHu = true;
-            // 检查是否有并列的胡,并且还没有叫过,则还需要等待
-            for (int i = 0; i < callCardLists.size(); i++) {
-                CallCardList callCardList = callCardLists.get(i);
-                CardList targetCardList = callCardList.cardList;
-                // 如果不是胡的类型了,说明没有胡牌类型了
-                if (!this.checkHuInstance(targetCardList)) {
-                    if (containsHu && allCallHu)
-                        return false;
-                    else {
-                        // 不是胡类型的第一个叫牌不是自己
-                        if (seatedIndex != callCardList.masterSeat) {
-                            // 没叫就要等待
-                            return true;
-                        }
-                    }
-
-                }
-                containsHu = true;
-                // 是胡牌 座位不是自己,并且还没有叫过的胡就要等待
-                if (seatedIndex != callCardList.masterSeat) {
-                    if (!callCardList.call) {
-                        allCallHu = false;
+            boolean huAllCall = true;
+            for (CallCardList callCardList : callCardLists) {
+                if (callCardList.cardList instanceof Hu) {
+                    huAllCall = callCardList.call;
+                    if (!huAllCall) {
                         return true;
                     }
+                } else {
+                    break;
                 }
             }
+            return false;
+        }
+        // 只要不是胡,就只查首个是不是叫了,没叫就得等着
+        if (callCardList0.call) {
+            return false;
+        }
+        return true;
+    }
 
-        } else if (seatedIndex != callCardList0.masterSeat) {
-            // 卡组不是胡，就不可能存在并列问题，直接检查位置是否是自己,不是就返回需要等待
+    /**
+     * 检查剩余牌组只有一张或者没有
+     * 
+     * @param callCardLists
+     * @return
+     * @author wcy 2017年8月30日
+     */
+    private boolean checkEmpty(List<CallCardList> callCardLists) {
+        int size = callCardLists.size();
+        // 等待的选择叫牌数量是0,则无需等待
+        if (size == 0) {
             return true;
         }
-
         return false;
     }
 
@@ -113,20 +169,20 @@ public class WaitOtherCallCardListChecker {
             callCardList.call = true;
             callCardLists.add(callCardList);
         }
-//        {
-//            CallCardList callCardList = new CallCardList();
-//            callCardList.cardList = new Step5Hu();
-//            callCardList.masterSeat = 0;
-//            callCardList.call = true;
-//            callCardLists.add(callCardList);
-//        }
-//        {
-//            CallCardList callCardList = new CallCardList();
-//            callCardList.cardList = new Step5Hu();
-//            callCardList.masterSeat = 3;
-//            callCardList.call = true;
-//            callCardLists.add(callCardList);
-//        }
+        // {
+        // CallCardList callCardList = new CallCardList();
+        // callCardList.cardList = new Step5Hu();
+        // callCardList.masterSeat = 0;
+        // callCardList.call = true;
+        // callCardLists.add(callCardList);
+        // }
+        // {
+        // CallCardList callCardList = new CallCardList();
+        // callCardList.cardList = new Step5Hu();
+        // callCardList.masterSeat = 3;
+        // callCardList.call = true;
+        // callCardLists.add(callCardList);
+        // }
         {
             CallCardList callCardList = new CallCardList();
             callCardList.cardList = new Gang();

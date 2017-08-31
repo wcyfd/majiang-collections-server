@@ -6,7 +6,9 @@ import java.util.Collections;
 import java.util.List;
 
 import com.randioo.mahjong_public_server.protocol.Entity.GameConfigData;
+import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.po.CardSort;
+import com.randioo.majiang_collections_server.module.fight.component.MajiangRule;
 import com.randioo.majiang_collections_server.util.Lists;
 
 public class BaiDaHu extends Hu {
@@ -165,8 +167,8 @@ public class BaiDaHu extends Hu {
     }
 
     @Override
-    public void check(GameConfigData gameConfigData, List<CardList> cardLists, CardSort cardSort, int card,
-            List<CardList> showCardList, boolean isMine) {
+    public void check(Game game, List<CardList> cardLists, CardSort cardSort, int card, List<CardList> showCardList,
+            boolean isMine) {
 
         List<Integer> baidaCards = new ArrayList<>();
         baidaCards.add(801);

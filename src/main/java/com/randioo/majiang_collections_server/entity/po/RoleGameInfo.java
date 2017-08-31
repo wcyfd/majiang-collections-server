@@ -33,8 +33,6 @@ public class RoleGameInfo {
     public boolean isGang;
     /** 胡牌记录 */
     public RoundCardsData roundCardsData;
-    /** 抢杠 */
-    public Gang qiangGang = null;
     /** 听的牌 */
     public List<Integer> tingCards = new ArrayList<>();
     /** 回合结果集 */
@@ -45,10 +43,22 @@ public class RoleGameInfo {
     public List<SC> roundSCList = new ArrayList<>();
     /** 申请退出时间 */
     public int lastRejectedExitTime;
-    /** 当前一局花数量的计数 */
+    /** 显示的花的数量 */
     public int flowerCount;
     /** 个人缓存的操作栈 */
     public Stack<MajiangStateEnum> operations = new Stack<>();
+
+    /** 一局游戏暗杠的次数 */
+    public int darkGangCount = 0;
+    /** 一局游戏明杠的次数 */
+    public int ligthGangCount = 0;
+    /** 每个人摸的牌 */
+    public int everybodyTouchCard;
+    /** 是不是听状态 */
+    public boolean isTing;
+
+    /** 不显示的花的数量 */
+    public int darkFlowerCount;
 
     @Override
     public String toString() {
@@ -64,8 +74,12 @@ public class RoleGameInfo {
         sb.append(t).append("newCard=>").append(newCard).append(n);
         sb.append(t).append("showCardLists=>").append(showCardLists).append(n);
         sb.append(t).append("flowerCount=>").append(flowerCount).append(n);
-        sb.append(t).append("qiangGang=>").append(qiangGang).append(n);
+        sb.append(t).append("dardFlowerCount=>").append(darkFlowerCount).append(n);
+        sb.append(t).append("darkGangCount=>").append(darkGangCount).append(n);
+        sb.append(t).append("ligthGangCount=>").append(ligthGangCount).append(n);
+        sb.append(t).append("isTing=>").append(isTing).append(n);
         sb.append(t).append("operation=>").append(operations).append(n);
+        sb.append(t).append("everybodyTouchCard=>").append(everybodyTouchCard).append(n);
         sb.append(t).append("]");
 
         return sb.toString();

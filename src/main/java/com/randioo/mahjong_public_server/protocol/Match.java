@@ -1740,6 +1740,30 @@ public final class Match {
     public boolean hasRoomId() { return hasRoomId; }
     public java.lang.String getRoomId() { return roomId_; }
     
+    // repeated int32 allCards = 5;
+    public static final int ALLCARDS_FIELD_NUMBER = 5;
+    private java.util.List<java.lang.Integer> allCards_ =
+      java.util.Collections.emptyList();
+    public java.util.List<java.lang.Integer> getAllCardsList() {
+      return allCards_;
+    }
+    public int getAllCardsCount() { return allCards_.size(); }
+    public int getAllCards(int index) {
+      return allCards_.get(index);
+    }
+    
+    // repeated int32 allFlowers = 6;
+    public static final int ALLFLOWERS_FIELD_NUMBER = 6;
+    private java.util.List<java.lang.Integer> allFlowers_ =
+      java.util.Collections.emptyList();
+    public java.util.List<java.lang.Integer> getAllFlowersList() {
+      return allFlowers_;
+    }
+    public int getAllFlowersCount() { return allFlowers_.size(); }
+    public int getAllFlowers(int index) {
+      return allFlowers_.get(index);
+    }
+    
     private void initFields() {
       roundVideoData_ = com.randioo.mahjong_public_server.protocol.Entity.RoundVideoData.getDefaultInstance();
       gameConfigData_ = com.randioo.mahjong_public_server.protocol.Entity.GameConfigData.getDefaultInstance();
@@ -1762,6 +1786,12 @@ public final class Match {
       }
       if (hasRoomId()) {
         output.writeString(4, getRoomId());
+      }
+      for (int element : getAllCardsList()) {
+        output.writeInt32(5, element);
+      }
+      for (int element : getAllFlowersList()) {
+        output.writeInt32(6, element);
       }
       getUnknownFields().writeTo(output);
     }
@@ -1787,6 +1817,24 @@ public final class Match {
       if (hasRoomId()) {
         size += com.google.protobuf.CodedOutputStream
           .computeStringSize(4, getRoomId());
+      }
+      {
+        int dataSize = 0;
+        for (int element : getAllCardsList()) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(element);
+        }
+        size += dataSize;
+        size += 1 * getAllCardsList().size();
+      }
+      {
+        int dataSize = 0;
+        for (int element : getAllFlowersList()) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(element);
+        }
+        size += dataSize;
+        size += 1 * getAllFlowersList().size();
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1930,6 +1978,14 @@ public final class Match {
           throw new IllegalStateException(
             "build() has already been called on this Builder.");
         }
+        if (result.allCards_ != java.util.Collections.EMPTY_LIST) {
+          result.allCards_ =
+            java.util.Collections.unmodifiableList(result.allCards_);
+        }
+        if (result.allFlowers_ != java.util.Collections.EMPTY_LIST) {
+          result.allFlowers_ =
+            java.util.Collections.unmodifiableList(result.allFlowers_);
+        }
         com.randioo.mahjong_public_server.protocol.Match.MatchJoinGameResponse returnMe = result;
         result = null;
         return returnMe;
@@ -1957,6 +2013,18 @@ public final class Match {
         }
         if (other.hasRoomId()) {
           setRoomId(other.getRoomId());
+        }
+        if (!other.allCards_.isEmpty()) {
+          if (result.allCards_.isEmpty()) {
+            result.allCards_ = new java.util.ArrayList<java.lang.Integer>();
+          }
+          result.allCards_.addAll(other.allCards_);
+        }
+        if (!other.allFlowers_.isEmpty()) {
+          if (result.allFlowers_.isEmpty()) {
+            result.allFlowers_ = new java.util.ArrayList<java.lang.Integer>();
+          }
+          result.allFlowers_.addAll(other.allFlowers_);
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -2007,6 +2075,32 @@ public final class Match {
             }
             case 34: {
               setRoomId(input.readString());
+              break;
+            }
+            case 40: {
+              addAllCards(input.readInt32());
+              break;
+            }
+            case 42: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              while (input.getBytesUntilLimit() > 0) {
+                addAllCards(input.readInt32());
+              }
+              input.popLimit(limit);
+              break;
+            }
+            case 48: {
+              addAllFlowers(input.readInt32());
+              break;
+            }
+            case 50: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              while (input.getBytesUntilLimit() > 0) {
+                addAllFlowers(input.readInt32());
+              }
+              input.popLimit(limit);
               break;
             }
           }
@@ -2124,6 +2218,74 @@ public final class Match {
       public Builder clearRoomId() {
         result.hasRoomId = false;
         result.roomId_ = getDefaultInstance().getRoomId();
+        return this;
+      }
+      
+      // repeated int32 allCards = 5;
+      public java.util.List<java.lang.Integer> getAllCardsList() {
+        return java.util.Collections.unmodifiableList(result.allCards_);
+      }
+      public int getAllCardsCount() {
+        return result.getAllCardsCount();
+      }
+      public int getAllCards(int index) {
+        return result.getAllCards(index);
+      }
+      public Builder setAllCards(int index, int value) {
+        result.allCards_.set(index, value);
+        return this;
+      }
+      public Builder addAllCards(int value) {
+        if (result.allCards_.isEmpty()) {
+          result.allCards_ = new java.util.ArrayList<java.lang.Integer>();
+        }
+        result.allCards_.add(value);
+        return this;
+      }
+      public Builder addAllAllCards(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        if (result.allCards_.isEmpty()) {
+          result.allCards_ = new java.util.ArrayList<java.lang.Integer>();
+        }
+        super.addAll(values, result.allCards_);
+        return this;
+      }
+      public Builder clearAllCards() {
+        result.allCards_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // repeated int32 allFlowers = 6;
+      public java.util.List<java.lang.Integer> getAllFlowersList() {
+        return java.util.Collections.unmodifiableList(result.allFlowers_);
+      }
+      public int getAllFlowersCount() {
+        return result.getAllFlowersCount();
+      }
+      public int getAllFlowers(int index) {
+        return result.getAllFlowers(index);
+      }
+      public Builder setAllFlowers(int index, int value) {
+        result.allFlowers_.set(index, value);
+        return this;
+      }
+      public Builder addAllFlowers(int value) {
+        if (result.allFlowers_.isEmpty()) {
+          result.allFlowers_ = new java.util.ArrayList<java.lang.Integer>();
+        }
+        result.allFlowers_.add(value);
+        return this;
+      }
+      public Builder addAllAllFlowers(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        if (result.allFlowers_.isEmpty()) {
+          result.allFlowers_ = new java.util.ArrayList<java.lang.Integer>();
+        }
+        super.addAll(values, result.allFlowers_);
+        return this;
+      }
+      public Builder clearAllFlowers() {
+        result.allFlowers_ = java.util.Collections.emptyList();
         return this;
       }
       
@@ -3872,24 +4034,25 @@ public final class Match {
       "(\005\"%\n\023MatchPreJoinRequest\022\016\n\006roomId\030\001 \001(",
       "\t\"<\n\024MatchPreJoinResponse\022\024\n\terrorCode\030\001" +
       " \001(\005:\0011\022\016\n\006roomId\030\002 \001(\t\"&\n\024MatchJoinGame" +
-      "Request\022\016\n\006roomId\030\001 \001(\t\"\345\001\n\025MatchJoinGam" +
+      "Request\022\016\n\006roomId\030\001 \001(\t\"\213\002\n\025MatchJoinGam" +
       "eResponse\022\024\n\terrorCode\030\001 \001(\005:\0011\022R\n\016Round" +
       "VideoData\030\002 \001(\0132:.com.randioo.mahjong_pu" +
       "blic_server.protocol.RoundVideoData\022R\n\016g" +
       "ameConfigData\030\003 \001(\0132:.com.randioo.mahjon" +
       "g_public_server.protocol.GameConfigData\022" +
-      "\016\n\006roomId\030\004 \001(\t\"o\n\017SCMatchJoinGame\022N\n\014ga" +
-      "meRoleData\030\001 \001(\01328.com.randioo.mahjong_p",
-      "ublic_server.protocol.GameRoleData\022\014\n\004is" +
-      "Me\030\002 \001(\010\"a\n\017SCMatchMineInfo\022N\n\014gameRoleD" +
-      "ata\030\001 \001(\01328.com.randioo.mahjong_public_s" +
-      "erver.protocol.GameRoleData\"\227\001\n\021SCMatchC" +
-      "reateGame\022\016\n\006roomId\030\001 \001(\t\022\020\n\010roomType\030\002 " +
-      "\001(\005\022\020\n\010roundNum\030\003 \001(\005\022N\n\014gameRoleData\030\004 " +
-      "\001(\01328.com.randioo.mahjong_public_server." +
-      "protocol.GameRoleData\"\'\n\025MatchCheckRoomR" +
-      "equest\022\016\n\006roomId\030\001 \001(\t\"\'\n\026MatchCheckRoom" +
-      "Response\022\r\n\005exist\030\001 \001(\010"
+      "\016\n\006roomId\030\004 \001(\t\022\020\n\010allCards\030\005 \003(\005\022\022\n\nall" +
+      "Flowers\030\006 \003(\005\"o\n\017SCMatchJoinGame\022N\n\014game",
+      "RoleData\030\001 \001(\01328.com.randioo.mahjong_pub" +
+      "lic_server.protocol.GameRoleData\022\014\n\004isMe" +
+      "\030\002 \001(\010\"a\n\017SCMatchMineInfo\022N\n\014gameRoleDat" +
+      "a\030\001 \001(\01328.com.randioo.mahjong_public_ser" +
+      "ver.protocol.GameRoleData\"\227\001\n\021SCMatchCre" +
+      "ateGame\022\016\n\006roomId\030\001 \001(\t\022\020\n\010roomType\030\002 \001(" +
+      "\005\022\020\n\010roundNum\030\003 \001(\005\022N\n\014gameRoleData\030\004 \001(" +
+      "\01328.com.randioo.mahjong_public_server.pr" +
+      "otocol.GameRoleData\"\'\n\025MatchCheckRoomReq" +
+      "uest\022\016\n\006roomId\030\001 \001(\t\"\'\n\026MatchCheckRoomRe",
+      "sponse\022\r\n\005exist\030\001 \001(\010"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -3941,7 +4104,7 @@ public final class Match {
           internal_static_com_randioo_mahjong_public_server_protocol_MatchJoinGameResponse_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_MatchJoinGameResponse_descriptor,
-              new java.lang.String[] { "ErrorCode", "RoundVideoData", "GameConfigData", "RoomId", },
+              new java.lang.String[] { "ErrorCode", "RoundVideoData", "GameConfigData", "RoomId", "AllCards", "AllFlowers", },
               com.randioo.mahjong_public_server.protocol.Match.MatchJoinGameResponse.class,
               com.randioo.mahjong_public_server.protocol.Match.MatchJoinGameResponse.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_SCMatchJoinGame_descriptor =

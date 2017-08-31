@@ -115,6 +115,10 @@ public class VideoServiceImpl extends ObserveBaseService implements VideoService
         // 投票退出
         if (FightConstant.FIGHT_VOTE_APPLY_EXIT.equals(msg)) {
         }
+        // 补花
+        if (FightConstant.FIGHT_ADD_FLOWER.equals(msg)) {
+            OnlyOneRecord(args);
+        }
         // 杠
         if (FightConstant.FIGHT_GANG.equals(msg)) {
             allRecord(args);
@@ -195,6 +199,7 @@ public class VideoServiceImpl extends ObserveBaseService implements VideoService
                 list.add(sc);
             }
             this.saveVideo(game);
+            ByteString gameOverBytes = sc.toByteString();
             // 每个人都要保存一下录像，直到确认结束
             for (RoleGameInfo roleGameInfo : game.getRoleIdMap().values()) {
                 int roleId = roleGameInfo.roleId;
@@ -203,7 +208,7 @@ public class VideoServiceImpl extends ObserveBaseService implements VideoService
                     continue;
                 }
                 List<ByteString> scList = matchService.getRejoinSCList(game, roleGameInfo.gameRoleId);
-                role.setGameOverSC(scList);
+                role.setGameOverSC(gameOverBytes);
             }
         }
 

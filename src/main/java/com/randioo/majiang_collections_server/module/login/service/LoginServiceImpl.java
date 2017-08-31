@@ -209,10 +209,10 @@ public class LoginServiceImpl extends ObserveBaseService implements LoginService
         RoleData.Builder builder = RoleData.newBuilder().setRoleId(roleId).setPoint(1000).setSex(1)
                 .setName(role.getName()).setHeadImageUrl(role.getHeadImgUrl() != null ? role.getHeadImgUrl() : "")
                 .setRandiooCoin(role.getRandiooMoney());
-        List<ByteString> scLists = role.getGameOverSC();
+        ByteString gameOverSCBytes = role.getGameOverSC();
         // 如果有录像数据就放入
-        if (scLists != null) {
-            builder.addAllGameOverSC(scLists);
+        if (gameOverSCBytes != null) {
+            builder.setGameOverSC(gameOverSCBytes);
         }
 
         if (lockString != null) {

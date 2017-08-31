@@ -1,8 +1,0 @@
-
-<project>
-	<process id="1" entity="" />
-	<condition id="2" entity="" jumpId="1">
-		<process id="3" entity="" />
-		<process id="4" entity="" />
-	</condition>
-</project>

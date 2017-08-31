@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import com.randioo.mahjong_public_server.protocol.Entity.GameConfigData;
 import com.randioo.majiang_collections_server.cache.local.GameCache;
+import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.po.CardSort;
+import com.randioo.majiang_collections_server.module.fight.component.MajiangRule;
 
 public class Gang extends AbstractCardList {
     public int card;
@@ -14,8 +15,14 @@ public class Gang extends AbstractCardList {
     public Peng peng = null;
 
     @Override
-    public void check(GameConfigData gameConfigData, List<CardList> cardLists, CardSort cardSort, int card,
-            List<CardList> showCardList, boolean isTouch) {
+    public void check(Game game, List<CardList> cardLists, CardSort cardSort, int card, List<CardList> showCardList,
+            boolean isTouch) {
+        MajiangRule rule = game.getRule();
+        int baida = rule.getBaidaCard(game);
+        // 如果是百搭牌 肯定不能杠
+        if (card == baida)
+            return;
+
         Set<Integer> set = cardSort.getList().get(3);
         boolean hasPeng = set.size() > 0;
 
@@ -41,12 +48,8 @@ public class Gang extends AbstractCardList {
                 if (cardList instanceof Peng) {
                     Peng peng = (Peng) cardList;
                     // 如果碰过的牌是这张牌，则可以补杠
-                    // 只有碰了才可以补杠
-                    if (peng.card == card /*
-                                           * ||
-                                           * cardSort.getList().get(0).contains
-                                           * (peng.card)
-                                           */) {
+                    // 只有碰了才可以补杠,情况分两种，第一种是本轮自摸到的牌可以用于补杠，第二种是手牌有可以用于补杠的
+                    if (peng.card == card || cardSort.getList().get(0).contains(peng.card)) {
                         Gang gang = new Gang();
                         gang.dark = false;
                         gang.card = peng.card;
@@ -63,10 +66,6 @@ public class Gang extends AbstractCardList {
             if (hasPeng) {
                 for (int value : set) {
                     if (card != value) {
-                        continue;
-                    }
-                    // TODO 如果是百搭牌，不可以杠
-                    if (GameCache.getBaiDaCardNumSet().contains(value)) {
                         continue;
                     }
 

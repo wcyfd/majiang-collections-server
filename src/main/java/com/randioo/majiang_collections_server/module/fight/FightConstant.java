@@ -61,11 +61,13 @@ public class FightConstant {
 
     public static final String FIGHT_GANG = "gang"; // 杠
     public static final String FIGHT_PENG = "peng"; // 碰
+    public static final String FIGHT_CHI = "chi";// 吃
     public static final String FIGHT_HU = "hu"; // 胡
     public static final String FIGHT_GUO = "guo"; // 过
 
     public static final String FIGHT_SCORE = "fight_score";// 分数改变
-
+    public static final String FIGHT_FLOWER_COUNT = "fight_flower_count"; // 花计数
+    public static final String FIGHT_ADD_FLOWER = "fight_add_flower";// 补花
     /** 每个玩家初始的牌数量 */
     public static final int EVERY_INIT_CARD_COUNT = 13;
 

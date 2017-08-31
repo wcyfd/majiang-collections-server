@@ -1,12 +1,10 @@
 package com.randioo.majiang_collections_server.module.fight.component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.randioo.majiang_collections_server.entity.bo.Game;
+import com.randioo.majiang_collections_server.entity.po.RoleGameInfo;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.CardList;
 
 /**
@@ -24,14 +22,23 @@ public abstract class MajiangRule {
      *
      */
     public enum MajiangStateEnum {
+        /** 摸花 */
+        STATE_TOUCH_FLOWER,
+        /** 补花 */
+        STATE_ADD_FLOWERS,
+        /** 碰杠时花分数变化 */
+        STATE_FLOWER_SCORE_CHANGE,
+        /** 百搭麻将初始化：产生百搭牌，确定荒番 */
+        STATE_BAIDA_INIT,
+        /** 敲麻初始化 */
+        STATE_QIAOMA_INIT,
+
         /** 通知游戏准备 */
         STATE_INIT_READY,
         /** 游戏准备 */
         STATE_ROLE_GAME_READY,
         /** 游戏开始 */
         STATE_GAME_START,
-        /** 产生百搭牌 */
-        STATE_CREATE_BAIDA_CARD,
         /** 检查庄家 */
         STATE_CHECK_ZHUANG,
         /** 发牌 */
@@ -46,8 +53,6 @@ public abstract class MajiangRule {
         STATE_TOUCH_CARD,
         /** 通知摸到的牌 */
         STATE_SC_TOUCH_CARD,
-        /** 摸花 */
-        STATE_TOUCH_FLOWER,
         /** 检查别人的杠碰吃胡 */
         STATE_CHECK_OTHER_CARDLIST,
         /** 检查自己的杠碰吃胡 */
@@ -61,6 +66,8 @@ public abstract class MajiangRule {
         /** 游戏结束 */
         STATE_GAME_OVER,
 
+        /** 吃 */
+        STATE_CHI,
         /** 碰 */
         STATE_PENG,
         /** 杠 */
@@ -70,14 +77,15 @@ public abstract class MajiangRule {
         /** 胡 */
         STATE_HU,
 
+        /** 抢杠重新变为碰 */
+        STATE_RECOVERY_PENG,
+
         /** 下一个人 */
         STATE_NEXT_SEAT,
         /** 跳转到一个人 */
         STATE_JUMP_SEAT,
         /** 等待操作 */
         STATE_WAIT_OPERATION,
-        /** 补花 */
-        STATE_ADD_FLOWERS,
 
         /** 玩家选择了卡组 */
         STATE_ROLE_CHOSEN_CARDLIST,
@@ -85,41 +93,15 @@ public abstract class MajiangRule {
         STATE_ROLE_SEND_CARD,
     }
 
-    /** 所有的牌型 */
-    protected Map<Class<? extends CardList>, CardList> allCardListMap = new HashMap<>();
-
-    protected List<Class<? extends CardList>> mineCardListSequence = new ArrayList<>();
-    protected List<Class<? extends CardList>> otherCardListSequence = new ArrayList<>();
-
-    protected List<Class<? extends CardList>> gangCardListSequence = new ArrayList<>();
-
     /**
      * 获得所有牌
      * 
      * @return
      * @author wcy 2017年8月21日
      */
-    public abstract int[] getCards();
+    public abstract List<Integer> getCards();
 
-    /**
-     * 能否抓胡
-     * 
-     * @return
-     * @author wcy 2017年8月21日
-     */
-    public boolean canZhuaHu(Game game) {
-        return true;
-    }
-
-    /**
-     * 能否白搭抓胡
-     * 
-     * @return
-     * @author wcy 2017年8月21日
-     */
-    public boolean canBaiDaZhuaHu(Game game) {
-        return true;
-    }
+    public abstract List<Integer> getFlowers();
 
     /**
      * 获得百搭牌
@@ -136,24 +118,16 @@ public abstract class MajiangRule {
      * @return
      * @author wcy 2017年8月21日
      */
-    public List<Class<? extends CardList>> getOtherCardListSequence() {
-        return otherCardListSequence;
-    }
+    public abstract List<Class<? extends CardList>> getOtherCardListSequence(RoleGameInfo roleGameInfo, Game game);
 
     /**
      * 
      * @return
      * @author wcy 2017年8月21日
      */
-    public List<Class<? extends CardList>> getMineCardListSequence() {
-        return mineCardListSequence;
-    }
+    public abstract List<Class<? extends CardList>> getMineCardListSequence(RoleGameInfo roleGameInfo, Game game);
 
-    public Map<Class<? extends CardList>, CardList> getCardListMap() {
-        return allCardListMap;
-    }
-
-    public abstract Set<Integer> getFlowers(Game game);
+    public abstract Map<Class<? extends CardList>, CardList> getCardListMap();
 
     /**
      * 执行前的处理
@@ -190,4 +164,5 @@ public abstract class MajiangRule {
      * @author wcy 2017年8月28日
      */
     public abstract void executeGameOverProcess(Game game);
+
 }

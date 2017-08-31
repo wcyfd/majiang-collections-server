@@ -17830,17 +17830,36 @@ public final class Fight {
       return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_SCFightFillFlower_fieldAccessorTable;
     }
     
-    // repeated .com.randioo.mahjong_public_server.protocol.FillFlowerUnit fillFlowerCards = 1;
-    public static final int FILLFLOWERCARDS_FIELD_NUMBER = 1;
-    private java.util.List<com.randioo.mahjong_public_server.protocol.Entity.FillFlowerUnit> fillFlowerCards_ =
+    // repeated int32 cards = 1;
+    public static final int CARDS_FIELD_NUMBER = 1;
+    private java.util.List<java.lang.Integer> cards_ =
       java.util.Collections.emptyList();
-    public java.util.List<com.randioo.mahjong_public_server.protocol.Entity.FillFlowerUnit> getFillFlowerCardsList() {
-      return fillFlowerCards_;
+    public java.util.List<java.lang.Integer> getCardsList() {
+      return cards_;
     }
-    public int getFillFlowerCardsCount() { return fillFlowerCards_.size(); }
-    public com.randioo.mahjong_public_server.protocol.Entity.FillFlowerUnit getFillFlowerCards(int index) {
-      return fillFlowerCards_.get(index);
+    public int getCardsCount() { return cards_.size(); }
+    public int getCards(int index) {
+      return cards_.get(index);
     }
+    
+    // repeated int32 counts = 2;
+    public static final int COUNTS_FIELD_NUMBER = 2;
+    private java.util.List<java.lang.Integer> counts_ =
+      java.util.Collections.emptyList();
+    public java.util.List<java.lang.Integer> getCountsList() {
+      return counts_;
+    }
+    public int getCountsCount() { return counts_.size(); }
+    public int getCounts(int index) {
+      return counts_.get(index);
+    }
+    
+    // optional int32 seat = 3;
+    public static final int SEAT_FIELD_NUMBER = 3;
+    private boolean hasSeat;
+    private int seat_ = 0;
+    public boolean hasSeat() { return hasSeat; }
+    public int getSeat() { return seat_; }
     
     private void initFields() {
     }
@@ -17851,8 +17870,14 @@ public final class Fight {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      for (com.randioo.mahjong_public_server.protocol.Entity.FillFlowerUnit element : getFillFlowerCardsList()) {
-        output.writeMessage(1, element);
+      for (int element : getCardsList()) {
+        output.writeInt32(1, element);
+      }
+      for (int element : getCountsList()) {
+        output.writeInt32(2, element);
+      }
+      if (hasSeat()) {
+        output.writeInt32(3, getSeat());
       }
       getUnknownFields().writeTo(output);
     }
@@ -17863,9 +17888,27 @@ public final class Fight {
       if (size != -1) return size;
     
       size = 0;
-      for (com.randioo.mahjong_public_server.protocol.Entity.FillFlowerUnit element : getFillFlowerCardsList()) {
+      {
+        int dataSize = 0;
+        for (int element : getCardsList()) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(element);
+        }
+        size += dataSize;
+        size += 1 * getCardsList().size();
+      }
+      {
+        int dataSize = 0;
+        for (int element : getCountsList()) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(element);
+        }
+        size += dataSize;
+        size += 1 * getCountsList().size();
+      }
+      if (hasSeat()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, element);
+          .computeInt32Size(3, getSeat());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -18009,9 +18052,13 @@ public final class Fight {
           throw new IllegalStateException(
             "build() has already been called on this Builder.");
         }
-        if (result.fillFlowerCards_ != java.util.Collections.EMPTY_LIST) {
-          result.fillFlowerCards_ =
-            java.util.Collections.unmodifiableList(result.fillFlowerCards_);
+        if (result.cards_ != java.util.Collections.EMPTY_LIST) {
+          result.cards_ =
+            java.util.Collections.unmodifiableList(result.cards_);
+        }
+        if (result.counts_ != java.util.Collections.EMPTY_LIST) {
+          result.counts_ =
+            java.util.Collections.unmodifiableList(result.counts_);
         }
         com.randioo.mahjong_public_server.protocol.Fight.SCFightFillFlower returnMe = result;
         result = null;
@@ -18029,11 +18076,20 @@ public final class Fight {
       
       public Builder mergeFrom(com.randioo.mahjong_public_server.protocol.Fight.SCFightFillFlower other) {
         if (other == com.randioo.mahjong_public_server.protocol.Fight.SCFightFillFlower.getDefaultInstance()) return this;
-        if (!other.fillFlowerCards_.isEmpty()) {
-          if (result.fillFlowerCards_.isEmpty()) {
-            result.fillFlowerCards_ = new java.util.ArrayList<com.randioo.mahjong_public_server.protocol.Entity.FillFlowerUnit>();
+        if (!other.cards_.isEmpty()) {
+          if (result.cards_.isEmpty()) {
+            result.cards_ = new java.util.ArrayList<java.lang.Integer>();
           }
-          result.fillFlowerCards_.addAll(other.fillFlowerCards_);
+          result.cards_.addAll(other.cards_);
+        }
+        if (!other.counts_.isEmpty()) {
+          if (result.counts_.isEmpty()) {
+            result.counts_ = new java.util.ArrayList<java.lang.Integer>();
+          }
+          result.counts_.addAll(other.counts_);
+        }
+        if (other.hasSeat()) {
+          setSeat(other.getSeat());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -18060,10 +18116,34 @@ public final class Fight {
               }
               break;
             }
+            case 8: {
+              addCards(input.readInt32());
+              break;
+            }
             case 10: {
-              com.randioo.mahjong_public_server.protocol.Entity.FillFlowerUnit.Builder subBuilder = com.randioo.mahjong_public_server.protocol.Entity.FillFlowerUnit.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addFillFlowerCards(subBuilder.buildPartial());
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              while (input.getBytesUntilLimit() > 0) {
+                addCards(input.readInt32());
+              }
+              input.popLimit(limit);
+              break;
+            }
+            case 16: {
+              addCounts(input.readInt32());
+              break;
+            }
+            case 18: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              while (input.getBytesUntilLimit() > 0) {
+                addCounts(input.readInt32());
+              }
+              input.popLimit(limit);
+              break;
+            }
+            case 24: {
+              setSeat(input.readInt32());
               break;
             }
           }
@@ -18071,54 +18151,89 @@ public final class Fight {
       }
       
       
-      // repeated .com.randioo.mahjong_public_server.protocol.FillFlowerUnit fillFlowerCards = 1;
-      public java.util.List<com.randioo.mahjong_public_server.protocol.Entity.FillFlowerUnit> getFillFlowerCardsList() {
-        return java.util.Collections.unmodifiableList(result.fillFlowerCards_);
+      // repeated int32 cards = 1;
+      public java.util.List<java.lang.Integer> getCardsList() {
+        return java.util.Collections.unmodifiableList(result.cards_);
       }
-      public int getFillFlowerCardsCount() {
-        return result.getFillFlowerCardsCount();
+      public int getCardsCount() {
+        return result.getCardsCount();
       }
-      public com.randioo.mahjong_public_server.protocol.Entity.FillFlowerUnit getFillFlowerCards(int index) {
-        return result.getFillFlowerCards(index);
+      public int getCards(int index) {
+        return result.getCards(index);
       }
-      public Builder setFillFlowerCards(int index, com.randioo.mahjong_public_server.protocol.Entity.FillFlowerUnit value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        result.fillFlowerCards_.set(index, value);
+      public Builder setCards(int index, int value) {
+        result.cards_.set(index, value);
         return this;
       }
-      public Builder setFillFlowerCards(int index, com.randioo.mahjong_public_server.protocol.Entity.FillFlowerUnit.Builder builderForValue) {
-        result.fillFlowerCards_.set(index, builderForValue.build());
+      public Builder addCards(int value) {
+        if (result.cards_.isEmpty()) {
+          result.cards_ = new java.util.ArrayList<java.lang.Integer>();
+        }
+        result.cards_.add(value);
         return this;
       }
-      public Builder addFillFlowerCards(com.randioo.mahjong_public_server.protocol.Entity.FillFlowerUnit value) {
-        if (value == null) {
-          throw new NullPointerException();
+      public Builder addAllCards(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        if (result.cards_.isEmpty()) {
+          result.cards_ = new java.util.ArrayList<java.lang.Integer>();
         }
-        if (result.fillFlowerCards_.isEmpty()) {
-          result.fillFlowerCards_ = new java.util.ArrayList<com.randioo.mahjong_public_server.protocol.Entity.FillFlowerUnit>();
-        }
-        result.fillFlowerCards_.add(value);
+        super.addAll(values, result.cards_);
         return this;
       }
-      public Builder addFillFlowerCards(com.randioo.mahjong_public_server.protocol.Entity.FillFlowerUnit.Builder builderForValue) {
-        if (result.fillFlowerCards_.isEmpty()) {
-          result.fillFlowerCards_ = new java.util.ArrayList<com.randioo.mahjong_public_server.protocol.Entity.FillFlowerUnit>();
-        }
-        result.fillFlowerCards_.add(builderForValue.build());
+      public Builder clearCards() {
+        result.cards_ = java.util.Collections.emptyList();
         return this;
       }
-      public Builder addAllFillFlowerCards(
-          java.lang.Iterable<? extends com.randioo.mahjong_public_server.protocol.Entity.FillFlowerUnit> values) {
-        if (result.fillFlowerCards_.isEmpty()) {
-          result.fillFlowerCards_ = new java.util.ArrayList<com.randioo.mahjong_public_server.protocol.Entity.FillFlowerUnit>();
-        }
-        super.addAll(values, result.fillFlowerCards_);
+      
+      // repeated int32 counts = 2;
+      public java.util.List<java.lang.Integer> getCountsList() {
+        return java.util.Collections.unmodifiableList(result.counts_);
+      }
+      public int getCountsCount() {
+        return result.getCountsCount();
+      }
+      public int getCounts(int index) {
+        return result.getCounts(index);
+      }
+      public Builder setCounts(int index, int value) {
+        result.counts_.set(index, value);
         return this;
       }
-      public Builder clearFillFlowerCards() {
-        result.fillFlowerCards_ = java.util.Collections.emptyList();
+      public Builder addCounts(int value) {
+        if (result.counts_.isEmpty()) {
+          result.counts_ = new java.util.ArrayList<java.lang.Integer>();
+        }
+        result.counts_.add(value);
+        return this;
+      }
+      public Builder addAllCounts(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        if (result.counts_.isEmpty()) {
+          result.counts_ = new java.util.ArrayList<java.lang.Integer>();
+        }
+        super.addAll(values, result.counts_);
+        return this;
+      }
+      public Builder clearCounts() {
+        result.counts_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // optional int32 seat = 3;
+      public boolean hasSeat() {
+        return result.hasSeat();
+      }
+      public int getSeat() {
+        return result.getSeat();
+      }
+      public Builder setSeat(int value) {
+        result.hasSeat = true;
+        result.seat_ = value;
+        return this;
+      }
+      public Builder clearSeat() {
+        result.hasSeat = false;
+        result.seat_ = 0;
         return this;
       }
       
@@ -18526,9 +18641,8 @@ public final class Fight {
       "spatchResponse\022\021\n\terrorCode\030\001 \001(\005\"+\n\033Fig" +
       "htClientTouchCardRequest\022\014\n\004card\030\001 \001(\005\"1" +
       "\n\034FightClientTouchCardResponse\022\021\n\terrorC" +
-      "ode\030\001 \001(\005\"h\n\021SCFightFillFlower\022S\n\017fillFl" +
-      "owerCards\030\001 \003(\0132:.com.randioo.mahjong_pu",
-      "blic_server.protocol.FillFlowerUnit"
+      "ode\030\001 \001(\005\"@\n\021SCFightFillFlower\022\r\n\005cards\030" +
+      "\001 \003(\005\022\016\n\006counts\030\002 \003(\005\022\014\n\004seat\030\003 \001(\005"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -18988,7 +19102,7 @@ public final class Fight {
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightFillFlower_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_SCFightFillFlower_descriptor,
-              new java.lang.String[] { "FillFlowerCards", },
+              new java.lang.String[] { "Cards", "Counts", "Seat", },
               com.randioo.mahjong_public_server.protocol.Fight.SCFightFillFlower.class,
               com.randioo.mahjong_public_server.protocol.Fight.SCFightFillFlower.Builder.class);
           return null;

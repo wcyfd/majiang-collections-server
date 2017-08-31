@@ -74,6 +74,45 @@ public class Game extends RuleableGame {
     /** 出牌的座位 */
     public int sendCardSeat;
 
+    /** 当前一回合是否荒番荒番局 */
+    private boolean currentRoundIsHuangFan;
+    /** 还需荒番的局数 */
+    private int huangFanCount;
+    /** 当前局是不是荒番 */
+    private boolean isHuangFan;
+    /** 抢杠的暂存数据 */
+    public CallCardList qiangGangCallCardList;
+    /** 需要检查别人的座位 */
+    public List<Integer> checkOtherCardListSeats = new ArrayList<>();
+    /** 骰子 */
+    public int[] dice;
+
+    public boolean touchCardIsFlower;
+
+    public boolean isHuangFan() {
+        return isHuangFan;
+    }
+
+    public void setHuangFan(boolean isHuangFan) {
+        this.isHuangFan = isHuangFan;
+    }
+
+    public boolean isCurrentRoundIsHuangFan() {
+        return currentRoundIsHuangFan;
+    }
+
+    public void setCurrentRoundIsHuangFan(boolean currentRoundIsHuangFan) {
+        this.currentRoundIsHuangFan = currentRoundIsHuangFan;
+    }
+
+    public int getHuangFanCount() {
+        return huangFanCount;
+    }
+
+    public void setHuangFanCount(int huangFanCount) {
+        this.huangFanCount = huangFanCount;
+    }
+
     public VoteBox getVoteBox() {
         return voteBox;
     }

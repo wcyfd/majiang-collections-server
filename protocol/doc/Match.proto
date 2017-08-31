@@ -33,6 +33,8 @@ message MatchJoinGameResponse{
 	optional RoundVideoData RoundVideoData = 2 ; //所有推送数据
     optional GameConfigData gameConfigData = 3;
     optional string roomId = 4;
+    repeated int32 allCards = 5;
+    repeated int32 allFlowers = 6;
 }
 
 message SCMatchJoinGame{

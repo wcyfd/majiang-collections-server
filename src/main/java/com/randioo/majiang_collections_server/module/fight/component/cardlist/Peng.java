@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import com.randioo.mahjong_public_server.protocol.Entity.GameConfigData;
-import com.randioo.majiang_collections_server.cache.local.GameCache;
+import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.po.CardSort;
+import com.randioo.majiang_collections_server.module.fight.component.MajiangRule;
 
 /**
  * 三个相同
@@ -18,9 +18,12 @@ public class Peng extends AbstractCardList {
     public int card;
 
     @Override
-    public void check(GameConfigData gameConfigData, List<CardList> cardLists, CardSort cardSort, int card,
-            List<CardList> showCardList, boolean isMine) {
-        if (GameCache.getBaiDaCardNumSet().contains(card))
+    public void check(Game game, List<CardList> cardLists, CardSort cardSort, int card, List<CardList> showCardList,
+            boolean isMine) {
+        MajiangRule rule = game.getRule();
+        int baida = rule.getBaidaCard(game);
+        // 百搭牌肯定不能碰
+        if (card == baida)
             return;
 
         Set<Integer> set = cardSort.getList().get(2);

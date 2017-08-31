@@ -184,17 +184,7 @@ public interface FightService extends ObserveBaseServiceInterface {
      * @param gang
      * @author wcy 2017年8月24日
      */
-    void addGangSuccess(RoleGameInfo roleGameInfo, Gang gang);
-
-    /**
-     * 是否有花
-     * 
-     * @param game
-     * @param roleGameInfo
-     * @return
-     * @author wcy 2017年8月25日
-     */
-    boolean containsFlowers(Game game, RoleGameInfo roleGameInfo);
+    void addGangSuccess(Game game, RoleGameInfo roleGameInfo, Gang gang);
 
     /**
      * 游戏结束
@@ -215,6 +205,10 @@ public interface FightService extends ObserveBaseServiceInterface {
 
     void roundOverHongZhong(Game game, boolean checkHu);
 
+    void roundOverBaida(Game game, boolean checkHu);
+
     void gameOverHongZhong(Game game);
+
+    void chi(Role role, int gameSendCount, int callCardListId);
 
 }
