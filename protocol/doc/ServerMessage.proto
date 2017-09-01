@@ -78,5 +78,6 @@ message SC{
 	optional MatchCheckRoomResponse MatchCheckRoomResponse = 61;// 检查房间号
 	optional SCFightFlowerCount SCFightFlowerCount = 62;//杠 碰时花的计数改变
     optional SCFightFillFlower SCFightFillFlower = 63;//补花
+	optional SCFightTing SCFightTing = 64;//听
 	extensions 100 to 200;
-} // 63
+} // 64

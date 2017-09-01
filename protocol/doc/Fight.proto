@@ -132,6 +132,7 @@ message SCFightNoticeSendCard{
 message FightSendCardRequest{
 	optional int32 card = 1;
 	optional bool isTouchCard = 2[default=false];
+	repeated int32 tingCards = 3;//听牌数组
 }
 
 message FightSendCardResponse{//
@@ -266,7 +267,10 @@ message FightClientTouchCardResponse{
 }
 
 message SCFightFillFlower{
-	repeated int32 cards = 1 ;//所有补的牌
-	repeated int32 counts = 2;//每一次补牌的计数
+	repeated int32 cards = 1 ;//一次补的牌
 	optional int32 seat = 3; //补花人的座位
+}
+
+message SCFightTing{
+	optional int32 seat = 1;//谁听了
 }

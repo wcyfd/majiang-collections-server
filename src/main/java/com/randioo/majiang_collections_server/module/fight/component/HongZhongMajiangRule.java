@@ -16,6 +16,7 @@ import com.randioo.majiang_collections_server.entity.po.RoleGameInfo;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.CardList;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Gang;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Hu;
+import com.randioo.majiang_collections_server.module.fight.component.cardlist.NewHu;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Peng;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.hongzhong.HongzhongGang;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.hongzhong.HongzhongHu;
@@ -280,6 +281,7 @@ public class HongZhongMajiangRule extends MajiangRule {
         allCardListMap.put(Gang.class, ReflectUtils.newInstance(HongzhongGang.class));
         allCardListMap.put(Peng.class, ReflectUtils.newInstance(HongzhongPeng.class));
         allCardListMap.put(Hu.class, ReflectUtils.newInstance(HongzhongHu.class));
+        allCardListMap.put(Hu.class, ReflectUtils.newInstance(NewHu.class));
 
         otherCardListSequence.add(Hu.class);
         otherCardListSequence.add(Gang.class);
@@ -352,6 +354,11 @@ public class HongZhongMajiangRule extends MajiangRule {
     @Override
     public void executeGameOverProcess(Game game) {
         fightService.gameOverHongZhong(game);
+    }
+
+    @Override
+    public boolean isFlower(Integer card) {
+        return false;
     }
 
 }

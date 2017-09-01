@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.randioo.majiang_collections_server.module.fight.component.calcuator.qiaoma;
+package com.randioo.majiang_collections_server.module.fight.component.score.round.qiaoma;
 
 import java.util.List;
 

@@ -54,7 +54,7 @@ public interface FightService extends ObserveBaseServiceInterface {
      * @param role
      * @param paiList
      */
-    void sendCard(Role role, int card, boolean isTouchCard);
+    void sendCard(Role role, int card, boolean isTouchCard, List<Integer> tingCards);
 
     /**
      * 分牌
@@ -206,6 +206,8 @@ public interface FightService extends ObserveBaseServiceInterface {
     void roundOverHongZhong(Game game, boolean checkHu);
 
     void roundOverBaida(Game game, boolean checkHu);
+
+    void roundOverQiaoMa(Game game, boolean checkHu);
 
     void gameOverHongZhong(Game game);
 

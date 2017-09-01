@@ -4,7 +4,6 @@
 package com.randioo.majiang_collections_server.module.fight.component;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,6 +25,7 @@ public class FillFlower {
         // 第一次
         List<Integer> flowerCards = removeHua(cards);
         roleGameInfo.sendFlowrCards.addAll(flowerCards);
+        roleGameInfo.flowerCount += flowerCards.size();
 
         fill2(fillFlowerBox, remainCards, flowerCards.size());
 
@@ -44,7 +44,8 @@ public class FillFlower {
             newTouchCards.add(remainCards.remove(0));
         }
         // 加入box
-        fillFlowerBox.addCards(newTouchCards);
+        // fillFlowerBox.addCards(newTouchCards);
+        fillFlowerBox.addLine(newTouchCards);
 
         // 进入下一轮
         fill2(fillFlowerBox, remainCards, huaCount(newTouchCards));
@@ -85,17 +86,4 @@ public class FillFlower {
         return BaidaMajiangRule.HUA_CARDS.contains(card / 100);
     }
 
-    public void test() {
-        List<Integer> cards1 = Arrays.asList(101, 101, 103, 104, 105, 801, 801, 901, 1101);
-        List<Integer> remainCards1 = Arrays.asList(106, 1001, 901, 1102, 1103, 1105, 201, 205, 301, 901, 1108, 202, 202,
-                308);
-        ArrayList<Integer> cards = new ArrayList<Integer>();
-        cards.addAll(cards1);
-        ArrayList<Integer> remainCards = new ArrayList<Integer>();
-        remainCards.addAll(remainCards1);
-
-        // FillFlowerBox box = fill(remainCards, cards);
-        // System.out.println(box.getCards());
-        // System.out.println(box.getEveryAddCardCountList());
-    }
 }

@@ -286,12 +286,12 @@ public final class Entity {
   
   public enum HuType
       implements com.google.protobuf.ProtocolMessageEnum {
-    GANG_KAI(0, 4),
-    MEN_QING(1, 5),
-    DA_DIAO_CHE(2, 6),
-    SI_BAI_DA(3, 1),
-    WU_BAI_DA(4, 2),
-    PAO_DAI_DA(5, 3),
+    GANG_KAI(0, 1),
+    MEN_QING(1, 2),
+    DA_DIAO_CHE(2, 3),
+    SI_BAI_DA(3, 4),
+    WU_BAI_DA(4, 5),
+    PAO_DAI_DA(5, 6),
     QING_PENG(6, 7),
     HUN_PENG(7, 8),
     QING_YI_SE(8, 9),
@@ -306,12 +306,12 @@ public final class Entity {
     
     public static HuType valueOf(int value) {
       switch (value) {
-        case 4: return GANG_KAI;
-        case 5: return MEN_QING;
-        case 6: return DA_DIAO_CHE;
-        case 1: return SI_BAI_DA;
-        case 2: return WU_BAI_DA;
-        case 3: return PAO_DAI_DA;
+        case 1: return GANG_KAI;
+        case 2: return MEN_QING;
+        case 3: return DA_DIAO_CHE;
+        case 4: return SI_BAI_DA;
+        case 5: return WU_BAI_DA;
+        case 6: return PAO_DAI_DA;
         case 7: return QING_PENG;
         case 8: return HUN_PENG;
         case 9: return QING_YI_SE;
@@ -375,10 +375,12 @@ public final class Entity {
   
   public enum OverMethod
       implements com.google.protobuf.ProtocolMessageEnum {
-    OVER_LOSS(0, 0),
-    OVER_CHONG(1, 1),
-    OVER_MO_HU(2, 2),
-    OVER_HU(3, 3),
+    LOSS(0, 0),
+    CHU_CHONG(1, 1),
+    GANG_CHONG(2, 2),
+    MO_HU(3, 3),
+    ZHUA_HU(4, 4),
+    QIANG_GANG(5, 5),
     ;
     
     
@@ -386,10 +388,12 @@ public final class Entity {
     
     public static OverMethod valueOf(int value) {
       switch (value) {
-        case 0: return OVER_LOSS;
-        case 1: return OVER_CHONG;
-        case 2: return OVER_MO_HU;
-        case 3: return OVER_HU;
+        case 0: return LOSS;
+        case 1: return CHU_CHONG;
+        case 2: return GANG_CHONG;
+        case 3: return MO_HU;
+        case 4: return ZHUA_HU;
+        case 5: return QIANG_GANG;
         default: return null;
       }
     }
@@ -420,7 +424,7 @@ public final class Entity {
     }
     
     private static final OverMethod[] VALUES = {
-      OVER_LOSS, OVER_CHONG, OVER_MO_HU, OVER_HU, 
+      LOSS, CHU_CHONG, GANG_CHONG, MO_HU, ZHUA_HU, QIANG_GANG, 
     };
     public static OverMethod valueOf(
         com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
@@ -5247,71 +5251,36 @@ public final class Entity {
     public boolean hasRoundCardsData() { return hasRoundCardsData; }
     public com.randioo.mahjong_public_server.protocol.Entity.RoundCardsData getRoundCardsData() { return roundCardsData_; }
     
-    // optional int32 baseScore = 3;
-    public static final int BASESCORE_FIELD_NUMBER = 3;
-    private boolean hasBaseScore;
-    private int baseScore_ = 0;
-    public boolean hasBaseScore() { return hasBaseScore; }
-    public int getBaseScore() { return baseScore_; }
-    
-    // optional bool gangKai = 4;
-    public static final int GANGKAI_FIELD_NUMBER = 4;
-    private boolean hasGangKai;
-    private boolean gangKai_ = false;
-    public boolean hasGangKai() { return hasGangKai; }
-    public boolean getGangKai() { return gangKai_; }
-    
-    // optional .com.randioo.mahjong_public_server.protocol.OverMethod overMethod = 5;
-    public static final int OVERMETHOD_FIELD_NUMBER = 5;
+    // optional .com.randioo.mahjong_public_server.protocol.OverMethod overMethod = 3;
+    public static final int OVERMETHOD_FIELD_NUMBER = 3;
     private boolean hasOverMethod;
     private com.randioo.mahjong_public_server.protocol.Entity.OverMethod overMethod_;
     public boolean hasOverMethod() { return hasOverMethod; }
     public com.randioo.mahjong_public_server.protocol.Entity.OverMethod getOverMethod() { return overMethod_; }
     
-    // optional int32 roundScore = 6;
-    public static final int ROUNDSCORE_FIELD_NUMBER = 6;
+    // optional int32 roundScore = 4;
+    public static final int ROUNDSCORE_FIELD_NUMBER = 4;
     private boolean hasRoundScore;
     private int roundScore_ = 0;
     public boolean hasRoundScore() { return hasRoundScore; }
     public int getRoundScore() { return roundScore_; }
     
-    // optional int32 mingGangScorePlus = 7;
-    public static final int MINGGANGSCOREPLUS_FIELD_NUMBER = 7;
-    private boolean hasMingGangScorePlus;
-    private int mingGangScorePlus_ = 0;
-    public boolean hasMingGangScorePlus() { return hasMingGangScorePlus; }
-    public int getMingGangScorePlus() { return mingGangScorePlus_; }
+    // optional int32 baseScore = 5;
+    public static final int BASESCORE_FIELD_NUMBER = 5;
+    private boolean hasBaseScore;
+    private int baseScore_ = 0;
+    public boolean hasBaseScore() { return hasBaseScore; }
+    public int getBaseScore() { return baseScore_; }
     
-    // optional int32 mingGangCountPlus = 8;
-    public static final int MINGGANGCOUNTPLUS_FIELD_NUMBER = 8;
-    private boolean hasMingGangCountPlus;
-    private int mingGangCountPlus_ = 0;
-    public boolean hasMingGangCountPlus() { return hasMingGangCountPlus; }
-    public int getMingGangCountPlus() { return mingGangCountPlus_; }
+    // optional int32 flowerCount = 6;
+    public static final int FLOWERCOUNT_FIELD_NUMBER = 6;
+    private boolean hasFlowerCount;
+    private int flowerCount_ = 0;
+    public boolean hasFlowerCount() { return hasFlowerCount; }
+    public int getFlowerCount() { return flowerCount_; }
     
-    // optional int32 anGangScorePlus = 9;
-    public static final int ANGANGSCOREPLUS_FIELD_NUMBER = 9;
-    private boolean hasAnGangScorePlus;
-    private int anGangScorePlus_ = 0;
-    public boolean hasAnGangScorePlus() { return hasAnGangScorePlus; }
-    public int getAnGangScorePlus() { return anGangScorePlus_; }
-    
-    // optional int32 anGangCountPlus = 10;
-    public static final int ANGANGCOUNTPLUS_FIELD_NUMBER = 10;
-    private boolean hasAnGangCountPlus;
-    private int anGangCountPlus_ = 0;
-    public boolean hasAnGangCountPlus() { return hasAnGangCountPlus; }
-    public int getAnGangCountPlus() { return anGangCountPlus_; }
-    
-    // optional int32 moScore = 11;
-    public static final int MOSCORE_FIELD_NUMBER = 11;
-    private boolean hasMoScore;
-    private int moScore_ = 0;
-    public boolean hasMoScore() { return hasMoScore; }
-    public int getMoScore() { return moScore_; }
-    
-    // repeated .com.randioo.mahjong_public_server.protocol.HuType huTypeList = 12;
-    public static final int HUTYPELIST_FIELD_NUMBER = 12;
+    // repeated .com.randioo.mahjong_public_server.protocol.HuType huTypeList = 7;
+    public static final int HUTYPELIST_FIELD_NUMBER = 7;
     private java.util.List<com.randioo.mahjong_public_server.protocol.Entity.HuType> huTypeList_ =
       java.util.Collections.emptyList();
     public java.util.List<com.randioo.mahjong_public_server.protocol.Entity.HuType> getHuTypeListList() {
@@ -5322,45 +5291,143 @@ public final class Entity {
       return huTypeList_.get(index);
     }
     
-    // optional int32 flowerCount = 13;
-    public static final int FLOWERCOUNT_FIELD_NUMBER = 13;
-    private boolean hasFlowerCount;
-    private int flowerCount_ = 0;
-    public boolean hasFlowerCount() { return hasFlowerCount; }
-    public int getFlowerCount() { return flowerCount_; }
+    // optional int32 mingGangScorePlus = 8;
+    public static final int MINGGANGSCOREPLUS_FIELD_NUMBER = 8;
+    private boolean hasMingGangScorePlus;
+    private int mingGangScorePlus_ = 0;
+    public boolean hasMingGangScorePlus() { return hasMingGangScorePlus; }
+    public int getMingGangScorePlus() { return mingGangScorePlus_; }
     
-    // optional int32 mingGangScoreMinus = 14;
-    public static final int MINGGANGSCOREMINUS_FIELD_NUMBER = 14;
+    // optional int32 mingGangCountPlus = 9;
+    public static final int MINGGANGCOUNTPLUS_FIELD_NUMBER = 9;
+    private boolean hasMingGangCountPlus;
+    private int mingGangCountPlus_ = 0;
+    public boolean hasMingGangCountPlus() { return hasMingGangCountPlus; }
+    public int getMingGangCountPlus() { return mingGangCountPlus_; }
+    
+    // optional int32 mingGangScoreMinus = 10;
+    public static final int MINGGANGSCOREMINUS_FIELD_NUMBER = 10;
     private boolean hasMingGangScoreMinus;
     private int mingGangScoreMinus_ = 0;
     public boolean hasMingGangScoreMinus() { return hasMingGangScoreMinus; }
     public int getMingGangScoreMinus() { return mingGangScoreMinus_; }
     
-    // optional int32 mingGangCountMinus = 15;
-    public static final int MINGGANGCOUNTMINUS_FIELD_NUMBER = 15;
+    // optional int32 mingGangCountMinus = 11;
+    public static final int MINGGANGCOUNTMINUS_FIELD_NUMBER = 11;
     private boolean hasMingGangCountMinus;
     private int mingGangCountMinus_ = 0;
     public boolean hasMingGangCountMinus() { return hasMingGangCountMinus; }
     public int getMingGangCountMinus() { return mingGangCountMinus_; }
     
-    // optional int32 anGangScoreMinus = 16;
-    public static final int ANGANGSCOREMINUS_FIELD_NUMBER = 16;
+    // optional int32 anGangScorePlus = 12;
+    public static final int ANGANGSCOREPLUS_FIELD_NUMBER = 12;
+    private boolean hasAnGangScorePlus;
+    private int anGangScorePlus_ = 0;
+    public boolean hasAnGangScorePlus() { return hasAnGangScorePlus; }
+    public int getAnGangScorePlus() { return anGangScorePlus_; }
+    
+    // optional int32 anGangCountPlus = 13;
+    public static final int ANGANGCOUNTPLUS_FIELD_NUMBER = 13;
+    private boolean hasAnGangCountPlus;
+    private int anGangCountPlus_ = 0;
+    public boolean hasAnGangCountPlus() { return hasAnGangCountPlus; }
+    public int getAnGangCountPlus() { return anGangCountPlus_; }
+    
+    // optional int32 anGangScoreMinus = 14;
+    public static final int ANGANGSCOREMINUS_FIELD_NUMBER = 14;
     private boolean hasAnGangScoreMinus;
     private int anGangScoreMinus_ = 0;
     public boolean hasAnGangScoreMinus() { return hasAnGangScoreMinus; }
     public int getAnGangScoreMinus() { return anGangScoreMinus_; }
     
-    // optional int32 anGangCountMinus = 17;
-    public static final int ANGANGCOUNTMINUS_FIELD_NUMBER = 17;
+    // optional int32 anGangCountMinus = 15;
+    public static final int ANGANGCOUNTMINUS_FIELD_NUMBER = 15;
     private boolean hasAnGangCountMinus;
     private int anGangCountMinus_ = 0;
     public boolean hasAnGangCountMinus() { return hasAnGangCountMinus; }
     public int getAnGangCountMinus() { return anGangCountMinus_; }
     
+    // optional int32 buGangScorePlus = 16;
+    public static final int BUGANGSCOREPLUS_FIELD_NUMBER = 16;
+    private boolean hasBuGangScorePlus;
+    private int buGangScorePlus_ = 0;
+    public boolean hasBuGangScorePlus() { return hasBuGangScorePlus; }
+    public int getBuGangScorePlus() { return buGangScorePlus_; }
+    
+    // optional int32 buGangCountPlus = 17;
+    public static final int BUGANGCOUNTPLUS_FIELD_NUMBER = 17;
+    private boolean hasBuGangCountPlus;
+    private int buGangCountPlus_ = 0;
+    public boolean hasBuGangCountPlus() { return hasBuGangCountPlus; }
+    public int getBuGangCountPlus() { return buGangCountPlus_; }
+    
+    // optional int32 buGangScoreMinus = 18;
+    public static final int BUGANGSCOREMINUS_FIELD_NUMBER = 18;
+    private boolean hasBuGangScoreMinus;
+    private int buGangScoreMinus_ = 0;
+    public boolean hasBuGangScoreMinus() { return hasBuGangScoreMinus; }
+    public int getBuGangScoreMinus() { return buGangScoreMinus_; }
+    
+    // optional int32 buGangCountMinus = 19;
+    public static final int BUGANGCOUNTMINUS_FIELD_NUMBER = 19;
+    private boolean hasBuGangCountMinus;
+    private int buGangCountMinus_ = 0;
+    public boolean hasBuGangCountMinus() { return hasBuGangCountMinus; }
+    public int getBuGangCountMinus() { return buGangCountMinus_; }
+    
+    // optional int32 ziMoScore = 20;
+    public static final int ZIMOSCORE_FIELD_NUMBER = 20;
+    private boolean hasZiMoScore;
+    private int ziMoScore_ = 0;
+    public boolean hasZiMoScore() { return hasZiMoScore; }
+    public int getZiMoScore() { return ziMoScore_; }
+    
+    // optional int32 zhuaHuScore = 21;
+    public static final int ZHUAHUSCORE_FIELD_NUMBER = 21;
+    private boolean hasZhuaHuScore;
+    private int zhuaHuScore_ = 0;
+    public boolean hasZhuaHuScore() { return hasZhuaHuScore; }
+    public int getZhuaHuScore() { return zhuaHuScore_; }
+    
+    // optional int32 qiangGangScore = 22;
+    public static final int QIANGGANGSCORE_FIELD_NUMBER = 22;
+    private boolean hasQiangGangScore;
+    private int qiangGangScore_ = 0;
+    public boolean hasQiangGangScore() { return hasQiangGangScore; }
+    public int getQiangGangScore() { return qiangGangScore_; }
+    
+    // optional int32 chuChongScore = 23;
+    public static final int CHUCHONGSCORE_FIELD_NUMBER = 23;
+    private boolean hasChuChongScore;
+    private int chuChongScore_ = 0;
+    public boolean hasChuChongScore() { return hasChuChongScore; }
+    public int getChuChongScore() { return chuChongScore_; }
+    
+    // optional int32 gangChongScore = 24;
+    public static final int GANGCHONGSCORE_FIELD_NUMBER = 24;
+    private boolean hasGangChongScore;
+    private int gangChongScore_ = 0;
+    public boolean hasGangChongScore() { return hasGangChongScore; }
+    public int getGangChongScore() { return gangChongScore_; }
+    
+    // optional int32 zhaMaScore = 25;
+    public static final int ZHAMASCORE_FIELD_NUMBER = 25;
+    private boolean hasZhaMaScore;
+    private int zhaMaScore_ = 0;
+    public boolean hasZhaMaScore() { return hasZhaMaScore; }
+    public int getZhaMaScore() { return zhaMaScore_; }
+    
+    // optional int32 cangYingScore = 26;
+    public static final int CANGYINGSCORE_FIELD_NUMBER = 26;
+    private boolean hasCangYingScore;
+    private int cangYingScore_ = 0;
+    public boolean hasCangYingScore() { return hasCangYingScore; }
+    public int getCangYingScore() { return cangYingScore_; }
+    
     private void initFields() {
       gameRoleData_ = com.randioo.mahjong_public_server.protocol.Entity.GameRoleData.getDefaultInstance();
       roundCardsData_ = com.randioo.mahjong_public_server.protocol.Entity.RoundCardsData.getDefaultInstance();
-      overMethod_ = com.randioo.mahjong_public_server.protocol.Entity.OverMethod.OVER_LOSS;
+      overMethod_ = com.randioo.mahjong_public_server.protocol.Entity.OverMethod.LOSS;
     }
     public final boolean isInitialized() {
       return true;
@@ -5375,50 +5442,77 @@ public final class Entity {
       if (hasRoundCardsData()) {
         output.writeMessage(2, getRoundCardsData());
       }
-      if (hasBaseScore()) {
-        output.writeInt32(3, getBaseScore());
-      }
-      if (hasGangKai()) {
-        output.writeBool(4, getGangKai());
-      }
       if (hasOverMethod()) {
-        output.writeEnum(5, getOverMethod().getNumber());
+        output.writeEnum(3, getOverMethod().getNumber());
       }
       if (hasRoundScore()) {
-        output.writeInt32(6, getRoundScore());
+        output.writeInt32(4, getRoundScore());
       }
-      if (hasMingGangScorePlus()) {
-        output.writeInt32(7, getMingGangScorePlus());
-      }
-      if (hasMingGangCountPlus()) {
-        output.writeInt32(8, getMingGangCountPlus());
-      }
-      if (hasAnGangScorePlus()) {
-        output.writeInt32(9, getAnGangScorePlus());
-      }
-      if (hasAnGangCountPlus()) {
-        output.writeInt32(10, getAnGangCountPlus());
-      }
-      if (hasMoScore()) {
-        output.writeInt32(11, getMoScore());
-      }
-      for (com.randioo.mahjong_public_server.protocol.Entity.HuType element : getHuTypeListList()) {
-        output.writeEnum(12, element.getNumber());
+      if (hasBaseScore()) {
+        output.writeInt32(5, getBaseScore());
       }
       if (hasFlowerCount()) {
-        output.writeInt32(13, getFlowerCount());
+        output.writeInt32(6, getFlowerCount());
+      }
+      for (com.randioo.mahjong_public_server.protocol.Entity.HuType element : getHuTypeListList()) {
+        output.writeEnum(7, element.getNumber());
+      }
+      if (hasMingGangScorePlus()) {
+        output.writeInt32(8, getMingGangScorePlus());
+      }
+      if (hasMingGangCountPlus()) {
+        output.writeInt32(9, getMingGangCountPlus());
       }
       if (hasMingGangScoreMinus()) {
-        output.writeInt32(14, getMingGangScoreMinus());
+        output.writeInt32(10, getMingGangScoreMinus());
       }
       if (hasMingGangCountMinus()) {
-        output.writeInt32(15, getMingGangCountMinus());
+        output.writeInt32(11, getMingGangCountMinus());
+      }
+      if (hasAnGangScorePlus()) {
+        output.writeInt32(12, getAnGangScorePlus());
+      }
+      if (hasAnGangCountPlus()) {
+        output.writeInt32(13, getAnGangCountPlus());
       }
       if (hasAnGangScoreMinus()) {
-        output.writeInt32(16, getAnGangScoreMinus());
+        output.writeInt32(14, getAnGangScoreMinus());
       }
       if (hasAnGangCountMinus()) {
-        output.writeInt32(17, getAnGangCountMinus());
+        output.writeInt32(15, getAnGangCountMinus());
+      }
+      if (hasBuGangScorePlus()) {
+        output.writeInt32(16, getBuGangScorePlus());
+      }
+      if (hasBuGangCountPlus()) {
+        output.writeInt32(17, getBuGangCountPlus());
+      }
+      if (hasBuGangScoreMinus()) {
+        output.writeInt32(18, getBuGangScoreMinus());
+      }
+      if (hasBuGangCountMinus()) {
+        output.writeInt32(19, getBuGangCountMinus());
+      }
+      if (hasZiMoScore()) {
+        output.writeInt32(20, getZiMoScore());
+      }
+      if (hasZhuaHuScore()) {
+        output.writeInt32(21, getZhuaHuScore());
+      }
+      if (hasQiangGangScore()) {
+        output.writeInt32(22, getQiangGangScore());
+      }
+      if (hasChuChongScore()) {
+        output.writeInt32(23, getChuChongScore());
+      }
+      if (hasGangChongScore()) {
+        output.writeInt32(24, getGangChongScore());
+      }
+      if (hasZhaMaScore()) {
+        output.writeInt32(25, getZhaMaScore());
+      }
+      if (hasCangYingScore()) {
+        output.writeInt32(26, getCangYingScore());
       }
       getUnknownFields().writeTo(output);
     }
@@ -5437,41 +5531,21 @@ public final class Entity {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, getRoundCardsData());
       }
-      if (hasBaseScore()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, getBaseScore());
-      }
-      if (hasGangKai()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(4, getGangKai());
-      }
       if (hasOverMethod()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(5, getOverMethod().getNumber());
+          .computeEnumSize(3, getOverMethod().getNumber());
       }
       if (hasRoundScore()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(6, getRoundScore());
+          .computeInt32Size(4, getRoundScore());
       }
-      if (hasMingGangScorePlus()) {
+      if (hasBaseScore()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(7, getMingGangScorePlus());
+          .computeInt32Size(5, getBaseScore());
       }
-      if (hasMingGangCountPlus()) {
+      if (hasFlowerCount()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(8, getMingGangCountPlus());
-      }
-      if (hasAnGangScorePlus()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(9, getAnGangScorePlus());
-      }
-      if (hasAnGangCountPlus()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(10, getAnGangCountPlus());
-      }
-      if (hasMoScore()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(11, getMoScore());
+          .computeInt32Size(6, getFlowerCount());
       }
       {
         int dataSize = 0;
@@ -5482,25 +5556,81 @@ public final class Entity {
         size += dataSize;
         size += 1 * getHuTypeListList().size();
       }
-      if (hasFlowerCount()) {
+      if (hasMingGangScorePlus()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(13, getFlowerCount());
+          .computeInt32Size(8, getMingGangScorePlus());
+      }
+      if (hasMingGangCountPlus()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(9, getMingGangCountPlus());
       }
       if (hasMingGangScoreMinus()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(14, getMingGangScoreMinus());
+          .computeInt32Size(10, getMingGangScoreMinus());
       }
       if (hasMingGangCountMinus()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(15, getMingGangCountMinus());
+          .computeInt32Size(11, getMingGangCountMinus());
+      }
+      if (hasAnGangScorePlus()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(12, getAnGangScorePlus());
+      }
+      if (hasAnGangCountPlus()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(13, getAnGangCountPlus());
       }
       if (hasAnGangScoreMinus()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(16, getAnGangScoreMinus());
+          .computeInt32Size(14, getAnGangScoreMinus());
       }
       if (hasAnGangCountMinus()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(17, getAnGangCountMinus());
+          .computeInt32Size(15, getAnGangCountMinus());
+      }
+      if (hasBuGangScorePlus()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(16, getBuGangScorePlus());
+      }
+      if (hasBuGangCountPlus()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(17, getBuGangCountPlus());
+      }
+      if (hasBuGangScoreMinus()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(18, getBuGangScoreMinus());
+      }
+      if (hasBuGangCountMinus()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(19, getBuGangCountMinus());
+      }
+      if (hasZiMoScore()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(20, getZiMoScore());
+      }
+      if (hasZhuaHuScore()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(21, getZhuaHuScore());
+      }
+      if (hasQiangGangScore()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(22, getQiangGangScore());
+      }
+      if (hasChuChongScore()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(23, getChuChongScore());
+      }
+      if (hasGangChongScore()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(24, getGangChongScore());
+      }
+      if (hasZhaMaScore()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(25, getZhaMaScore());
+      }
+      if (hasCangYingScore()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(26, getCangYingScore());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -5670,32 +5800,17 @@ public final class Entity {
         if (other.hasRoundCardsData()) {
           mergeRoundCardsData(other.getRoundCardsData());
         }
-        if (other.hasBaseScore()) {
-          setBaseScore(other.getBaseScore());
-        }
-        if (other.hasGangKai()) {
-          setGangKai(other.getGangKai());
-        }
         if (other.hasOverMethod()) {
           setOverMethod(other.getOverMethod());
         }
         if (other.hasRoundScore()) {
           setRoundScore(other.getRoundScore());
         }
-        if (other.hasMingGangScorePlus()) {
-          setMingGangScorePlus(other.getMingGangScorePlus());
+        if (other.hasBaseScore()) {
+          setBaseScore(other.getBaseScore());
         }
-        if (other.hasMingGangCountPlus()) {
-          setMingGangCountPlus(other.getMingGangCountPlus());
-        }
-        if (other.hasAnGangScorePlus()) {
-          setAnGangScorePlus(other.getAnGangScorePlus());
-        }
-        if (other.hasAnGangCountPlus()) {
-          setAnGangCountPlus(other.getAnGangCountPlus());
-        }
-        if (other.hasMoScore()) {
-          setMoScore(other.getMoScore());
+        if (other.hasFlowerCount()) {
+          setFlowerCount(other.getFlowerCount());
         }
         if (!other.huTypeList_.isEmpty()) {
           if (result.huTypeList_.isEmpty()) {
@@ -5703,8 +5818,11 @@ public final class Entity {
           }
           result.huTypeList_.addAll(other.huTypeList_);
         }
-        if (other.hasFlowerCount()) {
-          setFlowerCount(other.getFlowerCount());
+        if (other.hasMingGangScorePlus()) {
+          setMingGangScorePlus(other.getMingGangScorePlus());
+        }
+        if (other.hasMingGangCountPlus()) {
+          setMingGangCountPlus(other.getMingGangCountPlus());
         }
         if (other.hasMingGangScoreMinus()) {
           setMingGangScoreMinus(other.getMingGangScoreMinus());
@@ -5712,11 +5830,50 @@ public final class Entity {
         if (other.hasMingGangCountMinus()) {
           setMingGangCountMinus(other.getMingGangCountMinus());
         }
+        if (other.hasAnGangScorePlus()) {
+          setAnGangScorePlus(other.getAnGangScorePlus());
+        }
+        if (other.hasAnGangCountPlus()) {
+          setAnGangCountPlus(other.getAnGangCountPlus());
+        }
         if (other.hasAnGangScoreMinus()) {
           setAnGangScoreMinus(other.getAnGangScoreMinus());
         }
         if (other.hasAnGangCountMinus()) {
           setAnGangCountMinus(other.getAnGangCountMinus());
+        }
+        if (other.hasBuGangScorePlus()) {
+          setBuGangScorePlus(other.getBuGangScorePlus());
+        }
+        if (other.hasBuGangCountPlus()) {
+          setBuGangCountPlus(other.getBuGangCountPlus());
+        }
+        if (other.hasBuGangScoreMinus()) {
+          setBuGangScoreMinus(other.getBuGangScoreMinus());
+        }
+        if (other.hasBuGangCountMinus()) {
+          setBuGangCountMinus(other.getBuGangCountMinus());
+        }
+        if (other.hasZiMoScore()) {
+          setZiMoScore(other.getZiMoScore());
+        }
+        if (other.hasZhuaHuScore()) {
+          setZhuaHuScore(other.getZhuaHuScore());
+        }
+        if (other.hasQiangGangScore()) {
+          setQiangGangScore(other.getQiangGangScore());
+        }
+        if (other.hasChuChongScore()) {
+          setChuChongScore(other.getChuChongScore());
+        }
+        if (other.hasGangChongScore()) {
+          setGangChongScore(other.getGangChongScore());
+        }
+        if (other.hasZhaMaScore()) {
+          setZhaMaScore(other.getZhaMaScore());
+        }
+        if (other.hasCangYingScore()) {
+          setCangYingScore(other.getCangYingScore());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -5762,65 +5919,45 @@ public final class Entity {
               break;
             }
             case 24: {
-              setBaseScore(input.readInt32());
-              break;
-            }
-            case 32: {
-              setGangKai(input.readBool());
-              break;
-            }
-            case 40: {
               int rawValue = input.readEnum();
               com.randioo.mahjong_public_server.protocol.Entity.OverMethod value = com.randioo.mahjong_public_server.protocol.Entity.OverMethod.valueOf(rawValue);
               if (value == null) {
-                unknownFields.mergeVarintField(5, rawValue);
+                unknownFields.mergeVarintField(3, rawValue);
               } else {
                 setOverMethod(value);
               }
               break;
             }
-            case 48: {
+            case 32: {
               setRoundScore(input.readInt32());
               break;
             }
+            case 40: {
+              setBaseScore(input.readInt32());
+              break;
+            }
+            case 48: {
+              setFlowerCount(input.readInt32());
+              break;
+            }
             case 56: {
-              setMingGangScorePlus(input.readInt32());
-              break;
-            }
-            case 64: {
-              setMingGangCountPlus(input.readInt32());
-              break;
-            }
-            case 72: {
-              setAnGangScorePlus(input.readInt32());
-              break;
-            }
-            case 80: {
-              setAnGangCountPlus(input.readInt32());
-              break;
-            }
-            case 88: {
-              setMoScore(input.readInt32());
-              break;
-            }
-            case 96: {
               int rawValue = input.readEnum();
               com.randioo.mahjong_public_server.protocol.Entity.HuType value = com.randioo.mahjong_public_server.protocol.Entity.HuType.valueOf(rawValue);
               if (value == null) {
-                unknownFields.mergeVarintField(12, rawValue);
+                unknownFields.mergeVarintField(7, rawValue);
               } else {
                 addHuTypeList(value);
               }
               break;
             }
-            case 98: {
+            case 58: {
               int length = input.readRawVarint32();
               int oldLimit = input.pushLimit(length);
               while(input.getBytesUntilLimit() > 0) {
                 int rawValue = input.readEnum();
                 com.randioo.mahjong_public_server.protocol.Entity.HuType value = com.randioo.mahjong_public_server.protocol.Entity.HuType.valueOf(rawValue);
                 if (value == null) {
-                  unknownFields.mergeVarintField(12, rawValue);
+                  unknownFields.mergeVarintField(7, rawValue);
                 } else {
                   addHuTypeList(value);
                 }
@@ -5828,24 +5965,80 @@ public final class Entity {
               input.popLimit(oldLimit);
               break;
             }
-            case 104: {
-              setFlowerCount(input.readInt32());
+            case 64: {
+              setMingGangScorePlus(input.readInt32());
               break;
             }
-            case 112: {
+            case 72: {
+              setMingGangCountPlus(input.readInt32());
+              break;
+            }
+            case 80: {
               setMingGangScoreMinus(input.readInt32());
               break;
             }
-            case 120: {
+            case 88: {
               setMingGangCountMinus(input.readInt32());
               break;
             }
-            case 128: {
+            case 96: {
+              setAnGangScorePlus(input.readInt32());
+              break;
+            }
+            case 104: {
+              setAnGangCountPlus(input.readInt32());
+              break;
+            }
+            case 112: {
               setAnGangScoreMinus(input.readInt32());
               break;
             }
-            case 136: {
+            case 120: {
               setAnGangCountMinus(input.readInt32());
+              break;
+            }
+            case 128: {
+              setBuGangScorePlus(input.readInt32());
+              break;
+            }
+            case 136: {
+              setBuGangCountPlus(input.readInt32());
+              break;
+            }
+            case 144: {
+              setBuGangScoreMinus(input.readInt32());
+              break;
+            }
+            case 152: {
+              setBuGangCountMinus(input.readInt32());
+              break;
+            }
+            case 160: {
+              setZiMoScore(input.readInt32());
+              break;
+            }
+            case 168: {
+              setZhuaHuScore(input.readInt32());
+              break;
+            }
+            case 176: {
+              setQiangGangScore(input.readInt32());
+              break;
+            }
+            case 184: {
+              setChuChongScore(input.readInt32());
+              break;
+            }
+            case 192: {
+              setGangChongScore(input.readInt32());
+              break;
+            }
+            case 200: {
+              setZhaMaScore(input.readInt32());
+              break;
+            }
+            case 208: {
+              setCangYingScore(input.readInt32());
               break;
             }
           }
@@ -5927,43 +6120,7 @@ public final class Entity {
         return this;
       }
       
-      // optional int32 baseScore = 3;
-      public boolean hasBaseScore() {
-        return result.hasBaseScore();
-      }
-      public int getBaseScore() {
-        return result.getBaseScore();
-      }
-      public Builder setBaseScore(int value) {
-        result.hasBaseScore = true;
-        result.baseScore_ = value;
-        return this;
-      }
-      public Builder clearBaseScore() {
-        result.hasBaseScore = false;
-        result.baseScore_ = 0;
-        return this;
-      }
-      
-      // optional bool gangKai = 4;
-      public boolean hasGangKai() {
-        return result.hasGangKai();
-      }
-      public boolean getGangKai() {
-        return result.getGangKai();
-      }
-      public Builder setGangKai(boolean value) {
-        result.hasGangKai = true;
-        result.gangKai_ = value;
-        return this;
-      }
-      public Builder clearGangKai() {
-        result.hasGangKai = false;
-        result.gangKai_ = false;
-        return this;
-      }
-      
-      // optional .com.randioo.mahjong_public_server.protocol.OverMethod overMethod = 5;
+      // optional .com.randioo.mahjong_public_server.protocol.OverMethod overMethod = 3;
       public boolean hasOverMethod() {
         return result.hasOverMethod();
       }
@@ -5980,11 +6137,11 @@ public final class Entity {
       }
       public Builder clearOverMethod() {
         result.hasOverMethod = false;
-        result.overMethod_ = com.randioo.mahjong_public_server.protocol.Entity.OverMethod.OVER_LOSS;
+        result.overMethod_ = com.randioo.mahjong_public_server.protocol.Entity.OverMethod.LOSS;
         return this;
       }
       
-      // optional int32 roundScore = 6;
+      // optional int32 roundScore = 4;
       public boolean hasRoundScore() {
         return result.hasRoundScore();
       }
@@ -6002,97 +6159,43 @@ public final class Entity {
         return this;
       }
       
-      // optional int32 mingGangScorePlus = 7;
-      public boolean hasMingGangScorePlus() {
-        return result.hasMingGangScorePlus();
+      // optional int32 baseScore = 5;
+      public boolean hasBaseScore() {
+        return result.hasBaseScore();
       }
-      public int getMingGangScorePlus() {
-        return result.getMingGangScorePlus();
+      public int getBaseScore() {
+        return result.getBaseScore();
       }
-      public Builder setMingGangScorePlus(int value) {
-        result.hasMingGangScorePlus = true;
-        result.mingGangScorePlus_ = value;
+      public Builder setBaseScore(int value) {
+        result.hasBaseScore = true;
+        result.baseScore_ = value;
         return this;
       }
-      public Builder clearMingGangScorePlus() {
-        result.hasMingGangScorePlus = false;
-        result.mingGangScorePlus_ = 0;
-        return this;
-      }
-      
-      // optional int32 mingGangCountPlus = 8;
-      public boolean hasMingGangCountPlus() {
-        return result.hasMingGangCountPlus();
-      }
-      public int getMingGangCountPlus() {
-        return result.getMingGangCountPlus();
-      }
-      public Builder setMingGangCountPlus(int value) {
-        result.hasMingGangCountPlus = true;
-        result.mingGangCountPlus_ = value;
-        return this;
-      }
-      public Builder clearMingGangCountPlus() {
-        result.hasMingGangCountPlus = false;
-        result.mingGangCountPlus_ = 0;
+      public Builder clearBaseScore() {
+        result.hasBaseScore = false;
+        result.baseScore_ = 0;
         return this;
       }
       
-      // optional int32 anGangScorePlus = 9;
-      public boolean hasAnGangScorePlus() {
-        return result.hasAnGangScorePlus();
+      // optional int32 flowerCount = 6;
+      public boolean hasFlowerCount() {
+        return result.hasFlowerCount();
       }
-      public int getAnGangScorePlus() {
-        return result.getAnGangScorePlus();
+      public int getFlowerCount() {
+        return result.getFlowerCount();
       }
-      public Builder setAnGangScorePlus(int value) {
-        result.hasAnGangScorePlus = true;
-        result.anGangScorePlus_ = value;
+      public Builder setFlowerCount(int value) {
+        result.hasFlowerCount = true;
+        result.flowerCount_ = value;
         return this;
       }
-      public Builder clearAnGangScorePlus() {
-        result.hasAnGangScorePlus = false;
-        result.anGangScorePlus_ = 0;
-        return this;
-      }
-      
-      // optional int32 anGangCountPlus = 10;
-      public boolean hasAnGangCountPlus() {
-        return result.hasAnGangCountPlus();
-      }
-      public int getAnGangCountPlus() {
-        return result.getAnGangCountPlus();
-      }
-      public Builder setAnGangCountPlus(int value) {
-        result.hasAnGangCountPlus = true;
-        result.anGangCountPlus_ = value;
-        return this;
-      }
-      public Builder clearAnGangCountPlus() {
-        result.hasAnGangCountPlus = false;
-        result.anGangCountPlus_ = 0;
+      public Builder clearFlowerCount() {
+        result.hasFlowerCount = false;
+        result.flowerCount_ = 0;
         return this;
       }
       
-      // optional int32 moScore = 11;
-      public boolean hasMoScore() {
-        return result.hasMoScore();
-      }
-      public int getMoScore() {
-        return result.getMoScore();
-      }
-      public Builder setMoScore(int value) {
-        result.hasMoScore = true;
-        result.moScore_ = value;
-        return this;
-      }
-      public Builder clearMoScore() {
-        result.hasMoScore = false;
-        result.moScore_ = 0;
-        return this;
-      }
-      
-      // repeated .com.randioo.mahjong_public_server.protocol.HuType huTypeList = 12;
+      // repeated .com.randioo.mahjong_public_server.protocol.HuType huTypeList = 7;
       public java.util.List<com.randioo.mahjong_public_server.protocol.Entity.HuType> getHuTypeListList() {
         return java.util.Collections.unmodifiableList(result.huTypeList_);
       }
@@ -6132,25 +6235,43 @@ public final class Entity {
         return this;
       }
       
-      // optional int32 flowerCount = 13;
-      public boolean hasFlowerCount() {
-        return result.hasFlowerCount();
+      // optional int32 mingGangScorePlus = 8;
+      public boolean hasMingGangScorePlus() {
+        return result.hasMingGangScorePlus();
       }
-      public int getFlowerCount() {
-        return result.getFlowerCount();
+      public int getMingGangScorePlus() {
+        return result.getMingGangScorePlus();
       }
-      public Builder setFlowerCount(int value) {
-        result.hasFlowerCount = true;
-        result.flowerCount_ = value;
+      public Builder setMingGangScorePlus(int value) {
+        result.hasMingGangScorePlus = true;
+        result.mingGangScorePlus_ = value;
         return this;
       }
-      public Builder clearFlowerCount() {
-        result.hasFlowerCount = false;
-        result.flowerCount_ = 0;
+      public Builder clearMingGangScorePlus() {
+        result.hasMingGangScorePlus = false;
+        result.mingGangScorePlus_ = 0;
         return this;
       }
       
-      // optional int32 mingGangScoreMinus = 14;
+      // optional int32 mingGangCountPlus = 9;
+      public boolean hasMingGangCountPlus() {
+        return result.hasMingGangCountPlus();
+      }
+      public int getMingGangCountPlus() {
+        return result.getMingGangCountPlus();
+      }
+      public Builder setMingGangCountPlus(int value) {
+        result.hasMingGangCountPlus = true;
+        result.mingGangCountPlus_ = value;
+        return this;
+      }
+      public Builder clearMingGangCountPlus() {
+        result.hasMingGangCountPlus = false;
+        result.mingGangCountPlus_ = 0;
+        return this;
+      }
+      
+      // optional int32 mingGangScoreMinus = 10;
       public boolean hasMingGangScoreMinus() {
         return result.hasMingGangScoreMinus();
       }
@@ -6168,7 +6289,7 @@ public final class Entity {
         return this;
       }
       
-      // optional int32 mingGangCountMinus = 15;
+      // optional int32 mingGangCountMinus = 11;
       public boolean hasMingGangCountMinus() {
         return result.hasMingGangCountMinus();
       }
@@ -6186,7 +6307,43 @@ public final class Entity {
         return this;
       }
       
-      // optional int32 anGangScoreMinus = 16;
+      // optional int32 anGangScorePlus = 12;
+      public boolean hasAnGangScorePlus() {
+        return result.hasAnGangScorePlus();
+      }
+      public int getAnGangScorePlus() {
+        return result.getAnGangScorePlus();
+      }
+      public Builder setAnGangScorePlus(int value) {
+        result.hasAnGangScorePlus = true;
+        result.anGangScorePlus_ = value;
+        return this;
+      }
+      public Builder clearAnGangScorePlus() {
+        result.hasAnGangScorePlus = false;
+        result.anGangScorePlus_ = 0;
+        return this;
+      }
+      
+      // optional int32 anGangCountPlus = 13;
+      public boolean hasAnGangCountPlus() {
+        return result.hasAnGangCountPlus();
+      }
+      public int getAnGangCountPlus() {
+        return result.getAnGangCountPlus();
+      }
+      public Builder setAnGangCountPlus(int value) {
+        result.hasAnGangCountPlus = true;
+        result.anGangCountPlus_ = value;
+        return this;
+      }
+      public Builder clearAnGangCountPlus() {
+        result.hasAnGangCountPlus = false;
+        result.anGangCountPlus_ = 0;
+        return this;
+      }
+      
+      // optional int32 anGangScoreMinus = 14;
       public boolean hasAnGangScoreMinus() {
         return result.hasAnGangScoreMinus();
       }
@@ -6204,7 +6361,7 @@ public final class Entity {
         return this;
       }
       
-      // optional int32 anGangCountMinus = 17;
+      // optional int32 anGangCountMinus = 15;
       public boolean hasAnGangCountMinus() {
         return result.hasAnGangCountMinus();
       }
@@ -6219,6 +6376,204 @@ public final class Entity {
       public Builder clearAnGangCountMinus() {
         result.hasAnGangCountMinus = false;
         result.anGangCountMinus_ = 0;
+        return this;
+      }
+      
+      // optional int32 buGangScorePlus = 16;
+      public boolean hasBuGangScorePlus() {
+        return result.hasBuGangScorePlus();
+      }
+      public int getBuGangScorePlus() {
+        return result.getBuGangScorePlus();
+      }
+      public Builder setBuGangScorePlus(int value) {
+        result.hasBuGangScorePlus = true;
+        result.buGangScorePlus_ = value;
+        return this;
+      }
+      public Builder clearBuGangScorePlus() {
+        result.hasBuGangScorePlus = false;
+        result.buGangScorePlus_ = 0;
+        return this;
+      }
+      
+      // optional int32 buGangCountPlus = 17;
+      public boolean hasBuGangCountPlus() {
+        return result.hasBuGangCountPlus();
+      }
+      public int getBuGangCountPlus() {
+        return result.getBuGangCountPlus();
+      }
+      public Builder setBuGangCountPlus(int value) {
+        result.hasBuGangCountPlus = true;
+        result.buGangCountPlus_ = value;
+        return this;
+      }
+      public Builder clearBuGangCountPlus() {
+        result.hasBuGangCountPlus = false;
+        result.buGangCountPlus_ = 0;
+        return this;
+      }
+      
+      // optional int32 buGangScoreMinus = 18;
+      public boolean hasBuGangScoreMinus() {
+        return result.hasBuGangScoreMinus();
+      }
+      public int getBuGangScoreMinus() {
+        return result.getBuGangScoreMinus();
+      }
+      public Builder setBuGangScoreMinus(int value) {
+        result.hasBuGangScoreMinus = true;
+        result.buGangScoreMinus_ = value;
+        return this;
+      }
+      public Builder clearBuGangScoreMinus() {
+        result.hasBuGangScoreMinus = false;
+        result.buGangScoreMinus_ = 0;
+        return this;
+      }
+      
+      // optional int32 buGangCountMinus = 19;
+      public boolean hasBuGangCountMinus() {
+        return result.hasBuGangCountMinus();
+      }
+      public int getBuGangCountMinus() {
+        return result.getBuGangCountMinus();
+      }
+      public Builder setBuGangCountMinus(int value) {
+        result.hasBuGangCountMinus = true;
+        result.buGangCountMinus_ = value;
+        return this;
+      }
+      public Builder clearBuGangCountMinus() {
+        result.hasBuGangCountMinus = false;
+        result.buGangCountMinus_ = 0;
+        return this;
+      }
+      
+      // optional int32 ziMoScore = 20;
+      public boolean hasZiMoScore() {
+        return result.hasZiMoScore();
+      }
+      public int getZiMoScore() {
+        return result.getZiMoScore();
+      }
+      public Builder setZiMoScore(int value) {
+        result.hasZiMoScore = true;
+        result.ziMoScore_ = value;
+        return this;
+      }
+      public Builder clearZiMoScore() {
+        result.hasZiMoScore = false;
+        result.ziMoScore_ = 0;
+        return this;
+      }
+      
+      // optional int32 zhuaHuScore = 21;
+      public boolean hasZhuaHuScore() {
+        return result.hasZhuaHuScore();
+      }
+      public int getZhuaHuScore() {
+        return result.getZhuaHuScore();
+      }
+      public Builder setZhuaHuScore(int value) {
+        result.hasZhuaHuScore = true;
+        result.zhuaHuScore_ = value;
+        return this;
+      }
+      public Builder clearZhuaHuScore() {
+        result.hasZhuaHuScore = false;
+        result.zhuaHuScore_ = 0;
+        return this;
+      }
+      
+      // optional int32 qiangGangScore = 22;
+      public boolean hasQiangGangScore() {
+        return result.hasQiangGangScore();
+      }
+      public int getQiangGangScore() {
+        return result.getQiangGangScore();
+      }
+      public Builder setQiangGangScore(int value) {
+        result.hasQiangGangScore = true;
+        result.qiangGangScore_ = value;
+        return this;
+      }
+      public Builder clearQiangGangScore() {
+        result.hasQiangGangScore = false;
+        result.qiangGangScore_ = 0;
+        return this;
+      }
+      
+      // optional int32 chuChongScore = 23;
+      public boolean hasChuChongScore() {
+        return result.hasChuChongScore();
+      }
+      public int getChuChongScore() {
+        return result.getChuChongScore();
+      }
+      public Builder setChuChongScore(int value) {
+        result.hasChuChongScore = true;
+        result.chuChongScore_ = value;
+        return this;
+      }
+      public Builder clearChuChongScore() {
+        result.hasChuChongScore = false;
+        result.chuChongScore_ = 0;
+        return this;
+      }
+      
+      // optional int32 gangChongScore = 24;
+      public boolean hasGangChongScore() {
+        return result.hasGangChongScore();
+      }
+      public int getGangChongScore() {
+        return result.getGangChongScore();
+      }
+      public Builder setGangChongScore(int value) {
+        result.hasGangChongScore = true;
+        result.gangChongScore_ = value;
+        return this;
+      }
+      public Builder clearGangChongScore() {
+        result.hasGangChongScore = false;
+        result.gangChongScore_ = 0;
+        return this;
+      }
+      
+      // optional int32 zhaMaScore = 25;
+      public boolean hasZhaMaScore() {
+        return result.hasZhaMaScore();
+      }
+      public int getZhaMaScore() {
+        return result.getZhaMaScore();
+      }
+      public Builder setZhaMaScore(int value) {
+        result.hasZhaMaScore = true;
+        result.zhaMaScore_ = value;
+        return this;
+      }
+      public Builder clearZhaMaScore() {
+        result.hasZhaMaScore = false;
+        result.zhaMaScore_ = 0;
+        return this;
+      }
+      
+      // optional int32 cangYingScore = 26;
+      public boolean hasCangYingScore() {
+        return result.hasCangYingScore();
+      }
+      public int getCangYingScore() {
+        return result.getCangYingScore();
+      }
+      public Builder setCangYingScore(int value) {
+        result.hasCangYingScore = true;
+        result.cangYingScore_ = value;
+        return this;
+      }
+      public Builder clearCangYingScore() {
+        result.hasCangYingScore = false;
+        result.cangYingScore_ = 0;
         return this;
       }
       
@@ -10014,63 +10369,69 @@ public final class Entity {
       "d\030\002 \001(\005\022\022\n\ntargetSeat\030\003 \001(\005\022\022\n\ntargetCar" +
       "d\030\004 \001(\005\"h\n\nCallHuData\022\016\n\006callId\030\001 \001(\005\022J\n" +
       "\006huData\030\002 \001(\0132:.com.randioo.mahjong_publ" +
-      "ic_server.protocol.RoundCardsData\"\201\005\n\025Ro" +
+      "ic_server.protocol.RoundCardsData\"\337\006\n\025Ro" +
       "leRoundOverInfoData\022N\n\014gameRoleData\030\001 \001(" +
       "\01328.com.randioo.mahjong_public_server.pr" +
       "otocol.GameRoleData\022R\n\016roundCardsData\030\002 ",
       "\001(\0132:.com.randioo.mahjong_public_server." +
-      "protocol.RoundCardsData\022\021\n\tbaseScore\030\003 \001" +
-      "(\005\022\017\n\007gangKai\030\004 \001(\010\022J\n\noverMethod\030\005 \001(\0162" +
-      "6.com.randioo.mahjong_public_server.prot" +
-      "ocol.OverMethod\022\022\n\nroundScore\030\006 \001(\005\022\031\n\021m" +
-      "ingGangScorePlus\030\007 \001(\005\022\031\n\021mingGangCountP" +
-      "lus\030\010 \001(\005\022\027\n\017anGangScorePlus\030\t \001(\005\022\027\n\017an" +
-      "GangCountPlus\030\n \001(\005\022\017\n\007moScore\030\013 \001(\005\022F\n\n" +
-      "huTypeList\030\014 \003(\01622.com.randioo.mahjong_p" +
-      "ublic_server.protocol.HuType\022\023\n\013flowerCo",
-      "unt\030\r \001(\005\022\032\n\022mingGangScoreMinus\030\016 \001(\005\022\032\n" +
-      "\022mingGangCountMinus\030\017 \001(\005\022\030\n\020anGangScore" +
-      "Minus\030\020 \001(\005\022\030\n\020anGangCountMinus\030\021 \001(\005\"\242\002" +
-      "\n\024RoleGameOverInfoData\022N\n\014gameRoleData\030\001" +
-      " \001(\01328.com.randioo.mahjong_public_server" +
-      ".protocol.GameRoleData\022\017\n\007huCount\030\002 \001(\005\022" +
-      "\021\n\tmoHuCount\030\003 \001(\005\022\023\n\013zhuaHuCount\030\004 \001(\005\022" +
-      "\026\n\016dianChongCount\030\005 \001(\005\022\021\n\tgameScore\030\006 \001" +
-      "(\005\022\025\n\rmingGangScore\030\007 \001(\005\022\025\n\rmingGangCou" +
-      "nt\030\010 \001(\005\022\023\n\013anGangScore\030\t \001(\005\022\023\n\013anGangC",
-      "ount\030\n \001(\005\"\272\001\n\016RoundCardsData\022\016\n\006huCard\030" +
-      "\001 \001(\005\022\021\n\thandCards\030\002 \003(\005\022\021\n\ttouchCard\030\003 " +
-      "\001(\005\022\022\n\ntargetSeat\030\004 \001(\005\022N\n\014cardListData\030" +
-      "\005 \003(\01328.com.randioo.mahjong_public_serve" +
-      "r.protocol.CardListData\022\016\n\006flower\030\006 \003(\005\"" +
-      "\033\n\014RecommandPai\022\013\n\003pai\030\001 \003(\005\"j\n\010GameData" +
-      "\022\016\n\006roomId\030\001 \001(\t\022N\n\014gameRoleData\030\002 \003(\01328" +
-      ".com.randioo.mahjong_public_server.proto" +
-      "col.GameRoleData\"+\n\014AudienceData\022\014\n\004name" +
-      "\030\001 \001(\t\022\r\n\005score\030\002 \001(\005\"\034\n\016RoundVideoData\022",
-      "\n\n\002sc\030\001 \003(\014\"c\n\rGameVideoData\022R\n\016roundVid" +
-      "eoData\030\001 \003(\0132:.com.randioo.mahjong_publi" +
-      "c_server.protocol.RoundVideoData\"/\n\022Figh" +
-      "tStartRoleData\022\013\n\003pai\030\001 \003(\005\022\014\n\004seat\030\002 \001(" +
-      "\005\"\033\n\nClientCard\022\r\n\005cards\030\001 \003(\005*9\n\016GameOv" +
-      "erMethod\022\022\n\016GAME_OVER_TIME\020\001\022\023\n\017GAME_OVE" +
-      "R_ROUND\020\002*5\n\010GameType\022\023\n\017GAME_TYPE_MATCH" +
-      "\020\001\022\024\n\020GAME_TYPE_FRIEND\020\002*M\n\tGameState\022\026\n" +
-      "\022GAME_STATE_PREPARE\020\001\022\024\n\020GAME_START_STAR" +
-      "T\020\002\022\022\n\016GAME_START_END\020\003*\231\001\n\014CardListType",
-      "\022\026\n\022CARD_LIST_TYPE_CHI\020\001\022\027\n\023CARD_LIST_TY" +
-      "PE_PENG\020\002\022\035\n\031CARD_LIST_TYPE_GANG_LIGHT\020\003" +
-      "\022\034\n\030CARD_LIST_TYPE_GANG_DARK\020\004\022\033\n\027CARD_L" +
-      "IST_TYPE_GANG_ADD\020\005*\321\001\n\006HuType\022\014\n\010GANG_K" +
-      "AI\020\004\022\014\n\010MEN_QING\020\005\022\017\n\013DA_DIAO_CHE\020\006\022\r\n\tS" +
-      "I_BAI_DA\020\001\022\r\n\tWU_BAI_DA\020\002\022\016\n\nPAO_DAI_DA\020" +
-      "\003\022\r\n\tQING_PENG\020\007\022\014\n\010HUN_PENG\020\010\022\016\n\nQING_Y" +
-      "I_SE\020\t\022\020\n\014PENG_PENG_HU\020\n\022\r\n\tHUN_YI_SE\020\013\022" +
-      "\016\n\nWU_HUA_GUO\020\014\022\016\n\nHAI_DI_LAO\020\r*H\n\nOverM" +
-      "ethod\022\r\n\tOVER_LOSS\020\000\022\016\n\nOVER_CHONG\020\001\022\016\n\n",
-      "OVER_MO_HU\020\002\022\013\n\007OVER_HU\020\003*D\n\022FightVoteAp" +
-      "plyExit\022\r\n\tVOTE_IDLE\020\000\022\016\n\nVOTE_AGREE\020\001\022\017" +
-      "\n\013VOTE_REJECT\020\002"
+      "protocol.RoundCardsData\022J\n\noverMethod\030\003 " +
+      "\001(\01626.com.randioo.mahjong_public_server." +
+      "protocol.OverMethod\022\022\n\nroundScore\030\004 \001(\005\022" +
+      "\021\n\tbaseScore\030\005 \001(\005\022\023\n\013flowerCount\030\006 \001(\005\022" +
+      "F\n\nhuTypeList\030\007 \003(\01622.com.randioo.mahjon" +
+      "g_public_server.protocol.HuType\022\031\n\021mingG" +
+      "angScorePlus\030\010 \001(\005\022\031\n\021mingGangCountPlus\030" +
+      "\t \001(\005\022\032\n\022mingGangScoreMinus\030\n \001(\005\022\032\n\022min" +
+      "gGangCountMinus\030\013 \001(\005\022\027\n\017anGangScorePlus",
+      "\030\014 \001(\005\022\027\n\017anGangCountPlus\030\r \001(\005\022\030\n\020anGan" +
+      "gScoreMinus\030\016 \001(\005\022\030\n\020anGangCountMinus\030\017 " +
+      "\001(\005\022\027\n\017buGangScorePlus\030\020 \001(\005\022\027\n\017buGangCo" +
+      "untPlus\030\021 \001(\005\022\030\n\020buGangScoreMinus\030\022 \001(\005\022" +
+      "\030\n\020buGangCountMinus\030\023 \001(\005\022\021\n\tziMoScore\030\024" +
+      " \001(\005\022\023\n\013zhuaHuScore\030\025 \001(\005\022\026\n\016qiangGangSc" +
+      "ore\030\026 \001(\005\022\025\n\rchuChongScore\030\027 \001(\005\022\026\n\016gang" +
+      "ChongScore\030\030 \001(\005\022\022\n\nzhaMaScore\030\031 \001(\005\022\025\n\r" +
+      "cangYingScore\030\032 \001(\005\"\242\002\n\024RoleGameOverInfo" +
+      "Data\022N\n\014gameRoleData\030\001 \001(\01328.com.randioo",
+      ".mahjong_public_server.protocol.GameRole" +
+      "Data\022\017\n\007huCount\030\002 \001(\005\022\021\n\tmoHuCount\030\003 \001(\005" +
+      "\022\023\n\013zhuaHuCount\030\004 \001(\005\022\026\n\016dianChongCount\030" +
+      "\005 \001(\005\022\021\n\tgameScore\030\006 \001(\005\022\025\n\rmingGangScor" +
+      "e\030\007 \001(\005\022\025\n\rmingGangCount\030\010 \001(\005\022\023\n\013anGang" +
+      "Score\030\t \001(\005\022\023\n\013anGangCount\030\n \001(\005\"\272\001\n\016Rou" +
+      "ndCardsData\022\016\n\006huCard\030\001 \001(\005\022\021\n\thandCards" +
+      "\030\002 \003(\005\022\021\n\ttouchCard\030\003 \001(\005\022\022\n\ntargetSeat\030" +
+      "\004 \001(\005\022N\n\014cardListData\030\005 \003(\01328.com.randio" +
+      "o.mahjong_public_server.protocol.CardLis",
+      "tData\022\016\n\006flower\030\006 \003(\005\"\033\n\014RecommandPai\022\013\n" +
+      "\003pai\030\001 \003(\005\"j\n\010GameData\022\016\n\006roomId\030\001 \001(\t\022N" +
+      "\n\014gameRoleData\030\002 \003(\01328.com.randioo.mahjo" +
+      "ng_public_server.protocol.GameRoleData\"+" +
+      "\n\014AudienceData\022\014\n\004name\030\001 \001(\t\022\r\n\005score\030\002 " +
+      "\001(\005\"\034\n\016RoundVideoData\022\n\n\002sc\030\001 \003(\014\"c\n\rGam" +
+      "eVideoData\022R\n\016roundVideoData\030\001 \003(\0132:.com" +
+      ".randioo.mahjong_public_server.protocol." +
+      "RoundVideoData\"/\n\022FightStartRoleData\022\013\n\003" +
+      "pai\030\001 \003(\005\022\014\n\004seat\030\002 \001(\005\"\033\n\nClientCard\022\r\n",
+      "\005cards\030\001 \003(\005*9\n\016GameOverMethod\022\022\n\016GAME_O" +
+      "VER_TIME\020\001\022\023\n\017GAME_OVER_ROUND\020\002*5\n\010GameT" +
+      "ype\022\023\n\017GAME_TYPE_MATCH\020\001\022\024\n\020GAME_TYPE_FR" +
+      "IEND\020\002*M\n\tGameState\022\026\n\022GAME_STATE_PREPAR" +
+      "E\020\001\022\024\n\020GAME_START_START\020\002\022\022\n\016GAME_START_" +
+      "END\020\003*\231\001\n\014CardListType\022\026\n\022CARD_LIST_TYPE" +
+      "_CHI\020\001\022\027\n\023CARD_LIST_TYPE_PENG\020\002\022\035\n\031CARD_" +
+      "LIST_TYPE_GANG_LIGHT\020\003\022\034\n\030CARD_LIST_TYPE" +
+      "_GANG_DARK\020\004\022\033\n\027CARD_LIST_TYPE_GANG_ADD\020" +
+      "\005*\321\001\n\006HuType\022\014\n\010GANG_KAI\020\001\022\014\n\010MEN_QING\020\002",
+      "\022\017\n\013DA_DIAO_CHE\020\003\022\r\n\tSI_BAI_DA\020\004\022\r\n\tWU_B" +
+      "AI_DA\020\005\022\016\n\nPAO_DAI_DA\020\006\022\r\n\tQING_PENG\020\007\022\014" +
+      "\n\010HUN_PENG\020\010\022\016\n\nQING_YI_SE\020\t\022\020\n\014PENG_PEN" +
+      "G_HU\020\n\022\r\n\tHUN_YI_SE\020\013\022\016\n\nWU_HUA_GUO\020\014\022\016\n" +
+      "\nHAI_DI_LAO\020\r*]\n\nOverMethod\022\010\n\004LOSS\020\000\022\r\n" +
+      "\tCHU_CHONG\020\001\022\016\n\nGANG_CHONG\020\002\022\t\n\005MO_HU\020\003\022" +
+      "\013\n\007ZHUA_HU\020\004\022\016\n\nQIANG_GANG\020\005*D\n\022FightVot" +
+      "eApplyExit\022\r\n\tVOTE_IDLE\020\000\022\016\n\nVOTE_AGREE\020" +
+      "\001\022\017\n\013VOTE_REJECT\020\002"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -10154,7 +10515,7 @@ public final class Entity {
           internal_static_com_randioo_mahjong_public_server_protocol_RoleRoundOverInfoData_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_RoleRoundOverInfoData_descriptor,
-              new java.lang.String[] { "GameRoleData", "RoundCardsData", "BaseScore", "GangKai", "OverMethod", "RoundScore", "MingGangScorePlus", "MingGangCountPlus", "AnGangScorePlus", "AnGangCountPlus", "MoScore", "HuTypeList", "FlowerCount", "MingGangScoreMinus", "MingGangCountMinus", "AnGangScoreMinus", "AnGangCountMinus", },
+              new java.lang.String[] { "GameRoleData", "RoundCardsData", "OverMethod", "RoundScore", "BaseScore", "FlowerCount", "HuTypeList", "MingGangScorePlus", "MingGangCountPlus", "MingGangScoreMinus", "MingGangCountMinus", "AnGangScorePlus", "AnGangCountPlus", "AnGangScoreMinus", "AnGangCountMinus", "BuGangScorePlus", "BuGangCountPlus", "BuGangScoreMinus", "BuGangCountMinus", "ZiMoScore", "ZhuaHuScore", "QiangGangScore", "ChuChongScore", "GangChongScore", "ZhaMaScore", "CangYingScore", },
               com.randioo.mahjong_public_server.protocol.Entity.RoleRoundOverInfoData.class,
               com.randioo.mahjong_public_server.protocol.Entity.RoleRoundOverInfoData.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_RoleGameOverInfoData_descriptor =

@@ -23,6 +23,8 @@ import com.randioo.randioo_server_base.template.Ref;
 public class HongzhongHu extends Hu {
     private Logger logger = LoggerFactory.getLogger(ZLPBaiDaHu.class.getSimpleName());
 
+    private boolean ifHuDirectHu = true;
+
     @Override
     public void check(Game game, List<CardList> cardLists, CardSort cardSort, int card, List<CardList> showCardList,
             boolean isMine) {
@@ -57,7 +59,6 @@ public class HongzhongHu extends Hu {
     }
 
     private boolean checkHu(GameConfigData gameConfigData, CardSort cardSort) {
-        boolean debug = true;
         // 1.克隆牌组
         CardSort cardSort1 = cardSort.clone();
 
@@ -97,8 +98,9 @@ public class HongzhongHu extends Hu {
                 if (checkOnlyJiangCards(baiDaCountRef, cloneCards)) {
                     // 可以胡
                     logger.debug("hu");
-                    if (debug)
+                    if (ifHuDirectHu) {
                         return true;
+                    }
                 }
             }
 
@@ -135,8 +137,9 @@ public class HongzhongHu extends Hu {
                 if (checkOnlyJiangCards(baiDaCountRef, cloneCards)) {
                     // 可以胡
                     logger.debug("hu");
-                    if (debug)
+                    if (ifHuDirectHu) {
                         return true;
+                    }
                 }
             }
         }
@@ -159,8 +162,9 @@ public class HongzhongHu extends Hu {
                 logger.debug("remain=" + cloneCards);
                 if (checkOnlyJiangCards(baiDaCountRef, cloneCards)) {
                     logger.debug("hu");
-                    if (debug)
+                    if (ifHuDirectHu) {
                         return true;
+                    }
                 }
             }
         }
@@ -186,8 +190,9 @@ public class HongzhongHu extends Hu {
 
                 if (checkOnlyJiangCards(baiDaCountRef, cloneCards)) {
                     logger.debug("hu");
-                    if (debug)
+                    if (ifHuDirectHu) {
                         return true;
+                    }
                 }
             }
         }
@@ -232,7 +237,7 @@ public class HongzhongHu extends Hu {
      * @return
      * @author wcy 2017年7月24日
      */
-    private boolean checkOnlyJiangCards(Ref<Integer> baiDaCountRef, List<Integer> remainCards) {
+    private boolean checkOnlyJiangCards3(Ref<Integer> baiDaCountRef, List<Integer> remainCards) {
         int baiDaCount = baiDaCountRef.get();
         int totalCount = baiDaCount + remainCards.size();
         if ((totalCount - 2) % 3 != 0) {
@@ -261,6 +266,84 @@ public class HongzhongHu extends Hu {
         }
 
         return false;
+    }
+
+    /**
+     * 检查是否只剩下将牌,凯恩改进查将牌算法，原来写错的在上面
+     * 
+     * @param baiDaCountRef
+     * @param remainCards
+     * @return
+     * @author wcy 2017年7月24日
+     */
+    private boolean checkOnlyJiangCards(Ref<Integer> baiDaCountRef, List<Integer> remainCards) {
+        int baiDaCount = baiDaCountRef.get();
+        int totalCount = baiDaCount + remainCards.size();
+        if ((totalCount - 2) % 3 != 0) {
+            return false;
+        }
+        // 如果只剩下两张牌
+        if (baiDaCount + remainCards.size() == 2) {
+            return checkOnlyTwoCards(baiDaCountRef, remainCards);
+        }
+        // 多于两张牌,先将对子能生成的三全部移除，然后重新检查最后两张将牌
+        int startIndex = 0;
+        int endIndex = remainCards.size();
+        Set<Integer> indexSet = new HashSet<>();
+        for (int i = startIndex; i < endIndex; i++) {
+            // 如果该索引已经使用过了,则直接继续
+            if (indexSet.contains(i))
+                continue;
+            int c1 = remainCards.get(i);
+
+            if (i + 1 < endIndex) {
+                // 找对子
+                int c2 = remainCards.get(i + 1);
+                if (c1 == c2) {
+                    if (baiDaCountRef.get() > 0) {
+                        baiDaCountRef.set(baiDaCountRef.get() - 1);
+                        Sets.add(indexSet, i, i + 1);
+                        continue;
+                    }
+                }
+
+            }
+
+            // 超出边界则直接跳过
+            if ((c1 + 2) % 100 >= 10)
+                continue;
+        }
+
+        List<Integer> cloneCards = new ArrayList<>(remainCards);
+        Lists.removeAllIndex(cloneCards, new ArrayList<>(indexSet));
+
+        return checkOnlyTwoCards(baiDaCountRef, cloneCards);
+
+    }
+
+    /**
+     * 检查是否只有两张牌
+     * 
+     * @param baidaCardRef
+     * @param remainCards
+     * @return
+     * @author wcy 2017年9月1日
+     */
+    private boolean checkOnlyTwoCards(Ref<Integer> baidaCardRef, List<Integer> remainCards) {
+        int baiDaCount = baidaCardRef.get();
+        if (baiDaCount + remainCards.size() == 2) {
+            if (remainCards.size() == 1 && baiDaCount == 1) {
+                return true;
+            } else {
+                int card0 = remainCards.get(0);
+                int card1 = remainCards.get(1);
+                if (card0 == card1) {
+                    return true;
+                }
+            }
+        }
+        return false;
+
     }
 
     /**
@@ -496,12 +579,6 @@ public class HongzhongHu extends Hu {
     }
 
     @Override
-    public void checkTing(CardSort cardSort, List<Integer> waitCards, GameConfigData gameConfigData) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
     public String toString() {
         return "cardList:hu=>gangkai=" + gangKai + ",isMine=" + isMine + ",card=" + card + "," + super.toString();
     }
@@ -511,70 +588,10 @@ public class HongzhongHu extends Hu {
         return null;
     }
 
-    // public static void main(String[] args) {
-    //
-    // ZLPBaiDaHu hu = new ZLPBaiDaHu();
-    // for (int i = 0; i < 6; i++) {
-    // int count = hu.getLoopChiCount(Arrays.asList(101, 101, 102, 102, 103,
-    // 103), 0, i);
-    // System.out.println(count);
-    // }
-    //
-    // }
+    @Override
+    public boolean checkTing(Game game, CardSort cardSort, List<Integer> waitCards) {
 
-    public static void main(String[] args) {
-        HongzhongHu hu = new HongzhongHu();
-        CardSort cardSort = new CardSort(4);
-        // cardSort.fillCardSort(Arrays.asList(801, 801, 203, 203, 206, 206,
-        // 207, 207, 208, 308, 308));
-        cardSort.fillCardSort(Arrays.asList(102, 102, 107, 108, 109, 204, 204, 206, 207, 208, 307, 307, 308, 308));
-        // cardSort.fillCardSort(Arrays.asList(101, 102, 103, 104, 105, 201,
-        // 302, 101, 102, 201, 302, 801, 801, 302));
-
-        // List<Integer> cards = Arrays.asList(101, 102, 103, 104, 105, 201,
-        // 302, 101, 102, 201, 302, 801, 801, 302);
-        // List<Integer> cards = Arrays.asList(101, 102, 201, 302, 101, 102,
-        // 201, 302, 801, 801, 302);
-        // List<Integer> cards = Arrays.asList(101, 102, 103, 104, 105, 201,
-        // 302, 101, 102, 201, 302, 801, 801, 302);
-
-        // List<Integer> cards = Arrays.asList(101, 102, 103, 801, 801, 201,
-        // 302, 101, 102, 201, 302, 801, 801, 302);
-
-        // List<Integer> cards = Arrays.asList(101, 102, 104, 104, 104, 107,
-        // 107, 108, 108, 201, 203, 801, 801, 801);
-        // List<Integer> cards = Arrays.asList(103, 104, 105, 205, 205, 206,
-        // 801, 206);
-        // List<Integer> cards = Arrays.asList(108, 109, 302, 302, 801, 801,
-        // 801, 207);
-        // List<Integer> cards = Arrays.asList(108, 109, 201, 202, 203, 203,
-        // 203, 801);
-        // List<Integer> cards = Arrays.asList(102, 103, 104, 305, 306, 307,
-        // 307, 304);
-        //
-        // cardSort.fillCardSort(cards);
-
-        long start = System.currentTimeMillis();
-        boolean b = hu.checkHu(null, cardSort);
-        System.out.println(b);
-        long end = System.currentTimeMillis();
-        System.out.println(end - start);
+        return false;
     }
 
-    // public static void main(String[] args) {
-    // List<Integer> indexList = new ArrayList<>(Arrays.asList(2, 3, 5,5));
-    // List<Integer> sources = new ArrayList<>(Arrays.asList(100, 101, 102, 103,
-    // 104, 105, 106));
-    // Lists.removeAllIndex(sources, indexList);
-    // System.out.println(sources);
-    //
-    // }
-
-    // public static void main(String[] args) {
-    // List<Integer> sources = new ArrayList<>(Arrays.asList(100, 101, 101, 103,
-    // 104, 105, 106));
-    // int count = Lists.containsCount(sources, 101);
-    // System.out.println(count);
-    //
-    // }
 }

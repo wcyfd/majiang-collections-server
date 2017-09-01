@@ -111,13 +111,13 @@ message CallHuData{
 }
 enum HuType{
 	//共有
-	GANG_KAI = 4;  // 杠开
-	MEN_QING = 5;  //门清
-	DA_DIAO_CHE = 6; //大吊
+	GANG_KAI = 1;// 杠开
+	MEN_QING = 2;//门清
+	DA_DIAO_CHE = 3;//大吊车
 	//百搭麻将
-	SI_BAI_DA = 1 ;   //  四百搭
-	WU_BAI_DA = 2; //无百搭
-	PAO_DAI_DA = 3;  //无百搭
+	SI_BAI_DA = 4;//四百搭
+	WU_BAI_DA = 5;//无百搭
+	PAO_DAI_DA = 6;//跑百搭
 	//敲麻
 	QING_PENG = 7; //清碰
 	HUN_PENG = 8;//混碰
@@ -130,28 +130,46 @@ enum HuType{
 message RoleRoundOverInfoData{
 	optional GameRoleData gameRoleData = 1;
 	optional RoundCardsData roundCardsData = 2;
-	optional int32 baseScore = 3;
-	optional bool gangKai = 4;
-	optional OverMethod overMethod = 5;
-	optional int32 roundScore = 6;
-	optional int32 mingGangScorePlus = 7;
-	optional int32 mingGangCountPlus = 8;
-	optional int32 anGangScorePlus = 9;
-	optional int32 anGangCountPlus = 10;
-	optional int32 moScore = 11;
-	repeated HuType huTypeList = 12;
-	optional int32 flowerCount = 13;  //赢家花的数量	
-	optional int32 mingGangScoreMinus = 14;
-	optional int32 mingGangCountMinus = 15;
-	optional int32 anGangScoreMinus = 16;
-	optional int32 anGangCountMinus = 17;
+	optional OverMethod overMethod = 3;
+	optional int32 roundScore = 4;
+
+	optional int32 baseScore = 5;//底分
+	optional int32 flowerCount = 6;  //赢家花的数量	
+	repeated HuType huTypeList = 7;//牌型
+
+	optional int32 mingGangScorePlus = 8;//明杠
+	optional int32 mingGangCountPlus = 9;
+	optional int32 mingGangScoreMinus = 10;
+	optional int32 mingGangCountMinus = 11;
+
+	optional int32 anGangScorePlus = 12;//暗杠
+	optional int32 anGangCountPlus = 13;
+	optional int32 anGangScoreMinus = 14;
+	optional int32 anGangCountMinus = 15;
+
+	optional int32 buGangScorePlus = 16;//补杠
+	optional int32 buGangCountPlus = 17;
+	optional int32 buGangScoreMinus = 18;
+	optional int32 buGangCountMinus = 19;
+
+	optional int32 ziMoScore = 20;//自摸
+	optional int32 zhuaHuScore = 21;//抓胡
+	optional int32 qiangGangScore = 22;//抢杠
+
+	optional int32 chuChongScore = 23;//出铳
+	optional int32 gangChongScore = 24;//杠铳
+
+	optional int32 zhaMaScore = 25;//扎马分数
+	optional int32 cangYingScore = 26;//苍蝇分数
 }
 
 enum OverMethod{
-	OVER_LOSS = 0;
-	OVER_CHONG = 1;
-	OVER_MO_HU =2;
-	OVER_HU = 3;
+	LOSS = 0;//输
+	CHU_CHONG = 1;//出铳
+	GANG_CHONG = 2;//杠铳
+	MO_HU = 3;//自摸
+	ZHUA_HU = 4;//抓胡
+	QIANG_GANG = 5;//抢杠
 }
 
 message RoleGameOverInfoData{

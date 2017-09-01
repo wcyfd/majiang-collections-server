@@ -32,6 +32,8 @@ public abstract class MajiangRule {
         STATE_BAIDA_INIT,
         /** 敲麻初始化 */
         STATE_QIAOMA_INIT,
+        /** 进入听状态 */
+        STATE_TING,
 
         /** 通知游戏准备 */
         STATE_INIT_READY,
@@ -164,5 +166,7 @@ public abstract class MajiangRule {
      * @author wcy 2017年8月28日
      */
     public abstract void executeGameOverProcess(Game game);
+
+    public abstract boolean isFlower(Integer card);
 
 }

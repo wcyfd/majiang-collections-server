@@ -5,10 +5,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.randioo.mahjong_public_server.protocol.Entity.GameConfigData;
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.po.CardSort;
-import com.randioo.majiang_collections_server.module.fight.component.MajiangRule;
 import com.randioo.majiang_collections_server.util.Lists;
 
 public class BaiDaHu extends Hu {
@@ -186,38 +184,6 @@ public class BaiDaHu extends Hu {
 
     }
 
-    @Override
-    public void checkTing(CardSort cardSort, List<Integer> waitCards, GameConfigData gameConfigData) {
-        List<Integer> tryCards = new ArrayList<>();
-        int start = 100;
-        // 把所有牌型加入 tryCards
-        for (int i = 1; i <= 9; i++) {
-            int card = start + i;
-            if (cardSort.count(card) < 4) { // 没超过四张才能加入
-                tryCards.add(card);
-            }
-            for (int j = 2; j <= 3; j++) {
-                card = start * j + i;
-                if (cardSort.count(card) < 4) {
-                    tryCards.add(card);
-                }
-            }
-        }
-        if (cardSort.count(801) < 4) {
-            tryCards.add(801);
-        }
-
-        for (Integer i : tryCards) {
-            cardSort.addCard(i);
-            System.out.println("加入了" + i);
-            if (this.checkBaiDa(cardSort)) {
-                waitCards.add(i);
-            }
-            cardSort.remove(i);
-        }
-        System.out.println("res:  " + waitCards);
-    }
-
     public void removeCards(List<Integer> cards, Integer... delCards) {
         for (Integer card : delCards) {
             cards.remove(card);
@@ -268,6 +234,12 @@ public class BaiDaHu extends Hu {
     public List<Integer> getCards() {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public boolean checkTing(Game game, CardSort cardSort, List<Integer> waitCards) {
+
+        return false;
     }
 
 }

@@ -9,7 +9,6 @@ import com.randioo.mahjong_public_server.protocol.ServerMessage.SC;
 import com.randioo.majiang_collections_server.entity.bo.VideoData;
 import com.randioo.majiang_collections_server.module.fight.component.MajiangRule.MajiangStateEnum;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.CardList;
-import com.randioo.majiang_collections_server.module.fight.component.cardlist.Gang;
 import com.randioo.majiang_collections_server.module.fight.component.score.round.RoundOverResult;
 
 public class RoleGameInfo {
@@ -33,8 +32,7 @@ public class RoleGameInfo {
     public boolean isGang;
     /** 胡牌记录 */
     public RoundCardsData roundCardsData;
-    /** 听的牌 */
-    public List<Integer> tingCards = new ArrayList<>();
+
     /** 回合结果集 */
     public RoundOverResult roundOverResult = new RoundOverResult();
     /** 录像数据 */
@@ -56,6 +54,8 @@ public class RoleGameInfo {
     public int everybodyTouchCard;
     /** 是不是听状态 */
     public boolean isTing;
+    /** 听的牌 */
+    public List<Integer> tingCards = new ArrayList<>();
 
     /** 不显示的花的数量 */
     public int darkFlowerCount;
@@ -78,6 +78,7 @@ public class RoleGameInfo {
         sb.append(t).append("darkGangCount=>").append(darkGangCount).append(n);
         sb.append(t).append("ligthGangCount=>").append(ligthGangCount).append(n);
         sb.append(t).append("isTing=>").append(isTing).append(n);
+        sb.append(t).append("tingCards=>").append(tingCards).append(n);
         sb.append(t).append("operation=>").append(operations).append(n);
         sb.append(t).append("everybodyTouchCard=>").append(everybodyTouchCard).append(n);
         sb.append(t).append("]");

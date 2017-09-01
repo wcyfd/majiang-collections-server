@@ -33,7 +33,7 @@ public class ZhuangJudger {
                 }
             }
 
-            if (overMethod == OverMethod.OVER_CHONG) {
+            if (overMethod == OverMethod.CHU_CHONG) {
                 dianChongSeat = seat;
             }
 
@@ -48,21 +48,22 @@ public class ZhuangJudger {
     }
 
     private boolean overMethodIsHu(OverMethod overMethod) {
-        return overMethod == OverMethod.OVER_HU || overMethod == OverMethod.OVER_MO_HU;
+        return overMethod == OverMethod.ZHUA_HU || overMethod == OverMethod.MO_HU
+                || overMethod == OverMethod.QIANG_GANG;
     }
 
     public static void main(String[] args) {
         RoundOverResult r1 = new RoundOverResult();
-        r1.overMethod = OverMethod.OVER_LOSS;
+        r1.overMethod = OverMethod.LOSS;
 
         RoundOverResult r2 = new RoundOverResult();
-        r2.overMethod = OverMethod.OVER_LOSS;
+        r2.overMethod = OverMethod.LOSS;
 
         RoundOverResult r3 = new RoundOverResult();
-        r3.overMethod = OverMethod.OVER_LOSS;
+        r3.overMethod = OverMethod.LOSS;
 
         RoundOverResult r4 = new RoundOverResult();
-        r4.overMethod = OverMethod.OVER_LOSS;
+        r4.overMethod = OverMethod.LOSS;
 
         Map<Integer, RoundOverResult> map = new HashMap<>();
         map.put(0, r1);

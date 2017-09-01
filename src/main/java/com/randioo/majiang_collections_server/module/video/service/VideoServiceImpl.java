@@ -119,12 +119,20 @@ public class VideoServiceImpl extends ObserveBaseService implements VideoService
         if (FightConstant.FIGHT_ADD_FLOWER.equals(msg)) {
             OnlyOneRecord(args);
         }
+        // 花计数的变化
+        if (FightConstant.FIGHT_FLOWER_COUNT.equals(msg)) {
+            allRecord(args);
+        }
         // 杠
         if (FightConstant.FIGHT_GANG.equals(msg)) {
             allRecord(args);
         }
         // 碰
         if (FightConstant.FIGHT_PENG.equals(msg)) {
+            allRecord(args);
+        }
+        // 吃
+        if (FightConstant.FIGHT_CHI.equals(msg)) {
             allRecord(args);
         }
         // 胡

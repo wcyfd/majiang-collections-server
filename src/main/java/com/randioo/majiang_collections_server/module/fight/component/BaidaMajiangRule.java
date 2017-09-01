@@ -244,6 +244,8 @@ public class BaidaMajiangRule extends MajiangRule {
             if (game.getCallCardLists().size() > 0) {
                 list.addAll(noticeCardListProcesses);
             } else {
+                // 进入后 以下就是正常流程了
+                game.isAddFlowerState = false;
                 RoleGameInfo roleGameInfo = roleGameInfoGetter.getCurrentRoleGameInfo(game);
                 int size = roleGameInfo.cards.size();
                 int cardListSize = roleGameInfo.showCardLists.size();
@@ -284,6 +286,8 @@ public class BaidaMajiangRule extends MajiangRule {
         }
             break;
         case STATE_ROLE_CHOSEN_CARDLIST: {// 选择后
+            // 如有栈中有CHECK_MINE_CARDLIST_OUTER，说明在补花流程中
+            boolean isAddFlower = game.getOperations().contains(MajiangStateEnum.STATE_CHECK_MINE_CARDLIST_OUTER);
             // 获得第一个人的卡组
             List<CallCardList> callCardLists = game.getCallCardLists();
             if (callCardLists.size() > 0) {
@@ -297,9 +301,6 @@ public class BaidaMajiangRule extends MajiangRule {
                 } else if (cardList instanceof Gang) {
                     Gang gang = (Gang) cardList;
                     list.add(MajiangStateEnum.STATE_GANG);
-                    // 如有栈中有CHECK_MINE_CARDLIST_OUTER，说明在补花流程中
-                    boolean isAddFlower = game.getOperations()
-                            .contains(MajiangStateEnum.STATE_CHECK_MINE_CARDLIST_OUTER);
                     // 如果需要跳转,则要填上出牌流程，实质上和下一家的流程差不多
                     if (game.getCurrentRoleIdIndex() != callCardList.masterSeat) {
                         list.add(MajiangStateEnum.STATE_JUMP_SEAT);
@@ -321,6 +322,14 @@ public class BaidaMajiangRule extends MajiangRule {
                     list.addAll(sendCardProcesses);
                 } else if (cardList instanceof Hu) {
                     list.add(MajiangStateEnum.STATE_HU);
+                }
+            } else {
+                // 补花流程中,栈中无CHECK_MINE_CARDLIST_OUTER，有操作，但是选择了过
+                if (game.isAddFlowerState && !isAddFlower) {
+                    game.isAddFlowerState = false;
+                    list.addAll(touchCardProcesses);
+                    list.addAll(sendCardProcesses);
+                    list.add(MajiangStateEnum.STATE_NEXT_SEAT);
                 }
             }
         }
@@ -368,7 +377,6 @@ public class BaidaMajiangRule extends MajiangRule {
         allCardListMap.put(Chi.class, ReflectUtils.newInstance(BaidaChi.class));
         allCardListMap.put(Hu.class, ReflectUtils.newInstance(BaidaHu.class));
 
-        otherCardListSequence.add(Hu.class);
         otherCardListSequence.add(Gang.class);
         otherCardListSequence.add(Peng.class);
 
@@ -448,6 +456,11 @@ public class BaidaMajiangRule extends MajiangRule {
             }
         }
         return count;
+    }
+
+    @Override
+    public boolean isFlower(Integer card) {
+        return flowerCards.contains(card);
     }
 
 }

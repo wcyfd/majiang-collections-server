@@ -7,8 +7,12 @@ package com.randioo.majiang_collections_server.module.fight.component.score.roun
  *
  */
 public class GameOverResult extends RoundOverResult {
+    /** 杠铳 */
+    public int gangChongCount;
     /** 胡的次数 */
     public int huCount;
+    /** 抢杠 */
+    public int qiangGangCount;
     /** 摸胡次数 */
     public int moHuCount;
     /** 抓胡次数 */

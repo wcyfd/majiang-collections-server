@@ -62,7 +62,7 @@ public class majiang_collections_serverApp {
 
         HeartTimeOutHandler heartTimeOutHandler = SpringContext.getBean(HeartTimeOutHandler.class);
         gameServerInit.setKeepAliveFilter(
-                new KeepAliveFilter(protoHeartFactory, IdleStatus.READER_IDLE, heartTimeOutHandler, 5, 3));
+                new KeepAliveFilter(protoHeartFactory, IdleStatus.READER_IDLE, heartTimeOutHandler, 5, 10));
         gameServerInit.start();
 
         // LiteHttpServer server = new LiteHttpServer();

@@ -14,8 +14,6 @@ import org.springframework.stereotype.Component;
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.po.CallCardList;
 import com.randioo.majiang_collections_server.entity.po.RoleGameInfo;
-import com.randioo.majiang_collections_server.module.fight.component.calcuator.qiaoma.QiaomaHuTypeCalculator;
-import com.randioo.majiang_collections_server.module.fight.component.calcuator.qiaoma.QiaomaHuTypeResult;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.CardList;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Chi;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Gang;
@@ -25,6 +23,8 @@ import com.randioo.majiang_collections_server.module.fight.component.cardlist.St
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.baida.BaidaChi;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.baida.BaidaGang;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.baida.BaidaPeng;
+import com.randioo.majiang_collections_server.module.fight.component.score.round.qiaoma.QiaomaHuTypeCalculator;
+import com.randioo.majiang_collections_server.module.fight.component.score.round.qiaoma.QiaomaHuTypeResult;
 import com.randioo.majiang_collections_server.module.fight.service.FightService;
 import com.randioo.randioo_server_base.utils.ReflectUtils;
 
@@ -198,6 +198,12 @@ public class QiaoMaRule extends MajiangRule {
 
             break;
         case STATE_ROLE_SEND_CARD: { // 出牌后
+            {
+                RoleGameInfo roleGameInfo = roleGameInfoGetter.getCurrentRoleGameInfo(game);
+                if (roleGameInfo.tingCards.size() > 0) {
+                    list.add(MajiangStateEnum.STATE_TING);
+                }
+            }
             list.add(MajiangStateEnum.STATE_CHECK_OTHER_CARDLIST);
             // 添加需要检测的人
             game.checkOtherCardListSeats.clear();
@@ -247,6 +253,8 @@ public class QiaoMaRule extends MajiangRule {
             if (game.getCallCardLists().size() > 0) {
                 list.addAll(noticeCardListProcesses);
             } else {
+                // 进入后 以下就是正常流程了
+                game.isAddFlowerState = false;
                 RoleGameInfo roleGameInfo = roleGameInfoGetter.getCurrentRoleGameInfo(game);
                 int size = roleGameInfo.cards.size();
                 int cardListSize = roleGameInfo.showCardLists.size();
@@ -287,6 +295,8 @@ public class QiaoMaRule extends MajiangRule {
         }
             break;
         case STATE_ROLE_CHOSEN_CARDLIST: {// 选择后
+            // 如有栈中有CHECK_MINE_CARDLIST_OUTER，说明在补花流程中
+            boolean isAddFlower = game.getOperations().contains(MajiangStateEnum.STATE_CHECK_MINE_CARDLIST_OUTER);
             // 获得第一个人的卡组
             List<CallCardList> callCardLists = game.getCallCardLists();
             if (callCardLists.size() > 0) {
@@ -300,9 +310,6 @@ public class QiaoMaRule extends MajiangRule {
                 } else if (cardList instanceof Gang) {
                     Gang gang = (Gang) cardList;
                     list.add(MajiangStateEnum.STATE_GANG);
-                    // 如有栈中有CHECK_MINE_CARDLIST_OUTER，说明在补花流程中
-                    boolean isAddFlower = game.getOperations()
-                            .contains(MajiangStateEnum.STATE_CHECK_MINE_CARDLIST_OUTER);
 
                     int seat = callCardList.masterSeat;
                     game.checkOtherCardListSeats.clear();
@@ -346,6 +353,13 @@ public class QiaoMaRule extends MajiangRule {
                 }
 
             } else {
+                // 补花流程中,栈中无CHECK_MINE_CARDLIST_OUTER，有操作，但是选择了过
+                if (game.isAddFlowerState && !isAddFlower) {
+                    game.isAddFlowerState = false;
+                    list.addAll(touchCardProcesses);
+                    list.addAll(sendCardProcesses);
+                    list.add(MajiangStateEnum.STATE_NEXT_SEAT);
+                }
                 if (game.qiangGangCallCardList != null) {
                     // 如果需要跳转,则要填上出牌流程，实质上和下一家的流程差不多
                     list.add(MajiangStateEnum.STATE_GANG_CAL_SCORE);
@@ -368,9 +382,7 @@ public class QiaoMaRule extends MajiangRule {
 
         default:
         }
-
         return list;
-
     }
 
     public boolean containsFlowers(RoleGameInfo roleGameInfo) {
@@ -383,7 +395,7 @@ public class QiaoMaRule extends MajiangRule {
     }
 
     /** 所有的牌型 */
-    private Map<Class<? extends CardList>, CardList> allCardListMap = new HashMap<>();
+    public Map<Class<? extends CardList>, CardList> allCardListMap = new HashMap<>();
 
     /** 别人打牌 不是下一家 花足够时，可以抓胡、杠、碰 */
     private List<Class<? extends CardList>> otherFlowerMoreCardListSequence = new ArrayList<>();
@@ -446,7 +458,7 @@ public class QiaoMaRule extends MajiangRule {
 
     @Override
     public void executeRoundOverProcess(Game game, boolean checkHu) {
-        fightService.roundOverBaida(game, checkHu);
+        fightService.roundOverQiaoMa(game, checkHu);
     }
 
     @Override
@@ -470,7 +482,7 @@ public class QiaoMaRule extends MajiangRule {
         int nextSeat = seatIndexCalc.getNext(game);
         RoleGameInfo nextRoleInfo = roleGameInfoGetter.getRoleGameInfoBySeat(game, nextSeat);
         // 目前有几个花
-        int flowerCount = roleGameInfo.flowerCount + getDarkFlowerCount(roleGameInfo);
+        int flowerCount = roleGameInfo.flowerCount + getDarkFlowerCount(roleGameInfo.cards);
         // 获得规则
         int needCount = game.getGameConfig().getZhuaFlowerCount();
         if (nextRoleInfo == roleGameInfo) { // 下一家
@@ -490,14 +502,14 @@ public class QiaoMaRule extends MajiangRule {
 
     @Override
     public List<Class<? extends CardList>> getMineCardListSequence(RoleGameInfo roleGameInfo, Game game) {
-        // 有牌型的可以自摸，不受花数的限制
+        // 有牌型或听时
         QiaomaHuTypeResult typeRes = typeCalc.calc(roleGameInfo, game, roleGameInfo.newCard, false);
-        if (typeRes.typeList.size() > 0) {
+        if (typeRes.typeList.size() > 0 || roleGameInfo.isTing) {
             return mineFlowerMoreCardListSequence;
         }
 
         // 目前有几个花
-        int flowerCount = roleGameInfo.flowerCount + getDarkFlowerCount(roleGameInfo);
+        int flowerCount = roleGameInfo.flowerCount + getDarkFlowerCount(roleGameInfo.cards);
         int needCount = game.getGameConfig().getMoFlowerCount();
         if (flowerCount >= needCount) {
             return mineFlowerMoreCardListSequence;
@@ -523,9 +535,14 @@ public class QiaoMaRule extends MajiangRule {
         return isFlower;
     }
 
-    public int getDarkFlowerCount(RoleGameInfo roleGameInfo) {
+    /**
+     * 获取手牌里超过3个的风向牌的个数
+     * 
+     * @param roleGameInfo
+     * @return
+     */
+    public int getDarkFlowerCount(List<Integer> cards) {
         int count = 0;
-        List<Integer> cards = roleGameInfo.cards;
         for (Integer fengCard : fengCards) {
             if (Collections.frequency(cards, fengCard) >= 3) {
                 count++;
@@ -534,15 +551,9 @@ public class QiaoMaRule extends MajiangRule {
         return count;
     }
 
-    public void darkFlowerTest() {
-        int count = 0;
-        List<Integer> cards = Arrays.asList(401, 401, 401, 101, 101, 101, 101, 601, 601, 601, 601);
-        for (Integer fengCard : fengCards) {
-            if (Collections.frequency(cards, fengCard) >= 3) {
-                count++;
-            }
-        }
-        System.out.println(count);
+    @Override
+    public boolean isFlower(Integer card) {
+        return flowerCards.contains(card);
     }
 
 }

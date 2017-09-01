@@ -34,23 +34,24 @@ enum ErrorCode{
 	GAME_NOT_EXIST = 20;//游戏不存在
 	GAME_CARD_NOT_EXIST = 21;//卡牌不存在
 	GAME_EXITING = 22;//其他人正申请退出
-	APPLY_REJECT = 23;//拒绝解散房间
-	NOT_YOUR_TURN = 24;//没轮到你
+	GAME_TING_FAIL = 23;//听牌失败
+	APPLY_REJECT = 24;//拒绝解散房间
+	NOT_YOUR_TURN = 25;//没轮到你
 	
-	NOT_SAME_TYPE = 25;//牌型不符
-	SMALLER = 26;//牌比上家小
-	NULL_REJECT = 27;//不允许不出牌
-	NOT_LANDLORD = 28;//你不是地主
-	MINGPAI_FORBIDDEN = 29;//不能明牌
-	FIRST_ROUND = 30;//第一轮
+	NOT_SAME_TYPE = 26;//牌型不符
+	SMALLER = 27;//牌比上家小
+	NULL_REJECT = 28;//不允许不出牌
+	NOT_LANDLORD = 29;//你不是地主
+	MINGPAI_FORBIDDEN = 30;//不能明牌
+	FIRST_ROUND = 31;//第一轮
 
 	//战斗
-	FIGHT_TIME_PASS = 31;//时间过期
-	FIGHT_MORE_CARD = 32;//牌多了一张，有问题	
+	FIGHT_TIME_PASS = 32;//时间过期
+	FIGHT_MORE_CARD = 33;//牌多了一张，有问题	
 
 	//比赛
-	RACE_JOIN_FAILED = 33;//比赛加入失败
+	RACE_JOIN_FAILED = 34;//比赛加入失败
 	
 	//燃点币
-	NOT_RANDIOOMONEY_ENOUGH = 34;//燃点币不足
-} // 34
+	NOT_RANDIOOMONEY_ENOUGH = 35;//燃点币不足
+} // 35

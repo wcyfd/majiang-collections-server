@@ -421,12 +421,6 @@ public class ZLPBaiDaHu extends Hu {
     }
 
     @Override
-    public void checkTing(CardSort cardSort, List<Integer> waitCards, GameConfigData gameConfigData) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
     public String toString() {
         return "cardList:hu=>gangkai=" + gangKai + ",isMine=" + isMine + ",card=" + card + "," + super.toString();
     }
@@ -450,8 +444,9 @@ public class ZLPBaiDaHu extends Hu {
     public static void main(String[] args) {
         ZLPBaiDaHu hu = new ZLPBaiDaHu();
         CardSort cardSort = new CardSort(4);
-//        cardSort.fillCardSort(Arrays.asList(101, 102, 103, 104, 105, 201, 302, 101, 102, 201, 302, 801, 801, 302));
-        cardSort.fillCardSort(Arrays.asList(801,801,203,203,206,206,207,207,208,308,308));
+        // cardSort.fillCardSort(Arrays.asList(101, 102, 103, 104, 105, 201,
+        // 302, 101, 102, 201, 302, 801, 801, 302));
+        cardSort.fillCardSort(Arrays.asList(801, 801, 203, 203, 206, 206, 207, 207, 208, 308, 308));
 
         // List<Integer> cards = Arrays.asList(101, 102, 103, 104, 105, 201,
         // 302, 101, 102, 201, 302, 801, 801, 302);
@@ -481,6 +476,12 @@ public class ZLPBaiDaHu extends Hu {
         System.out.println(b);
         long end = System.currentTimeMillis();
         System.out.println(end - start);
+    }
+
+    @Override
+    public boolean checkTing(Game game, CardSort cardSort, List<Integer> waitCards) {
+
+        return false;
     }
 
     // public static void main(String[] args) {

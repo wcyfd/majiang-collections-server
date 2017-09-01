@@ -14,12 +14,14 @@ import com.randioo.majiang_collections_server.module.fight.component.BaidaMajian
  * @date 2017年8月23日 上午9:35:57
  */
 public class FillFlowerBox {
-    /** 补的所有牌 */
-    private List<Integer> cards = new ArrayList<>();
-    /** 每一次补的牌数 */
-    private List<Integer> everyAddCardCountList = new ArrayList<>();
+    private List<List<Integer>> cardList = new ArrayList<>();
+
     private List<Integer> flowerCards = new ArrayList<>();
     private List<Integer> nomalCards = new ArrayList<>();
+
+    public List<List<Integer>> getCardList() {
+        return cardList;
+    }
 
     public List<Integer> getFlowerCards() {
         return flowerCards;
@@ -29,18 +31,8 @@ public class FillFlowerBox {
         return nomalCards;
     }
 
-    public List<Integer> getCards() {
-        return cards;
-    }
-
-    public List<Integer> getEveryAddCardCountList() {
-        return everyAddCardCountList;
-    }
-
-    public void addCards(List<Integer> newList) {
-        cards.addAll(newList);
-        everyAddCardCountList.add(newList.size());
-
+    public void addLine(List<Integer> newList) {
+        this.cardList.add(newList);
         for (Integer card : newList) {
             if (isHua(card)) {
                 flowerCards.add(card);
@@ -50,13 +42,18 @@ public class FillFlowerBox {
         }
     }
 
-    public List<Integer> getHideCards() {
+    public List<Integer> getLine(int index) {
+        return cardList.get(index);
+    }
+
+    public List<Integer> getHideCards(int index) {
         List<Integer> hideCards = new ArrayList<>();
-        for (Integer card : cards) {
+        List<Integer> onLine = cardList.get(index);
+        for (Integer card : onLine) {
             if (isHua(card)) {
-                hideCards.add(0);
-            } else {
                 hideCards.add(card);
+            } else {
+                hideCards.add(0);
             }
         }
         return hideCards;

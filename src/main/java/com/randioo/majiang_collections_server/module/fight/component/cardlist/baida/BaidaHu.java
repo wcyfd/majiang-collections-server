@@ -388,7 +388,8 @@ public class BaidaHu extends Hu {
      * 找到没有使用过的指定对象索引
      * 
      * @param cards
-     * @param indexSet 使用过的对象索引
+     * @param indexSet
+     *            使用过的对象索引
      * @param startIndex
      * @param card
      * @return
@@ -479,12 +480,6 @@ public class BaidaHu extends Hu {
     }
 
     @Override
-    public void checkTing(CardSort cardSort, List<Integer> waitCards, GameConfigData gameConfigData) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
     public String toString() {
         return "cardList:hu=>gangkai=" + gangKai + ",isMine=" + isMine + ",card=" + card + "," + super.toString();
     }
@@ -538,6 +533,12 @@ public class BaidaHu extends Hu {
         // System.out.println(b);
         long end = System.currentTimeMillis();
         System.out.println(end - start);
+    }
+
+    @Override
+    public boolean checkTing(Game game, CardSort cardSort, List<Integer> waitCards) {
+
+        return false;
     }
 
     // public static void main(String[] args) {

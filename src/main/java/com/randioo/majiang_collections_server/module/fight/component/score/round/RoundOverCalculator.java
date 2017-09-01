@@ -46,12 +46,12 @@ public class RoundOverCalculator {
                     containsHu = true;
                     Hu hu = (Hu) callCardList.cardList;
 
-                    result.overMethod = OverMethod.OVER_HU;
-
                     if (hu.isMine) {// 自摸 的人底分x3,苍蝇x3，如果是杠开还要再乘2，每家都扣分
-                        result.overMethod = OverMethod.OVER_MO_HU;
+                        result.overMethod = OverMethod.MO_HU;
                         result.score = minScore * (3 * (hu.gangKai ? 2 : 1)) + zhamaScore * 3;
                         result.moScore = result.score;
+
+                        result.zhaMaScore = zhamaScore * 3;
 
                         for (RoundOverResult roundOverResult : results.values()) {
                             if (roundOverResult.seat == seat) {
@@ -59,15 +59,28 @@ public class RoundOverCalculator {
                             }
 
                             roundOverResult.score += -(minScore * (hu.gangKai ? 2 : 1) + zhamaScore);
+                            roundOverResult.zhaMaScore = -zhamaScore;
                         }
                     } else if (hu.gangChong) {// 杠冲底分x3,苍蝇x3,被杠冲的人扣相同分数
+                        result.overMethod = OverMethod.QIANG_GANG;
                         result.score += (minScore + zhamaScore) * 3;
+                        result.qiangGangScore = minScore * 3;
+                        result.zhaMaScore = zhamaScore * 3;
+
                         RoundOverResult targetRoundOverResult = results.get(hu.getTargetSeat());
                         targetRoundOverResult.score += -(minScore + zhamaScore) * 3;
+                        targetRoundOverResult.gangChongScore = -minScore * 3;
+                        targetRoundOverResult.zhaMaScore = -zhamaScore * 3;
                     } else {
+                        result.overMethod = OverMethod.ZHUA_HU;
                         result.score += minScore + zhamaScore;
+                        result.zhuaHuScore = minScore;
+                        result.zhaMaScore = zhamaScore;
+
                         RoundOverResult targetRoundOverResult = results.get(hu.getTargetSeat());
                         targetRoundOverResult.score += -(minScore + zhamaScore);
+                        targetRoundOverResult.zhuaHuScore = -minScore;
+                        targetRoundOverResult.zhaMaScore = -zhamaScore;
                     }
 
                     result.gangKai = hu.gangKai;
@@ -77,15 +90,23 @@ public class RoundOverCalculator {
 
             // 没胡就是输，检查点冲
             if (!containsHu) {
-                result.overMethod = OverMethod.OVER_LOSS;
+                result.overMethod = OverMethod.LOSS;
                 if (checkHu) {
                     // 检查是否被点冲
                     for (CallCardList huCallCardList : huCallCardLists) {
                         Hu hu = (Hu) huCallCardList.cardList;
-                        if (hu.getTargetSeat() == seat) {
-                            // 点冲
-                            result.overMethod = OverMethod.OVER_CHONG;
-                            break;
+                        if (hu.gangKai) {
+                            if (hu.getTargetSeat() == seat) {
+                                // 点冲
+                                result.overMethod = OverMethod.GANG_CHONG;
+                                break;
+                            }
+                        } else {
+                            if (hu.getTargetSeat() == seat) {
+                                // 点冲
+                                result.overMethod = OverMethod.CHU_CHONG;
+                                break;
+                            }
                         }
                     }
                 }

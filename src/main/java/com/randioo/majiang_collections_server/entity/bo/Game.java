@@ -86,8 +86,12 @@ public class Game extends RuleableGame {
     public List<Integer> checkOtherCardListSeats = new ArrayList<>();
     /** 骰子 */
     public int[] dice;
-
+    /** 是不是补花状态 */
+    public boolean isAddFlowerState;
+    /** 新摸的牌是不是花牌 */
     public boolean touchCardIsFlower;
+    /** 能不能听 */
+    public boolean canTing;
 
     public boolean isHuangFan() {
         return isHuangFan;

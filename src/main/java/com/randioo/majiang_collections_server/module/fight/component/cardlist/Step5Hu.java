@@ -7,13 +7,28 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.randioo.mahjong_public_server.protocol.Entity.GameConfigData;
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.po.CardSort;
 import com.randioo.majiang_collections_server.module.fight.component.MajiangRule;
 import com.randioo.majiang_collections_server.util.Lists;
 
 public class Step5Hu extends Hu {
+    @Override
+    public boolean checkTing(Game game, CardSort cardSort, List<Integer> waitCards) {
+        boolean canTing = false;
+        List<CardList> resList = new ArrayList<>();
+        List<CardList> showCardList = new ArrayList<>();
+        for (Integer waitCard : waitCards) {
+            cardSort.addCard(waitCard);
+            this.check(game, resList, cardSort, waitCard, showCardList, false);
+            cardSort.remove(waitCard);
+        }
+        if (resList.size() == waitCards.size()) {
+            canTing = true;
+        }
+        return canTing;
+    }
+
     @Override
     public void check(Game game, List<CardList> cardLists, CardSort cardSort, int card, List<CardList> showCardList,
             boolean isMine) {
@@ -213,12 +228,6 @@ public class Step5Hu extends Hu {
         // 11,12,11,11,12
         // 11,11,12,12,12
         List<Integer> change = new ArrayList<>();
-
-    }
-
-    @Override
-    public void checkTing(CardSort cardSort, List<Integer> waitCards, GameConfigData gameConfigData) {
-        // TODO Auto-generated method stub
 
     }
 
