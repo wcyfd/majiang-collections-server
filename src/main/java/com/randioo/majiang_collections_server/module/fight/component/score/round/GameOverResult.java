@@ -37,7 +37,8 @@ public class GameOverResult extends RoundOverResult {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("GameOverResult [huCount=").append(huCount).append(", moHuCount=").append(moHuCount)
+        builder.append("GameOverResult [gangChongCount=").append(gangChongCount).append(", huCount=").append(huCount)
+                .append(", qiangGangCount=").append(qiangGangCount).append(", moHuCount=").append(moHuCount)
                 .append(", zhuaHuCount=").append(zhuaHuCount).append(", dianChong=").append(dianChong)
                 .append(", score=").append(score).append(", mingGangScore=").append(mingGangScore)
                 .append(", mingGangCount=").append(mingGangCount).append(", darkGangScore=").append(darkGangScore)

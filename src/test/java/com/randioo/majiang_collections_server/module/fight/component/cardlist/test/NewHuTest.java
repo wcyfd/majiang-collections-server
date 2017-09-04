@@ -34,7 +34,7 @@ public class NewHuTest {
         NewHu hu = new NewHu();
         // List<Integer> cards = Lists.newArrayList(103, 104, 104, 104, 105,
         // 106, 106, 106, 107, 107, 108, 109, 801, 801);
-        List<Integer> cards = Lists.newArrayList(203, 203, 203, 203, 303, 303, 303, 801);
+        List<Integer> cards = Lists.newArrayList(801,203,203,203,303,303,303,203);
         CardSort cardSort = new CardSort(4);
         cardSort.fillCardSort(cards);
         Method method = ReflectionUtils.findMethod(NewHu.class, "checkHu", CardSort.class, int.class);
@@ -44,12 +44,12 @@ public class NewHuTest {
         ReflectionUtils.makeAccessible(findAllField);
         ReflectionUtils.makeAccessible(printField);
         ReflectionUtils.setField(findAllField, hu, false);
-        ReflectionUtils.setField(printField, hu, false);
+        ReflectionUtils.setField(printField, hu, true);
         boolean result = (boolean) ReflectionUtils.invokeMethod(method, hu, cardSort, 801);
         System.out.println(result);
     }
 
-    @Test
+//    @Test
     public void checkTingTest() {
         NewHu hu = new NewHu();
         // List<Integer> cards = Lists.newArrayList(103, 104, 104, 104, 105,

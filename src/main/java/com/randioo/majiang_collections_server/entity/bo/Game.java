@@ -12,6 +12,7 @@ import com.randioo.mahjong_public_server.protocol.Entity.GameState;
 import com.randioo.mahjong_public_server.protocol.Entity.GameType;
 import com.randioo.majiang_collections_server.entity.po.CallCardList;
 import com.randioo.majiang_collections_server.entity.po.RoleGameInfo;
+import com.randioo.majiang_collections_server.entity.po.env_vars.EnvVars;
 import com.randioo.majiang_collections_server.module.fight.component.RuleableGame;
 import com.randioo.majiang_collections_server.module.fight.component.score.round.GameOverResult;
 import com.randioo.majiang_collections_server.util.key.Key;
@@ -92,6 +93,8 @@ public class Game extends RuleableGame {
     public boolean touchCardIsFlower;
     /** 能不能听 */
     public boolean canTing;
+    /** 环境变量集合 */
+    public EnvVars envVars = new EnvVars();
 
     public boolean isHuangFan() {
         return isHuangFan;

@@ -49,7 +49,7 @@ public class RoundOverCalculator {
                     if (hu.isMine) {// 自摸 的人底分x3,苍蝇x3，如果是杠开还要再乘2，每家都扣分
                         result.overMethod = OverMethod.MO_HU;
                         result.score = minScore * (3 * (hu.gangKai ? 2 : 1)) + zhamaScore * 3;
-                        result.moScore = result.score;
+                        result.moScore = minScore * (3 * (hu.gangKai ? 2 : 1));
 
                         result.zhaMaScore = zhamaScore * 3;
 

@@ -21,7 +21,6 @@ public class HeartTimeOutHandler implements KeepAliveRequestTimeoutHandler {
     public void keepAliveRequestTimedOut(KeepAliveFilter arg0, IoSession arg1) throws Exception {
         System.out.println(TimeUtils.getDetailTimeStr() + " keepAliveRequestTimedOut");
 //        arg1.close(true);
-        System.exit(0);
         Role role = (Role) RoleCache.getRoleBySession(arg1);
         closeService.asynManipulate(role);
 //        

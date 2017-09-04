@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.po.RoleGameInfo;
 import com.randioo.majiang_collections_server.util.Lists;
+import com.randioo.randioo_server_base.utils.RandomUtils;
 
 @Component
 public class DebugDispatcher implements Dispatcher {
@@ -86,14 +87,22 @@ public class DebugDispatcher implements Dispatcher {
         // { 201, 202, 203, 203, 204, 205, 206, 207, 208, 209, 305, 304, 306 }
         // //
         // };
-        int[][] arrs = { // 吃
-                //
-                { 301, 301, 301, 302, 303, 304, 305, 306, 307, 308, 309, 309, 309 },
-                { 101, 101, 101, 201, 202, 203, 204, 205, 206, 207, 208, 209, 301 },
-                { 301, 302, 303, 304, 305, 306, 307, 308, 309, 309, 308, 307, 306 },
-                { 201, 202, 203, 203, 204, 205, 206, 207, 208, 209, 305, 304, 306 }
+        // int[][] arrs = { // 吃
+        // //
+        // { 301, 301, 301, 302, 303, 304, 305, 306, 307, 308, 309, 309, 309 },
+        // { 101, 101, 101, 201, 202, 203, 204, 205, 206, 207, 208, 209, 301 },
+        // { 301, 302, 303, 304, 305, 306, 307, 308, 309, 309, 308, 307, 306 },
+        // { 201, 202, 203, 203, 204, 205, 206, 207, 208, 209, 305, 304, 306 }
+        // //
+        // };
+        int[][] arrs = { // 跑百搭
+        //
+                
+                { 301, 301, 301, 302, 302, 302, 303, 303, 303, 304, 304, 304, 801 }
+
         //
         };
+
         // int[][] arrs = { // 补花检测
         // //
         // { 101, 101, 101, 104, 105, 1001, 107, 1101, 109, 801, 202, 203, 204
@@ -163,6 +172,7 @@ public class DebugDispatcher implements Dispatcher {
 
         List<CardPart> cardParts = new ArrayList<>();
         List<Integer> removeList = new ArrayList<>();
+        // 指定牌加入
         for (int i = 0; i < partCount; i++) {
             CardPart cardPart = new CardPart();
             cardParts.add(cardPart);
@@ -170,18 +180,30 @@ public class DebugDispatcher implements Dispatcher {
             RoleGameInfo roleGameInfo = game.getRoleIdMap().get(gameRoleId);
             roleGameInfo.cards.clear();
 
-            for (int j = 0; j < everyPartCount; j++) {
-                cardPart.add(arrs[i][j]);
-                removeList.add(arrs[i][j]);
+            if (i < arrs.length) {
+                for (int j = 0; j < arrs[i].length; j++) {
+                    int value = arrs[i][j];
+                    cardPart.add(value);
+                    removeList.add(value);
+                }
+            }
+        }
+        Lists.removeElementByList(originCards, removeList);
+        removeList.clear();
+
+        // 剩余牌补全
+        for (int i = 0; i < partCount; i++) {
+            CardPart cardPart = cardParts.get(i);
+            for (int j = cardPart.size(); j < everyPartCount; j++) {
+                int index = RandomUtils.getRandomNum(originCards.size());
+                int value = originCards.get(index);
+                cardPart.add(value);
+                removeList.add(value);
             }
         }
 
-        Lists.removeElementByList(remainCards, removeList);
-        // remainCards.clear();
-        // remainCards.add(203);
+        Lists.removeElementByList(originCards, removeList);
 
-        Collections.sort(remainCards);
-        // Collections.shuffle(remainCards);
         return cardParts;
     }
 

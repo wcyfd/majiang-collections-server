@@ -93,6 +93,6 @@ public class HongzhongGang extends Gang {
 
     @Override
     public String toString() {
-        return "cardList=>gang:card=" + card + " visible=" + dark + " peng=" + peng + " " + super.toString();
+        return super.toString();
     }
 }

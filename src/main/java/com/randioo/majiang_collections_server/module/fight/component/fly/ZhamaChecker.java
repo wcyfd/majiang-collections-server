@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.randioo.mahjong_public_server.protocol.Entity.GameConfigData;
 import com.randioo.majiang_collections_server.entity.bo.Game;
+import com.randioo.randioo_server_base.utils.RandomUtils;
 
 @Component
 public class ZhamaChecker {
@@ -39,7 +40,10 @@ public class ZhamaChecker {
      */
     private List<Integer> getZhamas(Game game) {
         GameConfigData config = game.getGameConfig();
-        int catchCount = config.getZhamaCount();
+        int remainCardsCount = game.getRemainCards().size();
+        int zhamaCount = config.getZhamaCount();
+        // 确定抓苍蝇的数量，有多少抓多少，没有剩余牌就不抓
+        int catchCount = remainCardsCount >= zhamaCount ? zhamaCount : remainCardsCount;
         // 没有可以抓的苍蝇直接返回
         if (catchCount == 0)
             return new ArrayList<Integer>();
@@ -48,7 +52,8 @@ public class ZhamaChecker {
         for (int j = 0; j < catchCount; j++) {
             // 没苍蝇就算了
             try {
-                int zhamaCard = game.getRemainCards().remove(0);
+                int index = RandomUtils.getRandomNum(game.getRemainCards().size());
+                int zhamaCard = game.getRemainCards().remove(index);
                 zhamas.add(zhamaCard);
             } catch (Exception e) {
                 break;
@@ -72,7 +77,7 @@ public class ZhamaChecker {
         List<Integer> result = new ArrayList<>(zhamas.size());
 
         List<Integer> zhamaValueList = gameConfigData.getZhamaValueList();
-        for (Integer i : zhamas) {
+        for (int i : zhamas) {
             if (this.isNumSame(zhamaValueList, i))
                 result.add(i);
         }

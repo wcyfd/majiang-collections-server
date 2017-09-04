@@ -1,5 +1,6 @@
 package com.randioo.majiang_collections_server.module.match.service;
 
+import java.lang.reflect.Field;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +13,7 @@ import java.util.Map;
 import org.apache.mina.core.session.IoSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.GeneratedMessage;
@@ -38,6 +40,7 @@ import com.randioo.majiang_collections_server.entity.file.GameRoundConfig;
 import com.randioo.majiang_collections_server.entity.po.RoleGameInfo;
 import com.randioo.majiang_collections_server.entity.po.RoleMatchRule;
 import com.randioo.majiang_collections_server.module.ServiceConstant;
+import com.randioo.majiang_collections_server.module.fight.FightConstant;
 import com.randioo.majiang_collections_server.module.fight.component.BaidaMajiangRule;
 import com.randioo.majiang_collections_server.module.fight.component.HongZhongMajiangRule;
 import com.randioo.majiang_collections_server.module.fight.component.MajiangRule;
@@ -311,10 +314,27 @@ public class MatchServiceImpl extends ObserveBaseService implements MatchService
             game.setRule(hongZhongMajiangRule);
         }
 
+        // 复制环境变量
+        this.copyGlobleMap(game);
+
         GameCache.getGameMap().put(gameId, game);
         GameCache.getGameLockStringMap().put(lockString, gameId);
 
         return game;
+    }
+
+    /**
+     * 复制环境变量
+     * 
+     * @param game
+     * @author wcy 2017年9月4日
+     */
+    private void copyGlobleMap(Game game) {
+        Field field = ReflectionUtils.findField(GlobleMap.class, "paramMap");
+        ReflectionUtils.makeAccessible(field);
+        @SuppressWarnings("unchecked")
+        Map<String, Object> paramMap = (Map<String, Object>) ReflectionUtils.getField(field, null);
+        game.envVars.putParam(paramMap);
     }
 
     /**

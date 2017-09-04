@@ -42,7 +42,7 @@ public class HongzhongPeng extends Peng {
 
     @Override
     public String toString() {
-        return "cardList=>peng:card=" + card + " " + super.toString();
+        return super.toString();
     }
 
 }
