@@ -183,11 +183,16 @@ public class BaidaMajiangRule extends MajiangRule {
             }
             break;
         case STATE_GAME_START: {
-            RoleGameInfo currentRoleGameInfo = roleGameInfoGetter.getCurrentRoleGameInfo(game);
             list.add(MajiangStateEnum.STATE_BAIDA_INIT);
             list.add(MajiangStateEnum.STATE_CHECK_ZHUANG);
             list.add(MajiangStateEnum.STATE_DISPATCH);
             list.add(MajiangStateEnum.STATE_SC_GAME_START);
+
+        }
+            break;
+        case STATE_SC_GAME_START: {
+            RoleGameInfo currentRoleGameInfo = roleGameInfoGetter.getCurrentRoleGameInfo(game);
+
             if (containsFlowers(currentRoleGameInfo)) {
                 list.addAll(addFlowersProcess);
             } else {

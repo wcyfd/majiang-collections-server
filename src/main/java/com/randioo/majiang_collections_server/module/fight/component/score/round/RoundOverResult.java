@@ -1,5 +1,6 @@
 package com.randioo.majiang_collections_server.module.fight.component.score.round;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.randioo.mahjong_public_server.protocol.Entity.HuType;
@@ -11,7 +12,7 @@ public class RoundOverResult {
     /** 分数 */
     public int score;
     /** 胡的牌型 */
-    public List<HuType> huTypeList;
+    public List<HuType> huTypeList = new ArrayList<>();
     /** 结束原因 */
     public OverMethod overMethod;
     /** 是否杠开 */
@@ -69,11 +70,11 @@ public class RoundOverResult {
                 .append(", mingGangScoreMinus=").append(mingGangScoreMinus).append(", mingGangCountMinus=")
                 .append(mingGangCountMinus).append(", darkGangScoreMinus=").append(darkGangScoreMinus)
                 .append(", darkGangCountMinus=").append(darkGangCountMinus).append(", addGangScoreMinus=")
-                .append(addGangScoreMinus).append(", addGangCountMinus=").append(addGangCountMinus)
-                .append(", moScore=").append(moScore).append(", zhuaHuScore=").append(zhuaHuScore)
-                .append(", qiangGangScore=").append(qiangGangScore).append(", chuChongScore=").append(chuChongScore)
-                .append(", gangChongScore=").append(gangChongScore).append(", zhaMaScore=").append(zhaMaScore)
-                .append(", cangYingScore=").append(cangYingScore).append("]");
+                .append(addGangScoreMinus).append(", addGangCountMinus=").append(addGangCountMinus).append(", moScore=")
+                .append(moScore).append(", zhuaHuScore=").append(zhuaHuScore).append(", qiangGangScore=")
+                .append(qiangGangScore).append(", chuChongScore=").append(chuChongScore).append(", gangChongScore=")
+                .append(gangChongScore).append(", zhaMaScore=").append(zhaMaScore).append(", cangYingScore=")
+                .append(cangYingScore).append("]");
         return builder.toString();
     }
 

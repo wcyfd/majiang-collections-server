@@ -12,7 +12,8 @@
        http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
 	<!-- 加载配置属性文件 -->
-	<context:property-placeholder ignore-unresolvable="true" location="classpath:application.properties" />
+	<!-- <context:property-placeholder ignore-unresolvable="true" location="classpath:application.properties" /> -->
+	<context:property-placeholder ignore-unresolvable="true" location="application.properties" />
 
 	<!-- 利用注解进行bean的生成，并进行自动连锁 -->
 	<!-- sihao_server -->

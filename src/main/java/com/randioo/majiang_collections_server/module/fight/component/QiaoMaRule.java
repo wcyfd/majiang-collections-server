@@ -11,6 +11,7 @@ import java.util.Stack;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.randioo.mahjong_public_server.protocol.Entity.HuType;
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.po.CallCardList;
 import com.randioo.majiang_collections_server.entity.po.RoleGameInfo;
@@ -185,11 +186,15 @@ public class QiaoMaRule extends MajiangRule {
             }
             break;
         case STATE_GAME_START: {
-            RoleGameInfo currentRoleGameInfo = roleGameInfoGetter.getCurrentRoleGameInfo(game);
             list.add(MajiangStateEnum.STATE_QIAOMA_INIT);
             list.add(MajiangStateEnum.STATE_CHECK_ZHUANG);
             list.add(MajiangStateEnum.STATE_DISPATCH);
             list.add(MajiangStateEnum.STATE_SC_GAME_START);
+        }
+            break;
+        case STATE_SC_GAME_START: {
+            RoleGameInfo currentRoleGameInfo = roleGameInfoGetter.getCurrentRoleGameInfo(game);
+
             if (containsFlowers(currentRoleGameInfo)) {
                 list.addAll(addFlowersProcess);
             } else {
@@ -505,19 +510,26 @@ public class QiaoMaRule extends MajiangRule {
         if (roleGameInfo.isTing) {
             return otherTingCardListSequence;
         }
-        // 有牌型可以抓胡和自摸，不受花数的限制
-        QiaomaHuTypeResult typeRes = typeCalc.calc(roleGameInfo, game, game.sendCard, false);
-        if (typeRes.typeList.size() > 0) {
-            return otherNextAndFlowerMoreCardListSequence;
-        }
-        // 普通胡
         int nextSeat = seatIndexCalc.getNext(game);
         RoleGameInfo nextRoleInfo = roleGameInfoGetter.getRoleGameInfoBySeat(game, nextSeat);
+        boolean isNextRole = nextRoleInfo.gameRoleId.equals(roleGameInfo.gameRoleId);
+        // 有牌型可以抓胡和自摸，不受花数的限制
+        QiaomaHuTypeResult typeRes = typeCalc.calc(roleGameInfo, game, game.sendCard, false);
+        // 垃圾胡不作为牌型，只是显示
+        typeRes.typeList.remove(HuType.LA_JI_HU);
+        if (typeRes.typeList.size() > 0) {
+            if (isNextRole) {
+                return otherNextAndFlowerMoreCardListSequence;
+            } else {
+                return otherFlowerMoreCardListSequence;
+            }
+        }
+        // 普通胡
         // 目前有几个花
         int flowerCount = roleGameInfo.flowerCount + getDarkFlowerCount(roleGameInfo.cards);
         // 获得规则
         int needCount = game.getGameConfig().getZhuaFlowerCount();
-        if (nextRoleInfo == roleGameInfo) { // 下一家
+        if (isNextRole) { // 下一家
             if (flowerCount >= needCount) {// 花够了
                 return otherNextAndFlowerMoreCardListSequence;
             } else {

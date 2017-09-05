@@ -31,7 +31,7 @@ public class QiaomaHuTypeCalculator {
 
     public QiaomaHuTypeResult calc(RoleGameInfo roleGameInfo, Game game, int lastCard, boolean isGangKai) {
         // 手牌
-        List<Integer> cards = roleGameInfo.cards;
+        List<Integer> cards = new ArrayList<>(roleGameInfo.cards);
         cards.add(lastCard);
         CardSort handCard = new CardSort(4);
         handCard.fillCardSort(cards);
@@ -97,11 +97,25 @@ public class QiaomaHuTypeCalculator {
             typeEnumList.add(QiaomaTypeEnum.QING_PENG);
             res.typeList.add(HuType.QING_PENG);
         }
+        if (isLajiHu(typeEnumList)) {
+            typeEnumList.add(QiaomaTypeEnum.LA_JI_HU);
+            res.typeList.add(HuType.LA_JI_HU);
+        }
 
         for (QiaomaTypeEnum item : typeEnumList)
             res.fanCount += item.fan;
 
         return res;
+    }
+
+    // 垃圾胡
+    public boolean isLajiHu(List<QiaomaTypeEnum> list) {
+        for (QiaomaTypeEnum item : list) {
+            if (lajihuTestList.contains(item)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     // 清一色：全部牌型为一色牌组成
@@ -217,6 +231,11 @@ public class QiaomaHuTypeCalculator {
 
     }
 
+    /** 用于判断是不是垃圾胡的list */
+    public List<QiaomaTypeEnum> lajihuTestList = new ArrayList<>(
+            Arrays.asList(QiaomaTypeEnum.QING_PENG, QiaomaTypeEnum.HUN_PENG, QiaomaTypeEnum.QING_YI_SE,
+                    QiaomaTypeEnum.PENG_PENG_HU, QiaomaTypeEnum.HUN_YI_SE, QiaomaTypeEnum.WU_HUA_GUO));
+
     public enum QiaomaTypeEnum {
         // 清碰：全部牌型为一色牌且为碰碰胡组成
         QING_PENG(3),
@@ -237,7 +256,9 @@ public class QiaomaHuTypeCalculator {
         // 大吊车：当前牌只剩下最后一个时，胡牌。
         DA_DIAO_CHE(1),
         // 海底捞：摸最后一张牌时胡牌
-        HAI_DI_LAO(1);
+        HAI_DI_LAO(1),
+        // 垃圾胡
+        LA_JI_HU(0);
 
         public int fan;
 

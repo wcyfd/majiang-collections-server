@@ -299,6 +299,7 @@ public final class Entity {
     HUN_YI_SE(10, 11),
     WU_HUA_GUO(11, 12),
     HAI_DI_LAO(12, 13),
+    LA_JI_HU(13, 14),
     ;
     
     
@@ -319,6 +320,7 @@ public final class Entity {
         case 11: return HUN_YI_SE;
         case 12: return WU_HUA_GUO;
         case 13: return HAI_DI_LAO;
+        case 14: return LA_JI_HU;
         default: return null;
       }
     }
@@ -349,7 +351,7 @@ public final class Entity {
     }
     
     private static final HuType[] VALUES = {
-      GANG_KAI, MEN_QING, DA_DIAO_CHE, SI_BAI_DA, WU_BAI_DA, PAO_DAI_DA, QING_PENG, HUN_PENG, QING_YI_SE, PENG_PENG_HU, HUN_YI_SE, WU_HUA_GUO, HAI_DI_LAO, 
+      GANG_KAI, MEN_QING, DA_DIAO_CHE, SI_BAI_DA, WU_BAI_DA, PAO_DAI_DA, QING_PENG, HUN_PENG, QING_YI_SE, PENG_PENG_HU, HUN_YI_SE, WU_HUA_GUO, HAI_DI_LAO, LA_JI_HU, 
     };
     public static HuType valueOf(
         com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
@@ -10229,6 +10231,377 @@ public final class Entity {
     // @@protoc_insertion_point(class_scope:com.randioo.mahjong_public_server.protocol.ClientCard)
   }
   
+  public static final class EnvVarsData extends
+      com.google.protobuf.GeneratedMessage {
+    // Use EnvVarsData.newBuilder() to construct.
+    private EnvVarsData() {
+      initFields();
+    }
+    private EnvVarsData(boolean noInit) {}
+    
+    private static final EnvVarsData defaultInstance;
+    public static EnvVarsData getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public EnvVarsData getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.randioo.mahjong_public_server.protocol.Entity.internal_static_com_randioo_mahjong_public_server_protocol_EnvVarsData_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.randioo.mahjong_public_server.protocol.Entity.internal_static_com_randioo_mahjong_public_server_protocol_EnvVarsData_fieldAccessorTable;
+    }
+    
+    // optional string key = 1;
+    public static final int KEY_FIELD_NUMBER = 1;
+    private boolean hasKey;
+    private java.lang.String key_ = "";
+    public boolean hasKey() { return hasKey; }
+    public java.lang.String getKey() { return key_; }
+    
+    // optional string value = 2;
+    public static final int VALUE_FIELD_NUMBER = 2;
+    private boolean hasValue;
+    private java.lang.String value_ = "";
+    public boolean hasValue() { return hasValue; }
+    public java.lang.String getValue() { return value_; }
+    
+    // optional string type = 3;
+    public static final int TYPE_FIELD_NUMBER = 3;
+    private boolean hasType;
+    private java.lang.String type_ = "";
+    public boolean hasType() { return hasType; }
+    public java.lang.String getType() { return type_; }
+    
+    private void initFields() {
+    }
+    public final boolean isInitialized() {
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (hasKey()) {
+        output.writeString(1, getKey());
+      }
+      if (hasValue()) {
+        output.writeString(2, getValue());
+      }
+      if (hasType()) {
+        output.writeString(3, getType());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasKey()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(1, getKey());
+      }
+      if (hasValue()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(2, getValue());
+      }
+      if (hasType()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(3, getType());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData result;
+      
+      // Construct using com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData();
+        return builder;
+      }
+      
+      protected com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData.getDescriptor();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData getDefaultInstanceForType() {
+        return com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData) {
+          return mergeFrom((com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData other) {
+        if (other == com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData.getDefaultInstance()) return this;
+        if (other.hasKey()) {
+          setKey(other.getKey());
+        }
+        if (other.hasValue()) {
+          setValue(other.getValue());
+        }
+        if (other.hasType()) {
+          setType(other.getType());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              setKey(input.readString());
+              break;
+            }
+            case 18: {
+              setValue(input.readString());
+              break;
+            }
+            case 26: {
+              setType(input.readString());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // optional string key = 1;
+      public boolean hasKey() {
+        return result.hasKey();
+      }
+      public java.lang.String getKey() {
+        return result.getKey();
+      }
+      public Builder setKey(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasKey = true;
+        result.key_ = value;
+        return this;
+      }
+      public Builder clearKey() {
+        result.hasKey = false;
+        result.key_ = getDefaultInstance().getKey();
+        return this;
+      }
+      
+      // optional string value = 2;
+      public boolean hasValue() {
+        return result.hasValue();
+      }
+      public java.lang.String getValue() {
+        return result.getValue();
+      }
+      public Builder setValue(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasValue = true;
+        result.value_ = value;
+        return this;
+      }
+      public Builder clearValue() {
+        result.hasValue = false;
+        result.value_ = getDefaultInstance().getValue();
+        return this;
+      }
+      
+      // optional string type = 3;
+      public boolean hasType() {
+        return result.hasType();
+      }
+      public java.lang.String getType() {
+        return result.getType();
+      }
+      public Builder setType(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasType = true;
+        result.type_ = value;
+        return this;
+      }
+      public Builder clearType() {
+        result.hasType = false;
+        result.type_ = getDefaultInstance().getType();
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:com.randioo.mahjong_public_server.protocol.EnvVarsData)
+    }
+    
+    static {
+      defaultInstance = new EnvVarsData(true);
+      com.randioo.mahjong_public_server.protocol.Entity.internalForceInit();
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:com.randioo.mahjong_public_server.protocol.EnvVarsData)
+  }
+  
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_randioo_mahjong_public_server_protocol_RoleData_descriptor;
   private static
@@ -10324,6 +10697,11 @@ public final class Entity {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_randioo_mahjong_public_server_protocol_ClientCard_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_randioo_mahjong_public_server_protocol_EnvVarsData_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_randioo_mahjong_public_server_protocol_EnvVarsData_fieldAccessorTable;
   
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -10413,25 +10791,27 @@ public final class Entity {
       ".randioo.mahjong_public_server.protocol." +
       "RoundVideoData\"/\n\022FightStartRoleData\022\013\n\003" +
       "pai\030\001 \003(\005\022\014\n\004seat\030\002 \001(\005\"\033\n\nClientCard\022\r\n",
-      "\005cards\030\001 \003(\005*9\n\016GameOverMethod\022\022\n\016GAME_O" +
-      "VER_TIME\020\001\022\023\n\017GAME_OVER_ROUND\020\002*5\n\010GameT" +
-      "ype\022\023\n\017GAME_TYPE_MATCH\020\001\022\024\n\020GAME_TYPE_FR" +
-      "IEND\020\002*M\n\tGameState\022\026\n\022GAME_STATE_PREPAR" +
-      "E\020\001\022\024\n\020GAME_START_START\020\002\022\022\n\016GAME_START_" +
-      "END\020\003*\231\001\n\014CardListType\022\026\n\022CARD_LIST_TYPE" +
-      "_CHI\020\001\022\027\n\023CARD_LIST_TYPE_PENG\020\002\022\035\n\031CARD_" +
-      "LIST_TYPE_GANG_LIGHT\020\003\022\034\n\030CARD_LIST_TYPE" +
-      "_GANG_DARK\020\004\022\033\n\027CARD_LIST_TYPE_GANG_ADD\020" +
-      "\005*\321\001\n\006HuType\022\014\n\010GANG_KAI\020\001\022\014\n\010MEN_QING\020\002",
-      "\022\017\n\013DA_DIAO_CHE\020\003\022\r\n\tSI_BAI_DA\020\004\022\r\n\tWU_B" +
-      "AI_DA\020\005\022\016\n\nPAO_DAI_DA\020\006\022\r\n\tQING_PENG\020\007\022\014" +
-      "\n\010HUN_PENG\020\010\022\016\n\nQING_YI_SE\020\t\022\020\n\014PENG_PEN" +
-      "G_HU\020\n\022\r\n\tHUN_YI_SE\020\013\022\016\n\nWU_HUA_GUO\020\014\022\016\n" +
-      "\nHAI_DI_LAO\020\r*]\n\nOverMethod\022\010\n\004LOSS\020\000\022\r\n" +
-      "\tCHU_CHONG\020\001\022\016\n\nGANG_CHONG\020\002\022\t\n\005MO_HU\020\003\022" +
-      "\013\n\007ZHUA_HU\020\004\022\016\n\nQIANG_GANG\020\005*D\n\022FightVot" +
-      "eApplyExit\022\r\n\tVOTE_IDLE\020\000\022\016\n\nVOTE_AGREE\020" +
-      "\001\022\017\n\013VOTE_REJECT\020\002"
+      "\005cards\030\001 \003(\005\"7\n\013EnvVarsData\022\013\n\003key\030\001 \001(\t" +
+      "\022\r\n\005value\030\002 \001(\t\022\014\n\004type\030\003 \001(\t*9\n\016GameOve" +
+      "rMethod\022\022\n\016GAME_OVER_TIME\020\001\022\023\n\017GAME_OVER" +
+      "_ROUND\020\002*5\n\010GameType\022\023\n\017GAME_TYPE_MATCH\020" +
+      "\001\022\024\n\020GAME_TYPE_FRIEND\020\002*M\n\tGameState\022\026\n\022" +
+      "GAME_STATE_PREPARE\020\001\022\024\n\020GAME_START_START" +
+      "\020\002\022\022\n\016GAME_START_END\020\003*\231\001\n\014CardListType\022" +
+      "\026\n\022CARD_LIST_TYPE_CHI\020\001\022\027\n\023CARD_LIST_TYP" +
+      "E_PENG\020\002\022\035\n\031CARD_LIST_TYPE_GANG_LIGHT\020\003\022" +
+      "\034\n\030CARD_LIST_TYPE_GANG_DARK\020\004\022\033\n\027CARD_LI",
+      "ST_TYPE_GANG_ADD\020\005*\337\001\n\006HuType\022\014\n\010GANG_KA" +
+      "I\020\001\022\014\n\010MEN_QING\020\002\022\017\n\013DA_DIAO_CHE\020\003\022\r\n\tSI" +
+      "_BAI_DA\020\004\022\r\n\tWU_BAI_DA\020\005\022\016\n\nPAO_DAI_DA\020\006" +
+      "\022\r\n\tQING_PENG\020\007\022\014\n\010HUN_PENG\020\010\022\016\n\nQING_YI" +
+      "_SE\020\t\022\020\n\014PENG_PENG_HU\020\n\022\r\n\tHUN_YI_SE\020\013\022\016" +
+      "\n\nWU_HUA_GUO\020\014\022\016\n\nHAI_DI_LAO\020\r\022\014\n\010LA_JI_" +
+      "HU\020\016*]\n\nOverMethod\022\010\n\004LOSS\020\000\022\r\n\tCHU_CHON" +
+      "G\020\001\022\016\n\nGANG_CHONG\020\002\022\t\n\005MO_HU\020\003\022\013\n\007ZHUA_H" +
+      "U\020\004\022\016\n\nQIANG_GANG\020\005*D\n\022FightVoteApplyExi" +
+      "t\022\r\n\tVOTE_IDLE\020\000\022\016\n\nVOTE_AGREE\020\001\022\017\n\013VOTE",
+      "_REJECT\020\002"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -10590,6 +10970,14 @@ public final class Entity {
               new java.lang.String[] { "Cards", },
               com.randioo.mahjong_public_server.protocol.Entity.ClientCard.class,
               com.randioo.mahjong_public_server.protocol.Entity.ClientCard.Builder.class);
+          internal_static_com_randioo_mahjong_public_server_protocol_EnvVarsData_descriptor =
+            getDescriptor().getMessageTypes().get(19);
+          internal_static_com_randioo_mahjong_public_server_protocol_EnvVarsData_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_randioo_mahjong_public_server_protocol_EnvVarsData_descriptor,
+              new java.lang.String[] { "Key", "Value", "Type", },
+              com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData.class,
+              com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData.Builder.class);
           return null;
         }
       };

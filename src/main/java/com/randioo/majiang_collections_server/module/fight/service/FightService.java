@@ -2,7 +2,10 @@ package com.randioo.majiang_collections_server.module.fight.service;
 
 import java.util.List;
 
+import org.apache.mina.core.session.IoSession;
+
 import com.randioo.mahjong_public_server.protocol.Entity.ClientCard;
+import com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData;
 import com.randioo.mahjong_public_server.protocol.Entity.FightVoteApplyExit;
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.bo.Role;
@@ -212,5 +215,27 @@ public interface FightService extends ObserveBaseServiceInterface {
     void gameOverHongZhong(Game game);
 
     void chi(Role role, int gameSendCount, int callCardListId);
+
+    /**
+     * 获得游戏环境变量
+     * 
+     * @param roomId
+     * @param session
+     * @author wcy 2017年9月5日
+     */
+    void gmEnvVars(String roomId, List<EnvVarsData> list, IoSession session);
+
+    void gmGameInfo(String roomId, IoSession session);
+
+    /**
+     * 发牌
+     * 
+     * @param roomId
+     * @param list
+     * @param remainCards
+     * @param session
+     * @author wcy 2017年9月5日
+     */
+    void gmDispatchCard(String roomId, List<ClientCard> list, List<Integer> remainCards, IoSession session);
 
 }

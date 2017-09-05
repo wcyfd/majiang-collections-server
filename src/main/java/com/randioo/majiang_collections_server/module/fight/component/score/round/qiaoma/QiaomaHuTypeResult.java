@@ -3,6 +3,7 @@
  */
 package com.randioo.majiang_collections_server.module.fight.component.score.round.qiaoma;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.randioo.mahjong_public_server.protocol.Entity.HuType;
@@ -16,5 +17,5 @@ public class QiaomaHuTypeResult {
     /** 所有的番数 */
     public int fanCount;
     public int flowerCount;
-    public List<HuType> typeList;
+    public List<HuType> typeList = new ArrayList<>();
 }

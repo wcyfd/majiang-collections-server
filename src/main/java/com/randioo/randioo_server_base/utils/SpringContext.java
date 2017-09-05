@@ -1,6 +1,7 @@
 package com.randioo.randioo_server_base.utils;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.AbstractXmlApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 /**
  * Spring 配置
@@ -9,13 +10,15 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  *
  */
 public class SpringContext {
-    private static ClassPathXmlApplicationContext ctx;
+    private static AbstractXmlApplicationContext ctx;
 
     /**
      * 加载spring配置
      */
     public static void initSpringCtx(String filePath) {
-        ctx = new ClassPathXmlApplicationContext(filePath);
+        // ctx = new ClassPathXmlApplicationContext(filePath);
+        ctx = new FileSystemXmlApplicationContext(filePath);
+
         ctx.registerShutdownHook();
     }
 

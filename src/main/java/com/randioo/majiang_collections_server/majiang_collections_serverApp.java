@@ -42,7 +42,7 @@ public class majiang_collections_serverApp {
 
         SensitiveWordDictionary.readAll("./sensitive.txt");
 
-        SpringContext.initSpringCtx("ApplicationContext.xml");
+        SpringContext.initSpringCtx("classpath:ApplicationContext.xml");
 
         // 平台接口初始化
         RandiooPlatformSdk randiooPlatformSdk = SpringContext.getBean(RandiooPlatformSdk.class);
@@ -61,22 +61,9 @@ public class majiang_collections_serverApp {
         protoHeartFactory.setCsHeart(CS.newBuilder().setCSHeart(CSHeart.newBuilder()).build());
 
         HeartTimeOutHandler heartTimeOutHandler = SpringContext.getBean(HeartTimeOutHandler.class);
-        gameServerInit.setKeepAliveFilter(
-                new KeepAliveFilter(protoHeartFactory, IdleStatus.READER_IDLE, heartTimeOutHandler, 5, 10));
+        gameServerInit.setKeepAliveFilter(new KeepAliveFilter(protoHeartFactory, IdleStatus.READER_IDLE,
+                heartTimeOutHandler, 5, 10));
         gameServerInit.start();
-
-        // LiteHttpServer server = new LiteHttpServer();
-        // server.setPort(GlobleMap.Int(GlobleConstant.ARGS_PORT) + 10000);
-        // server.setRootPath("/mahjong_public");
-        // server.addLiteServlet("/kickRace", (LiteServlet)
-        // SpringContext.getBean(StartServlet.class));
-        // // server.addLiteServlet("/giveCard", (LiteServlet)
-        // // SpringContext.getBean(StartServlet.class));
-        // try {
-        // server.init();
-        // } catch (IOException e) {
-        // e.printStackTrace();
-        // }
 
         GlobleMap.putParam(GlobleConstant.ARGS_LOGIN, true);
 

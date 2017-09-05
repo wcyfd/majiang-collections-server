@@ -64,6 +64,8 @@ public class Game extends RuleableGame {
     private VoteBox voteBox = new VoteBox();
     /** 客户端调试的卡牌卡牌 */
     private List<ClientCard> clientCards = new ArrayList<>();
+    /** 客户端剩余摸牌 */
+    public List<Integer> clientRemainCards = new ArrayList<>();
     /** 客户端调试的摸牌 */
     private int clientTouchCard;
     /** 百搭牌 */

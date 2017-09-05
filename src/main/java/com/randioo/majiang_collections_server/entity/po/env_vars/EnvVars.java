@@ -12,6 +12,10 @@ import java.util.Map;
 public class EnvVars {
     protected Map<String, Object> paramMap = new HashMap<>();
 
+    public Map<String, Object> getParamMap() {
+        return paramMap;
+    }
+
     public int Int(String key) {
         Object result = paramMap.get(key);
         if (result == null)
