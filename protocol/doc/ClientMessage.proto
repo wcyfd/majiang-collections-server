@@ -6,6 +6,7 @@ import "Fight.proto";
 import "Settings.proto";
 import "Race.proto";
 import "Heart.proto";
+import "Gm.proto";
 
 message CS{
 	optional HeartRequest HeartRequest = 1;
@@ -46,4 +47,7 @@ message CS{
 	optional RaceJoinRaceRequest RaceJoinRaceRequest = 30;
 	optional RaceShowQueueRequest RaceShowQueueRequest = 31;
 
-} // 31
+	optional GmEnvVarsRequest GmEnvVarsRequest = 32;
+	optional GmGameInfoRequest GmGameInfoRequest = 33;
+	optional GmDispatchCardRequest GmDispatchCardRequest = 34;
+} // 34

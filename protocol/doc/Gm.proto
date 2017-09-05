@@ -1,0 +1,32 @@
+package com.randioo.mahjong_public_server.protocol;
+import "Entity.proto";
+
+message GmEnvVarsRequest{
+	optional string roomId = 1;
+	repeated EnvVarsData envVarsData = 2;
+}
+
+message GmEnvVarsResponse{
+	optional int32 errorCode =1[default = 1];
+}
+
+message GmGameInfoRequest{
+	optional string roomId = 1;
+}
+
+message GmGameInfoResponse{
+	optional int32 errorCode = 1 [default = 1];
+	repeated ClientCard clientCards = 2;
+	repeated int32 remainCards = 3;
+	repeated EnvVarsData envVarsData = 4;
+}
+
+message GmDispatchCardRequest{
+	optional string roomId = 1;
+	repeated ClientCard clientCards = 2;
+	repeated int32 remainCards = 3;
+}
+
+message GmDispatchCardResponse{
+	optional int32 errorCode = 1 [default = 1];
+}

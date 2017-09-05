@@ -126,6 +126,7 @@ enum HuType{
 	HUN_YI_SE = 11;//混一色
 	WU_HUA_GUO = 12;//无花果
 	HAI_DI_LAO = 13;//海底捞
+	LA_JI_HU = 14;//垃圾胡
 }
 message RoleRoundOverInfoData{
 	optional GameRoleData gameRoleData = 1;
@@ -230,3 +231,9 @@ message ClientCard{
 	repeated int32 cards = 1;
 }
 
+/** 环境变量数据 */
+message EnvVarsData{
+	optional string key = 1;
+	optional string value = 2;
+	optional string type = 3;
+}
