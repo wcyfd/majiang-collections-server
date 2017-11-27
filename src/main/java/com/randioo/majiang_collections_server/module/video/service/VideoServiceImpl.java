@@ -2,6 +2,7 @@ package com.randioo.majiang_collections_server.module.video.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,9 @@ import com.google.protobuf.ByteString;
 import com.google.protobuf.GeneratedMessage;
 import com.randioo.mahjong_public_server.protocol.Entity.GameVideoData;
 import com.randioo.mahjong_public_server.protocol.Entity.RoundVideoData;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightApplyExitGame;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightApplyExitResult;
+import com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit;
 import com.randioo.mahjong_public_server.protocol.ServerMessage.SC;
 import com.randioo.majiang_collections_server.dao.VideoDao;
 import com.randioo.majiang_collections_server.entity.bo.Game;
@@ -64,10 +68,11 @@ public class VideoServiceImpl extends ObserveBaseService implements VideoService
         Game game = (Game) args[1];
         RoleGameInfo info = (RoleGameInfo) args[2];
         info.roundSCList.add(sc);
-        for (RoleGameInfo roleGameInfo : game.getRoleIdMap().values()) {
-            List<SC> list = getCurrentSCList(roleGameInfo, game.getFinishRoundCount() + 1); // 此时玩家进入游戏时，认为
-            list.add(sc);
-        }
+        // for (RoleGameInfo roleGameInfo : game.getRoleIdMap().values()) {
+        // List<SC> list = getCurrentSCList(roleGameInfo,
+        // game.getFinishRoundCount() + 1); // 此时玩家进入游戏时，认为
+        // list.add(sc);
+        // }
     }
 
     @Override
@@ -77,8 +82,40 @@ public class VideoServiceImpl extends ObserveBaseService implements VideoService
             OnlyOneRecord(args);
         }
 
+        if (FightConstant.FIGHT_DICE.equals(msg)) {
+            allRecord(args);
+        }
+
         if (FightConstant.FIGHT_SCORE.equals(msg)) {
             allRecord(args);
+        }
+
+        if (FightConstant.FIGHT_NOTICE_APPLY_LEAVE.equals(msg)) {
+            allRecord(args);
+        }
+
+        if (FightConstant.FIGHT_REJECT_DISMISS.equals(msg)) {
+            Game game = (Game) args[0];
+            for (Map.Entry<String, RoleGameInfo> entrySet : game.getRoleIdMap().entrySet()) {
+                RoleGameInfo roleGameInfo = entrySet.getValue();
+                int size = roleGameInfo.roundSCList.size();
+                for (int i = size - 1; i >= 0; i--) {
+                    SC sc = roleGameInfo.roundSCList.get(i);
+                    if (sc.toString().contains(SCFightApplyExitGame.class.getSimpleName())) {
+                        roleGameInfo.roundSCList.remove(i);
+                        break;
+                    }
+
+                    if (sc.toString().contains(SCFightApplyExitResult.class.getSimpleName())) {
+                        roleGameInfo.roundSCList.remove(i);
+                    }
+
+                    if (sc.toString().contains(SCFightNoticeAgreeExit.class.getSimpleName())) {
+                        roleGameInfo.roundSCList.remove(i);
+                    }
+
+                }
+            }
         }
         // 摸牌
         if (FightConstant.FIGHT_TOUCH_CARD.equals(msg)) {
@@ -102,7 +139,7 @@ public class VideoServiceImpl extends ObserveBaseService implements VideoService
         }
         // 通知出牌
         if (FightConstant.FIGHT_NOTICE_SEND_CARD.equals(msg)) {
-            allRecord(args);
+            OnlyOneRecord(args);
         }
         // 倒计时
         if (FightConstant.FIGHT_COUNT_DOWN.equals(msg)) {
@@ -114,6 +151,15 @@ public class VideoServiceImpl extends ObserveBaseService implements VideoService
         }
         // 投票退出
         if (FightConstant.FIGHT_VOTE_APPLY_EXIT.equals(msg)) {
+            allRecord(args);
+        }
+        // 通知投票内容
+        if (FightConstant.FIGHT_NOTICE_AGREE_EXIT.equals(msg)) {
+            allRecord(args);
+        }
+        // 通知投票结果
+        if (FightConstant.FIFHT_APPLY_EXIT_RESULT.equals(msg)) {
+            allRecord(args);
         }
         // 补花
         if (FightConstant.FIGHT_ADD_FLOWER.equals(msg)) {
@@ -142,11 +188,26 @@ public class VideoServiceImpl extends ObserveBaseService implements VideoService
         // 过
         if (FightConstant.FIGHT_GUO.equals(msg)) {
         }
+        // 听
+        if (FightConstant.FIGHT_TING.equals(msg)) {
+            allRecord(args);
+        }
         if (FightConstant.FIGHT_GANG_PENG_HU.equals(msg)) {
             SC sc = (SC) args[2];
             RoleGameInfo roleInfo = (RoleGameInfo) args[3];
             roleInfo.roundSCList.add(sc);
         }
+
+        if (FightConstant.FIGHT_NOTICE_READY.equals(msg)) {
+            SC sc = (SC) args[0];
+            Game game = (Game) args[1];
+            RoleGameInfo roleInfo = (RoleGameInfo) args[2];
+
+            roleInfo.roundSCList.add(sc);
+            game.logger.info("记录FIGHT_NOTICE_READY");
+            return;
+        }
+
         if (FightConstant.FIGHT_READY.equals(msg)) {
 
             SC sc = (SC) args[0];
@@ -217,22 +278,23 @@ public class VideoServiceImpl extends ObserveBaseService implements VideoService
                 }
                 List<ByteString> scList = matchService.getRejoinSCList(game, roleGameInfo.gameRoleId);
                 role.setGameOverSC(gameOverBytes);
+                role.setGameConfigData(game.getGameConfig());
             }
         }
 
         if (FightConstant.FIGHT_CANCEL_GAME.equals(msg)) {
             Game game = (Game) args[0];
             this.saveVideo(game);
+            return;
         }
+
     }
 
     /**
      * 获取当前局数的SC列表，对应录像green hat的那一局
      * 
-     * @param roleGameInfo
-     *            玩家对象
-     * @param finishRound
-     *            当前的局数,开始局数是0
+     * @param roleGameInfo 玩家对象
+     * @param finishRound 当前的局数,开始局数是0
      * @return
      * @author wcy 2017年7月27日
      */
@@ -282,28 +344,28 @@ public class VideoServiceImpl extends ObserveBaseService implements VideoService
      */
 
     private void saveVideo(Game game) {
-        for (RoleGameInfo info : game.getRoleIdMap().values()) {
-            GameVideoData.Builder gameVideoDataBuilder = GameVideoData.newBuilder();
-            for (List<SC> list : info.videoData.getScList()) {
-                RoundVideoData.Builder roundVideoData = RoundVideoData.newBuilder();
-                for (SC sc : list) {
-                    roundVideoData.addSc(sc.toByteString());
-                }
-                gameVideoDataBuilder.addRoundVideoData(roundVideoData);
-            }
-
-            GameVideoData gameVideoData = gameVideoDataBuilder.build();
-            VideoUtils.toVideoData(info, gameVideoData.toByteArray());
-
-            gameDB.getInsertPool().execute(new EntityRunnable<VideoData>(info.videoData) {
-
-                @Override
-                public void run(VideoData entity) {
-                    videoDao.insert(entity);
-                }
-            });
-
-        }
+//        for (RoleGameInfo info : game.getRoleIdMap().values()) {
+//            GameVideoData.Builder gameVideoDataBuilder = GameVideoData.newBuilder();
+//            for (List<SC> list : info.videoData.getScList()) {
+//                RoundVideoData.Builder roundVideoData = RoundVideoData.newBuilder();
+//                for (SC sc : list) {
+//                    roundVideoData.addSc(sc.toByteString());
+//                }
+//                gameVideoDataBuilder.addRoundVideoData(roundVideoData);
+//            }
+//
+//            GameVideoData gameVideoData = gameVideoDataBuilder.build();
+//            VideoUtils.toVideoData(info, gameVideoData.toByteArray());
+//
+//            gameDB.getInsertPool().execute(new EntityRunnable<VideoData>(info.videoData) {
+//
+//                @Override
+//                public void run(VideoData entity) {
+//                    videoDao.insert(entity);
+//                }
+//            });
+//
+//        }
     }
 
 }

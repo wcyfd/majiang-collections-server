@@ -117,10 +117,11 @@ public class VoteBox {
 
     public static void main(String[] args) {
         final VoteBox voteBox = new VoteBox();
-        voteBox.setStrategy(new AllVoteExceptApplyerStrategy() {
+        voteBox.setStrategy(new OneRejectEndExceptApplyerStrategy() {
 
             @Override
             public VoteResult waitVote(String joiner) {
+                // TODO Auto-generated method stub
                 return VoteResult.WAIT;
             }
         });
@@ -163,22 +164,23 @@ public class VoteBox {
                 System.out.println(voteBox.getVoteId());
             }
         }).start();
-//        new Thread(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                }
-//                synchronized (voteBox) {
-//                    voteBox.vote("4", true, voteId);
-//                }
-//                System.out.println(voteBox.getVoteId());
-//            }
-//        }).start();
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                synchronized (voteBox) {
+                    System.out.println("4同意");
+                    voteBox.vote("4", true, voteId);
+                }
+                System.out.println(voteBox.getVoteId());
+            }
+        }).start();
 
         new Thread(new Runnable() {
 
@@ -197,8 +199,8 @@ public class VoteBox {
                 }
             }
         }).start();
-        System.out.println(voteBox.getResult());
-        System.out.println(voteBox.getVoteId());
+        // System.out.println(voteBox.getResult());
+        // System.out.println(voteBox.getVoteId());
     }
 
 }

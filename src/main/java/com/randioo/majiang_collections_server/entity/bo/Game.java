@@ -6,6 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+
 import com.randioo.mahjong_public_server.protocol.Entity.ClientCard;
 import com.randioo.mahjong_public_server.protocol.Entity.GameConfigData;
 import com.randioo.mahjong_public_server.protocol.Entity.GameState;
@@ -19,6 +21,8 @@ import com.randioo.majiang_collections_server.util.key.Key;
 import com.randioo.majiang_collections_server.util.vote.VoteBox;
 
 public class Game extends RuleableGame {
+    public Logger logger;
+
     private int gameId;
     /** 玩家id集合 */
     private Map<String, RoleGameInfo> roleIdMap = new LinkedHashMap<>();
@@ -66,6 +70,8 @@ public class Game extends RuleableGame {
     private List<ClientCard> clientCards = new ArrayList<>();
     /** 客户端剩余摸牌 */
     public List<Integer> clientRemainCards = new ArrayList<>();
+    /** 客户端剩余牌数量 */
+    public Integer clientRemainCardsCount;
     /** 客户端调试的摸牌 */
     private int clientTouchCard;
     /** 百搭牌 */
@@ -88,15 +94,31 @@ public class Game extends RuleableGame {
     /** 需要检查别人的座位 */
     public List<Integer> checkOtherCardListSeats = new ArrayList<>();
     /** 骰子 */
-    public int[] dice;
-    /** 是不是补花状态 */
-    public boolean isAddFlowerState;
+    public List<Integer> dice;
     /** 新摸的牌是不是花牌 */
     public boolean touchCardIsFlower;
     /** 能不能听 */
     public boolean canTing;
     /** 环境变量集合 */
     public EnvVars envVars = new EnvVars();
+    /** 临时存放ting的callCardList */
+    public CallCardList tingCardList;
+
+    private List<CallCardList> autoHuCallCardList = new ArrayList<>();
+    /** 是否是流局 */
+    public boolean isLiuju;
+    /** 回合开始时间 */
+    public int roundStartTime;
+    /** 回合结束时间 */
+    public int roundEndTime;
+    /** 第一回合回合开始时间 */
+    public int firstRoundStartTime;
+    /** 开始下一局标记 */
+    public boolean beginNextRound;
+
+    public List<CallCardList> getAutoHuCallCardList() {
+        return autoHuCallCardList;
+    }
 
     public boolean isHuangFan() {
         return isHuangFan;

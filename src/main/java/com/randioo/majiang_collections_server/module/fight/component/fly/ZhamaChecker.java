@@ -1,10 +1,12 @@
 package com.randioo.majiang_collections_server.module.fight.component.fly;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.google.common.collect.Lists;
 import com.randioo.mahjong_public_server.protocol.Entity.GameConfigData;
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.randioo_server_base.utils.RandomUtils;
@@ -108,6 +110,7 @@ public class ZhamaChecker {
      * @author wcy 2017年7月31日
      */
     private boolean isNumSame(List<Integer> zhamaValues, int zhama) {
-        return zhamaValues.contains(zhama %= 10);
+        int range = zhama / 100;
+        return zhamaValues.contains(zhama %= 10) && range > 0 && range < 4;
     }
 }

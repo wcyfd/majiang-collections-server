@@ -33,8 +33,18 @@ public abstract class MajiangRule {
         /** 敲麻初始化 */
         STATE_QIAOMA_INIT,
         /** 进入听状态 */
-        STATE_TING,
+        STATE_CHECK_TING,
+        /** 检查牌数量够不够听 */
+        STATE_SEND_CHECK_TING,
+        /** 通知检测听 */
+        STATE_NOTICE_TING,
+        /** 自动出牌 */
+        STATE_AUTO_SEND_CARD,
+        /** 自动胡 */
+        STATE_AUTO_HU,
 
+        /**随机座位号*/
+        STATE_RANDOM_SEAT,
         /** 通知游戏准备 */
         STATE_INIT_READY,
         /** 游戏准备 */

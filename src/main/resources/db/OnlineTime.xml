@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.randioo.majiang_collections_server.dao.OnlineTimeDao">
+	<insert id="insert">
+		insert into online_time(
+			role_id,
+			online_time
+		) values (
+			#{roleId},
+			#{onlineTime}
+		)
+	</insert>
+	
+	<select id="getByRoleId" resultType="OnlineTimeBO">
+		select 
+			role_id as roleId,
+			online_time as onlineTime
+		from 
+			online_time 
+		where 
+			role_id=#{roleId}
+	</select>
+	
+	<update id="update">
+		update
+			online_time
+		set
+			online_time=#{onlineTime}
+		where
+			role_id=#{roleId}
+	</update>
+</mapper>

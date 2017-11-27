@@ -73,4 +73,13 @@ public class ScoreParameter {
         this.flyScore = flyScore;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("ScoreParameter [baseScore=").append(baseScore).append(", huaMultiple=").append(huaMultiple)
+                .append(", fanNum=").append(fanNum).append(", huaNum=").append(huaNum).append(", isHuangFan=")
+                .append(isHuangFan).append(", flyScore=").append(flyScore).append(", limit=").append(limit).append("]");
+        return builder.toString();
+    }
+
 }

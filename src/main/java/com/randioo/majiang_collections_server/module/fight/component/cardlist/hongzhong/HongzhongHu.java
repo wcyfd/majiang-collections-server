@@ -11,10 +11,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.randioo.mahjong_public_server.protocol.Entity.GameConfigData;
+import com.randioo.mahjong_public_server.protocol.Entity.OverMethod;
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.po.CardSort;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.CardList;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.Hu;
+import com.randioo.majiang_collections_server.module.fight.component.cardlist.SuperHu;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.ZLPBaiDaHu;
 import com.randioo.majiang_collections_server.util.Lists;
 import com.randioo.majiang_collections_server.util.Sets;
@@ -37,8 +39,17 @@ public class HongzhongHu extends Hu {
             return;
         }
 
-        if (!cardSort.get(3).contains(baidaCard)) {
-            boolean hasHu = this.checkHu(gameConfigData, cardSort);
+        // 如果四百搭直接胡
+        boolean baida4win = gameConfigData.getBaida4Win();
+        if (baida4win) {
+            if (!cardSort.get(3).contains(baidaCard)) {
+                boolean hasHu = SuperHu.checkHu(cardSort, baidaCard);
+                if (!hasHu) {
+                    return;
+                }
+            }
+        } else {
+            boolean hasHu = SuperHu.checkHu(cardSort, baidaCard);
             if (!hasHu) {
                 return;
             }
@@ -53,6 +64,13 @@ public class HongzhongHu extends Hu {
         Collections.sort(list);
         hu.handCards.addAll(list);
         hu.showCardList.addAll(showCardList);
+        if (isMine) {
+            hu.setTargetSeat(-1);
+            hu.overMethod = OverMethod.MO_HU;
+        } else {
+            hu.setTargetSeat(game.sendCardSeat);
+            hu.overMethod = OverMethod.ZHUA_HU;
+        }
 
         cardLists.add(hu);
 
@@ -246,7 +264,7 @@ public class HongzhongHu extends Hu {
 
         // 如果剩余两张牌，比较一下之间的大小
         if (totalCount == 2) {
-            CardSort cardSort = new CardSort(4);
+            CardSort cardSort = new CardSort(5);
             cardSort.fillCardSort(remainCards);
             Set<Integer> set0 = cardSort.get(0);
             Set<Integer> set1 = cardSort.get(1);
@@ -355,7 +373,7 @@ public class HongzhongHu extends Hu {
      * @author wcy 2017年8月30日
      */
     private boolean dealRemainCards(int baidaCount, int totalCount, List<Integer> cards) {
-        CardSort cardSort = new CardSort(4);
+        CardSort cardSort = new CardSort(5);
         cardSort.fillCardSort(cards);
         Set<Integer> set0 = cardSort.get(0);
         Set<Integer> set1 = cardSort.get(1);

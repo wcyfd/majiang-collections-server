@@ -68,6 +68,28 @@ public class ClientDispatcher implements Dispatcher {
         }
 
         Lists.removeElementByList(originCards, removeList);
+
+        // 指定剩余牌
+        if (game.clientRemainCardsCount != null) {
+            int size = game.clientRemainCardsCount;
+            List<Integer> arr = new ArrayList<>(size);
+            for (int i = 0; i < size; i++) {
+                if (originCards.size() > i) {
+                    arr.add(originCards.get(i));
+                }
+            }
+            originCards.clear();
+            originCards.addAll(arr);
+        }
+//        originCards.clear();
+//        
+//        originCards.add(201);
+//        originCards.add(201);
+//        originCards.add(201);
+//        originCards.add(201);
+//        originCards.add(105);
+//        originCards.add(106);
+
         return cardParts;
     }
 

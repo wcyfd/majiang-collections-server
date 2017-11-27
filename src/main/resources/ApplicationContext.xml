@@ -59,4 +59,5 @@
 	</bean>
 
 	<import resource="communal.xml" />
+	<import resource="jedis.xml" />
 </beans>

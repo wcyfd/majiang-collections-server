@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.randioo.majiang_collections_server.dao.PlaybackDao">
+	<!-- insert -->
+	<insert id="insert">
+		insert into playback(
+			id,
+			sc_stream,
+			config_stream,
+			view_seat
+		) values(
+			#{playbackId},
+			#{scStream},
+			#{configStream},
+			#{viewSeat}
+		)
+	</insert>
+
+	<select id="getMaxId" resultType="java.lang.Integer">
+		SELECT MAX(id) from playback
+	</select>
+
+	<select id="getById" resultType="Playback">
+		select
+			id as playbackId,
+			<if test="needSCStream == true">
+				sc_stream as scStream,
+			</if>
+			config_stream as configStream,
+			view_seat as viewSeat
+		from 
+			playback
+		<where>
+			id=#{playbackId}
+		</where>
+	</select>
+
+	<delete id="cleanPlaybackByDays">
+		DELETE FROM playback
+		<where>
+			id in (
+				SELECT 
+					DISTINCT(playback_id) 
+				FROM 
+					round_score
+				<where>
+					game_start_time &lt; CURDATE()-#{days}
+				</where>					
+				)
+		</where>
+	</delete>
+</mapper>

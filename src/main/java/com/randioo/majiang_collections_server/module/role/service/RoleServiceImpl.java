@@ -2,6 +2,8 @@ package com.randioo.majiang_collections_server.module.role.service;
 
 import java.util.regex.Pattern;
 
+import org.apache.mina.core.session.IoSession;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,11 +11,14 @@ import com.google.protobuf.GeneratedMessage;
 import com.randioo.mahjong_public_server.protocol.Entity.RoleData;
 import com.randioo.mahjong_public_server.protocol.Error.ErrorCode;
 import com.randioo.mahjong_public_server.protocol.Role.RoleGetRoleDataResponse;
+import com.randioo.mahjong_public_server.protocol.Role.RoleGetServerTimeResponse;
 import com.randioo.mahjong_public_server.protocol.Role.RoleRenameResponse;
 import com.randioo.mahjong_public_server.protocol.Role.SCRoleRandiooCoinChange;
 import com.randioo.mahjong_public_server.protocol.ServerMessage.SC;
 import com.randioo.majiang_collections_server.GlobleConstant;
+import com.randioo.majiang_collections_server.dao.ConsumeDao;
 import com.randioo.majiang_collections_server.dao.RoleDao;
+import com.randioo.majiang_collections_server.entity.bo.ConsumeData;
 import com.randioo.majiang_collections_server.entity.bo.Role;
 import com.randioo.majiang_collections_server.module.ServiceConstant;
 import com.randioo.majiang_collections_server.module.login.LoginConstant;
@@ -25,6 +30,7 @@ import com.randioo.randioo_platform_sdk.exception.AccountErrorException;
 import com.randioo.randioo_server_base.cache.RoleCache;
 import com.randioo.randioo_server_base.config.GlobleMap;
 import com.randioo.randioo_server_base.db.IdClassCreator;
+import com.randioo.randioo_server_base.log.L;
 import com.randioo.randioo_server_base.module.role.RoleHandler;
 import com.randioo.randioo_server_base.module.role.RoleModelService;
 import com.randioo.randioo_server_base.sensitive.SensitiveWordDictionary;
@@ -32,6 +38,7 @@ import com.randioo.randioo_server_base.service.ObserveBaseService;
 import com.randioo.randioo_server_base.template.Ref;
 import com.randioo.randioo_server_base.utils.SessionUtils;
 import com.randioo.randioo_server_base.utils.StringUtils;
+import com.randioo.randioo_server_base.utils.TimeUtils;
 
 @Service("roleService")
 public class RoleServiceImpl extends ObserveBaseService implements RoleService {
@@ -50,9 +57,12 @@ public class RoleServiceImpl extends ObserveBaseService implements RoleService {
 
     @Autowired
     private RandiooPlatformSdk randiooPlatformSdk;
+    @Autowired
+    private ConsumeDao consumeDao;
 
     @Override
     public void init() {
+        LoggerFactory.getLogger(Role.class);
         Integer maxRoleId = roleDao.getMaxRoleId();
         idClassCreator.initId(Role.class, maxRoleId == null ? 0 : maxRoleId);
     }
@@ -101,6 +111,8 @@ public class RoleServiceImpl extends ObserveBaseService implements RoleService {
         role.setMusicVolume(50);
 
         initRoleDataFromHttp(role);
+
+        logger.info("新建用户 {}", role.getAccount());
     }
 
     @Override
@@ -137,6 +149,7 @@ public class RoleServiceImpl extends ObserveBaseService implements RoleService {
 
     @Override
     public void setHeadimgUrl(Role role, String headImgUrl) {
+
         role.setHeadImgUrl(headImgUrl);
     }
 
@@ -154,6 +167,8 @@ public class RoleServiceImpl extends ObserveBaseService implements RoleService {
         String headImageUrl = "null";
 
         try {
+            logger.info("平台信息准备读取 {}", role.getAccount());
+
             AccountInfo accountInfo = randiooPlatformSdk.getAccountInfo(role.getAccount());
             money = accountInfo.randiooMoney;
             sex = accountInfo.sex;
@@ -162,10 +177,12 @@ public class RoleServiceImpl extends ObserveBaseService implements RoleService {
                 headImageUrl = accountInfo.headImgUrl;
                 name = accountInfo.nickName;
             }
+
+            logger.info("平台信息为 {}={}", role.getAccount(), accountInfo);
         } catch (AccountErrorException e) {
-            loggererror("account " + role.getAccount() + " not on platform");
+            logger.error("没有该帐号平台信息 {}", role.getAccount());
         } catch (Exception e) {
-            loggererror("randiooPlatformSdk get account error ", e);
+            logger.error("{} 读取平台信息失败 {}", role.getAccount(), e);
         }
         if (money == -1)
             money = 0;
@@ -181,10 +198,14 @@ public class RoleServiceImpl extends ObserveBaseService implements RoleService {
     @Override
     public boolean addRandiooMoney(Role role, int money) {
         try {
+            logger.info("改变平台币数量 {}={}", role.getAccount(), money);
             randiooPlatformSdk.addMoney(role.getAccount(), money);
             role.setRandiooMoney(role.getRandiooMoney() + money);
+            // 燃点币消耗记录
+            consumeDao.insert(new ConsumeData(role.getRoleId(), money));
+            logger.info("平台币总量 {}={}", role.getAccount(), role.getRandiooMoney());
         } catch (Exception e) {
-            loggererror(role, "没有该帐号,无法改变燃点币");
+            logger.error("没有该帐号,无法改变平台币 {}", role.getAccount());
             return false;
         }
 
@@ -202,5 +223,13 @@ public class RoleServiceImpl extends ObserveBaseService implements RoleService {
 
         return SC.newBuilder().setRoleGetRoleDataResponse(RoleGetRoleDataResponse.newBuilder().setRoleData(roleData))
                 .build();
+    }
+
+    @Override
+    public void getServerTime(IoSession session) {
+        RoleGetServerTimeResponse response = RoleGetServerTimeResponse.newBuilder()
+                .setServerTime(TimeUtils.getNowTime()).build();
+        SC sc = SC.newBuilder().setRoleGetServerTimeResponse(response).build();
+        SessionUtils.sc(session, sc);
     }
 }

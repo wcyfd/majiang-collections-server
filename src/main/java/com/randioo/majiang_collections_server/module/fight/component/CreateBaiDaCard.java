@@ -20,6 +20,7 @@ public class CreateBaiDaCard {
         List<Integer> cards = BaidaMajiangRule.CARDS;
         int index = RandomUtils.getRandomNum(cards.size());
         int card = cards.get(index);
+
         // 设置第一次产生的百搭牌
         game.setFristBaidaCard(card);
 

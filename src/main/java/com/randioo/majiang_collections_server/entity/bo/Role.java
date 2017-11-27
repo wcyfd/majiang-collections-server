@@ -1,11 +1,14 @@
 package com.randioo.majiang_collections_server.entity.bo;
 
+import org.slf4j.Logger;
+
 import com.google.protobuf.ByteString;
+import com.randioo.mahjong_public_server.protocol.Entity.GameConfigData;
 import com.randioo.majiang_collections_server.entity.po.RoleRaceInfo;
 import com.randioo.randioo_server_base.entity.DefaultRole;
 
 public class Role extends DefaultRole {
-
+    public Logger logger;
     private int money;
     private int gameId;
     private int sex;
@@ -18,16 +21,31 @@ public class Role extends DefaultRole {
     /** 玩家比赛信息 */
     private RoleRaceInfo roleRaceInfo;
     private ByteString gameOverSC = null;
+    private GameConfigData gameConfigData = null;
+
     /** 比赛底分 */
     private int raceScore;
     /** 积分 */
     private int point;
+    /** 经纬度 */
+    private String lantiLongi;
+    /** 声音id */
+    private String voiceId;
+
+    public GameConfigData getGameConfigData() {
+        return gameConfigData;
+    }
+
+    public void setGameConfigData(GameConfigData gameConfigData) {
+        this.gameConfigData = gameConfigData;
+    }
 
     public int getRandiooMoney() {
         return randiooMoney;
     }
 
     public void setRandiooMoney(int randiooMoney) {
+        setChange(true);
         this.randiooMoney = randiooMoney;
     }
 
@@ -44,6 +62,7 @@ public class Role extends DefaultRole {
     }
 
     public void setVolume(int volume) {
+        setChange(true);
         this.volume = volume;
     }
 
@@ -77,6 +96,7 @@ public class Role extends DefaultRole {
     }
 
     public void setSex(int sex) {
+        setChange(true);
         this.sex = sex;
     }
 
@@ -128,6 +148,28 @@ public class Role extends DefaultRole {
         this.gameOverSC = gameOverSC;
     }
 
+    /**
+     * @return the lantiLongi
+     */
+    public String getLantiLongi() {
+        return lantiLongi;
+    }
+
+    /**
+     * @param lantiLongi the lantiLongi to set
+     */
+    public void setLantiLongi(String lantiLongi) {
+        this.lantiLongi = lantiLongi;
+    }
+
+    public String getVoiceId() {
+        return voiceId;
+    }
+
+    public void setVoiceId(String voiceId) {
+        this.voiceId = voiceId;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -137,7 +179,7 @@ public class Role extends DefaultRole {
                 .append(headImgUrl).append(", randiooMoney=").append(randiooMoney).append(", moneyExchangeNum=")
                 .append(moneyExchangeNum).append(", roleRaceInfo=").append(roleRaceInfo).append(", gameOverSC=")
                 .append(gameOverSC).append(", raceScore=").append(raceScore).append(", point=").append(point)
-                .append("]");
+                .append(", lantiLongi=").append(lantiLongi).append(", voiceId=").append(voiceId).append("]");
         return builder.toString();
     }
 

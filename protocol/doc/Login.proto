@@ -23,6 +23,8 @@ message LoginGetRoleDataRequest{
 	optional string uuid = 2;
 	optional string headImageUrl = 3;
 	optional string nickname = 4;
+	optional string lantiLongi = 5;//经纬度坐标
+	optional string voiceId = 6;//声音id
 }
 
 message LoginGetRoleDataResponse{

@@ -172,9 +172,9 @@ public class BaidaMajiangRule extends MajiangRule {
         List<MajiangStateEnum> list = new ArrayList<>();
 
         switch (currentState) {
-        case STATE_INIT_READY:
-            list.add(MajiangStateEnum.STATE_ROLE_GAME_READY);
-            break;
+//        case STATE_INIT_READY:
+//            list.add(MajiangStateEnum.STATE_ROLE_GAME_READY);
+//            break;
         case STATE_ROLE_GAME_READY:
             if (fightService.checkAllReady(game)) {
                 list.add(MajiangStateEnum.STATE_GAME_START);
@@ -183,6 +183,7 @@ public class BaidaMajiangRule extends MajiangRule {
             }
             break;
         case STATE_GAME_START: {
+            ruleableGame.getOperations().clear();
             list.add(MajiangStateEnum.STATE_BAIDA_INIT);
             list.add(MajiangStateEnum.STATE_CHECK_ZHUANG);
             list.add(MajiangStateEnum.STATE_DISPATCH);
@@ -224,6 +225,7 @@ public class BaidaMajiangRule extends MajiangRule {
         case STATE_SC_TOUCH_CARD: {// 通知摸牌后
             boolean isFlower = game.touchCardIsFlower;
             if (isFlower) {// 先把通知发出去后再加流程
+                list.add(MajiangStateEnum.STATE_FLOWER_SCORE_CHANGE);
                 list.addAll(touchCardProcesses);
             }
         }
@@ -262,8 +264,8 @@ public class BaidaMajiangRule extends MajiangRule {
                 list.addAll(noticeCardListProcesses);
             } else {
                 // 进入后 以下就是正常流程了
-                game.isAddFlowerState = false;
                 RoleGameInfo roleGameInfo = roleGameInfoGetter.getCurrentRoleGameInfo(game);
+                roleGameInfo.isAddFlowerState = false;
                 int totalSize = getCardCount(roleGameInfo);
                 // 牌数量不够，就要继续摸牌，否则直接出牌
                 if (totalSize < 14) {
@@ -309,9 +311,13 @@ public class BaidaMajiangRule extends MajiangRule {
         case STATE_ROLE_CHOSEN_CARDLIST: {// 选择后
             // 如有栈中有CHECK_MINE_CARDLIST_OUTER，说明在补花流程中
             boolean isAddFlower = game.getOperations().contains(MajiangStateEnum.STATE_CHECK_MINE_CARDLIST_OUTER);
+            RoleGameInfo currentRoleGameInfo = roleGameInfoGetter.getCurrentRoleGameInfo(game);
             // 获得第一个人的卡组
             List<CallCardList> callCardLists = game.getCallCardLists();
             if (callCardLists.size() > 0) {
+                if (!isAddFlower) {
+                    currentRoleGameInfo.isAddFlowerState = false;
+                }
                 CallCardList callCardList = game.getCallCardLists().get(0);
                 RoleGameInfo callRoleGameInfo = roleGameInfoGetter.getRoleGameInfoBySeat(game, callCardList.masterSeat);
                 CardList cardList = callCardList.cardList;
@@ -360,11 +366,15 @@ public class BaidaMajiangRule extends MajiangRule {
                     list.add(MajiangStateEnum.STATE_HU);
                 }
             } else {
+                Stack<MajiangStateEnum> stack = game.getOperations();
                 // 补花流程中,栈中无CHECK_MINE_CARDLIST_OUTER，有操作，但是选择了过
-                if (game.isAddFlowerState && !isAddFlower) {
-                    game.isAddFlowerState = false;
+                if (currentRoleGameInfo.isAddFlowerState && !isAddFlower) {
+                    currentRoleGameInfo.isAddFlowerState = false;
                     list.addAll(touchCardProcesses);
                     list.addAll(sendCardProcesses);
+                    list.add(MajiangStateEnum.STATE_NEXT_SEAT);
+                }
+                if (stack.isEmpty() && list.isEmpty()) {
                     list.add(MajiangStateEnum.STATE_NEXT_SEAT);
                 }
             }
@@ -407,7 +417,7 @@ public class BaidaMajiangRule extends MajiangRule {
     /** 不是下一家 */
     private List<Class<? extends CardList>> otherCardListSequence = new ArrayList<>();
     /** 下一家时 */
-    private List<Class<? extends CardList>> nextSeatCardListSequence = new ArrayList<>();
+    public List<Class<? extends CardList>> nextSeatCardListSequence = new ArrayList<>();
 
     public BaidaMajiangRule() {
         allCardListMap.put(Gang.class, ReflectUtils.newInstance(BaidaGang.class));
@@ -452,7 +462,7 @@ public class BaidaMajiangRule extends MajiangRule {
     @Override
     public void executeGameOverProcess(Game game) {
         // 红中和百搭差不多
-        fightService.gameOverHongZhong(game);
+        fightService.gameOver(game);
     }
 
     @Override

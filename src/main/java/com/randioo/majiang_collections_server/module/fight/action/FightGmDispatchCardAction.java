@@ -25,7 +25,9 @@ public class FightGmDispatchCardAction implements IActionSupport {
         String roomId = request.getRoomId();
         List<ClientCard> list = request.getClientCardsList();
         List<Integer> remainCards = request.getRemainCardsList();
-        fightService.gmDispatchCard(roomId, list, remainCards, session);
+        boolean remainCardBoolean = request.getRemainCardBoolean();
+        int count = request.getRemainCardsCount();
+        fightService.gmDispatchCard(roomId, list, remainCards, session,remainCardBoolean,count);
     }
 
 }

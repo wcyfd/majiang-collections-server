@@ -7,12 +7,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.randioo.mahjong_public_server.protocol.Entity.OverMethod;
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.po.CardSort;
-import com.randioo.majiang_collections_server.module.fight.component.MajiangRule;
 import com.randioo.majiang_collections_server.util.Lists;
 
 public class Step5Hu extends Hu {
+
+    /**
+     * cardSort 少一张牌
+     */
     @Override
     public boolean checkTing(Game game, CardSort cardSort, List<Integer> waitCards) {
         boolean canTing = false;
@@ -32,23 +36,22 @@ public class Step5Hu extends Hu {
     @Override
     public void check(Game game, List<CardList> cardLists, CardSort cardSort, int card, List<CardList> showCardList,
             boolean isMine) {
-        MajiangRule rule = game.getRule();
         this.isMine = isMine;
         CardSort copySort = cardSort.clone();
         for (int value : copySort.getList().get(1)) {
-            System.out.println("===============");
-            System.out.println(" value-> " + value);
-            System.out.println("===============");
+            // System.out.println("===============");
+            // System.out.println(" value-> " + value);
+            // System.out.println("===============");
             List<Integer> cards = copySort.toArray();
             Collections.sort(cards);
-            System.out.println(cards);
+            // System.out.println(cards);
             int step = 1;
             END: {
                 while (true) {
                     switch (step) {
                     case 1: {
                         removeDoubleCardStep(value, cards);
-                        System.out.println(cards);
+                        // System.out.println(cards);
                     }
                     case 2: {
                         if (checkHuStep(cards)) {
@@ -60,17 +63,24 @@ public class Step5Hu extends Hu {
                             Collections.sort(list);
                             hu.handCards.addAll(list);
                             hu.showCardList.addAll(showCardList);
+                            if (isMine) {
+                                hu.setTargetSeat(-1);
+                                hu.overMethod = OverMethod.MO_HU;
+                            } else {
+                                hu.setTargetSeat(game.sendCardSeat);
+                                hu.overMethod = OverMethod.ZHUA_HU;
+                            }
                             cardLists.add(hu);
                             break END;
                         }
-                        System.out.println(cards);
+                        // System.out.println(cards);
                     }
                     case 3: {
                         if (!checkFormer3CardIsSameStep(cards)) {
                             step = 5;
                             break;
                         }
-                        System.out.println(cards);
+                        // System.out.println(cards);
                     }
                     case 4: {
                         removeFormer3CardIsSameStep(cards);
@@ -86,9 +96,9 @@ public class Step5Hu extends Hu {
                         }
                     }
                     default:
-                        System.out.println("hu error");
+                        // System.out.println("hu error");
                     }
-                    System.out.println(cards);
+                    // System.out.println(cards);
                 }
             }
         }
@@ -101,7 +111,7 @@ public class Step5Hu extends Hu {
     private void step1(List<Integer> doubleCards, List<Integer> cards) {
         // 移除将牌
         Lists.removeElementByList(cards, doubleCards);
-        System.out.println("移除将牌");
+        // System.out.println("移除将牌");
     }
 
     private boolean checkHuStep(List<Integer> cards) {
@@ -110,7 +120,7 @@ public class Step5Hu extends Hu {
 
     private boolean step2(List<Integer> cards) {
         boolean result = cards.size() == 0;
-        System.out.println("检查是否剩余牌数为0,如果是则胡牌");
+        // System.out.println("检查是否剩余牌数为0,如果是则胡牌");
         return result;
     }
 
@@ -127,7 +137,7 @@ public class Step5Hu extends Hu {
         int card3 = cards.get(2);
 
         boolean result = card1 == card2 && card2 == card3;
-        System.out.println("检查前三张牌是否相同");
+        // System.out.println("检查前三张牌是否相同");
         return result;
     }
 
@@ -138,7 +148,7 @@ public class Step5Hu extends Hu {
     private void step4(List<Integer> cards) {
         for (int i = 0; i < 3; i++)
             cards.remove(0);
-        System.out.println("移除前三张牌");
+        // System.out.println("移除前三张牌");
     }
 
     private boolean removeShunCardsStep(List<Integer> cards) {
@@ -153,10 +163,10 @@ public class Step5Hu extends Hu {
             Lists.removeElementByList(cards, Arrays.asList(card1));
             Lists.removeElementByList(cards, Arrays.asList(card2));
             Lists.removeElementByList(cards, Arrays.asList(card3));
-            System.out.println("移除顺牌");
+            // System.out.println("移除顺牌");
             return true;
         }
-        System.out.println("移除顺牌");
+        // System.out.println("移除顺牌");
         return false;
     }
 
@@ -194,14 +204,14 @@ public class Step5Hu extends Hu {
     public static void main(String[] args) {
         List<CardList> cardLists = new ArrayList<>();
         Step5Hu hu = new Step5Hu();
-        CardSort cardSort = new CardSort(4);
+        CardSort cardSort = new CardSort(5);
         List<Integer> list = Arrays.asList(101, 102, 102, 103, 104, 104, 105, 106, 107, 107, 108, 109, 109, 801);
         // List<Integer> list = Arrays.asList(11, 12, 13, 14, 15, 21, 32, 11,
         // 12, 21, 32, 12, 21, 32);
         cardSort.fillCardSort(list);
 
         int i = hu.getKingCardCount(cardSort);
-        System.out.println(i);
+        // System.out.println(i);
         Set<Integer> array = new HashSet<>();
         array.add(11);
         array.add(12);
@@ -213,7 +223,7 @@ public class Step5Hu extends Hu {
         array1.add(13);
 
         // hu.check(null, cardLists, cardSort, 0, null, false);
-        // System.out.println(cardLists);
+        // //System.out.println(cardLists);
     }
 
     private void cal(Set<Integer> targetSet, int count) {

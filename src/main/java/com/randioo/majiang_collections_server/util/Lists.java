@@ -5,174 +5,179 @@ import java.util.Collections;
 import java.util.List;
 
 public class Lists {
-	/**
-	 * 填充列表
-	 * 
-	 * @param list
-	 * @param arr
-	 * @return
-	 */
-	public static void fillList(List<Integer> list, int[] arr) {
-		for (int i : arr)
-			list.add(i);
-	}
 
-	/**
-	 * 变为动态数组
-	 * 
-	 * @param arr
-	 * @return
-	 */
-	public static <T> List<T> asDynamicList(T[] arr) {
-		return asDynamicList(arr, 0, arr.length);
-	}
+    public static <T> boolean equals(List<T> list1, List<T> list2) {
+        return list1.containsAll(list2) && list2.containsAll(list1);
+    }
 
-	/**
-	 * 变为动态数组
-	 * 
-	 * @param arr
-	 * @param startIndex
-	 * @param endIndex
-	 * @return
-	 */
-	public static <T> List<T> asDynamicList(T[] arr, int startIndex, int endIndex) {
-		List<T> list = new ArrayList<>();
+    /**
+     * 填充列表
+     * 
+     * @param list
+     * @param arr
+     * @return
+     */
+    public static void fillList(List<Integer> list, int[] arr) {
+        for (int i : arr)
+            list.add(i);
+    }
 
-		if (startIndex > endIndex || startIndex < 0 || endIndex > arr.length)
-			throw new ArrayIndexOutOfBoundsException();
+    /**
+     * 变为动态数组
+     * 
+     * @param arr
+     * @return
+     */
+    public static <T> List<T> asDynamicList(T[] arr) {
+        return asDynamicList(arr, 0, arr.length);
+    }
 
-		for (int i = startIndex; i < endIndex; i++)
-			list.add(arr[i]);
+    /**
+     * 变为动态数组
+     * 
+     * @param arr
+     * @param startIndex
+     * @param endIndex
+     * @return
+     */
+    public static <T> List<T> asDynamicList(T[] arr, int startIndex, int endIndex) {
+        List<T> list = new ArrayList<>();
 
-		return list;
-	}
+        if (startIndex > endIndex || startIndex < 0 || endIndex > arr.length)
+            throw new ArrayIndexOutOfBoundsException();
 
-	/**
-	 * 
-	 * @param souceList
-	 * @param removeList
-	 * @author wcy 2017年6月19日
-	 */
-	public static void removeElementByList(List<Integer> sourceList, List<Integer> removeList) {
-		for (int card : removeList) {
-			for (int i = sourceList.size() - 1; i >= 0; i--) {
-				if (sourceList.get(i) == card) {
-					sourceList.remove(i);
-					break;
-				}
-			}
-		}
-	}
+        for (int i = startIndex; i < endIndex; i++)
+            list.add(arr[i]);
 
-	/**
-	 * 从数组指定位置查找是否存在一个值
-	 * 
-	 * @param arr
-	 * @param startIndex
-	 * @param endIndex
-	 * @param value
-	 * @return
-	 * @author wcy 2017年7月21日
-	 */
-	public static <T> boolean contains(List<T> arr, int startIndex, int endIndex, Object o) {
-		return indexOf(arr, startIndex, endIndex, o) >= 0;
-	}
+        return list;
+    }
 
-	/**
-	 * 返回列表中某值的数量
-	 * 
-	 * @param arr
-	 * @param startIndex
-	 * @param endIndex
-	 * @param o
-	 * @return
-	 * @author wcy 2017年7月21日
-	 */
-	public static <T> int containsCount(List<T> arr, Object o) {
-		return containsCount(arr, 0, arr.size(), o);
-	}
+    /**
+     * 
+     * @param souceList
+     * @param removeList
+     * @author wcy 2017年6月19日
+     */
+    public static void removeElementByList(List<Integer> sourceList, List<Integer> removeList) {
+        for (int card : removeList) {
+            for (int i = sourceList.size() - 1; i >= 0; i--) {
+                if (sourceList.get(i) == card) {
+                    sourceList.remove(i);
+                    break;
+                }
+            }
+        }
+    }
 
-	/**
-	 * 返回列表中指定位置某值的数量
-	 * 
-	 * @param arr
-	 * @param startIndex
-	 * @param endIndex
-	 * @param o
-	 * @return
-	 * @author wcy 2017年7月21日
-	 */
-	public static <T> int containsCount(List<T> arr, int startIndex, int endIndex, Object o) {
-		int count = 0;
-		for (int i = startIndex; i < endIndex;) {
-			int index = indexOf(arr, i, endIndex, o);
+    /**
+     * 从数组指定位置查找是否存在一个值
+     * 
+     * @param arr
+     * @param startIndex
+     * @param endIndex
+     * @param value
+     * @return
+     * @author wcy 2017年7月21日
+     */
+    public static <T> boolean contains(List<T> arr, int startIndex, int endIndex, Object o) {
+        return indexOf(arr, startIndex, endIndex, o) >= 0;
+    }
 
-			if (index == -1)
-				break;
+    /**
+     * 返回列表中某值的数量
+     * 
+     * @param arr
+     * @param startIndex
+     * @param endIndex
+     * @param o
+     * @return
+     * @author wcy 2017年7月21日
+     */
+    public static <T> int containsCount(List<T> arr, Object o) {
+        return containsCount(arr, 0, arr.size(), o);
+    }
 
-			i = index + 1;
-			count++;
+    /**
+     * 返回列表中指定位置某值的数量
+     * 
+     * @param arr
+     * @param startIndex
+     * @param endIndex
+     * @param o
+     * @return
+     * @author wcy 2017年7月21日
+     */
+    public static <T> int containsCount(List<T> arr, int startIndex, int endIndex, Object o) {
+        int count = 0;
+        for (int i = startIndex; i < endIndex;) {
+            int index = indexOf(arr, i, endIndex, o);
 
-		}
-		return count;
-	}
+            if (index == -1)
+                break;
 
-	/**
-	 * 从数组指定位置返回一个值的索引,不存在返回-1
-	 * 
-	 * @param arr
-	 * @param startIndex
-	 * @param endIndex
-	 * @param o
-	 * @return
-	 * @author wcy 2017年7月21日
-	 */
-	public static <T> int indexOf(List<T> arr, int startIndex, int endIndex, Object o) {
-		if (startIndex < 0 || endIndex > arr.size() || startIndex > endIndex)
-			throw new RuntimeException("index out of bounds");
+            i = index + 1;
+            count++;
 
-		if (o == null) {
-			for (int i = startIndex; i < endIndex; i++)
-				if (arr.get(i) == null)
-					return i;
-		} else {
-			for (int i = startIndex; i < endIndex; i++)
-				if (o.equals(arr.get(i)))
-					return i;
-		}
+        }
+        return count;
+    }
 
-		return -1;
-	}
+    /**
+     * 从数组指定位置返回一个值的索引,不存在返回-1
+     * 
+     * @param arr
+     * @param startIndex
+     * @param endIndex
+     * @param o
+     * @return
+     * @author wcy 2017年7月21日
+     */
+    public static <T> int indexOf(List<T> arr, int startIndex, int endIndex, Object o) {
+        if (startIndex < 0 || endIndex > arr.size() || startIndex > endIndex)
+            throw new RuntimeException("index out of bounds");
 
-	/**
-	 * 移除所有的指定的索引
-	 * 
-	 * @param sources
-	 * @param indexList
-	 * @author wcy 2017年7月21日
-	 */
-	public static <T> void removeAllIndex(List<T> sources, List<Integer> indexList) {
-		Collections.sort(indexList);
+        if (o == null) {
+            for (int i = startIndex; i < endIndex; i++)
+                if (arr.get(i) == null)
+                    return i;
+        } else {
+            for (int i = startIndex; i < endIndex; i++)
+                if (o.equals(arr.get(i)))
+                    return i;
+        }
 
-		int temp = -1;
-		int i = sources.size() - 1;
-		for (int j = indexList.size() - 1; j >= 0;) {
-			int index = indexList.get(j);
-			if (index == temp) {
-				j--;
-				continue;
-			}
-			for (; i >= 0; i--) {
-				if (index > i)
-					continue;
-				if (index == i) {
-					temp = index;
-					sources.remove(i);
-					j--;
-					break;
-				}
-			}
-		}
-	}
+        return -1;
+    }
+
+    /**
+     * 移除所有的指定的索引
+     * 
+     * @param sources
+     * @param indexList
+     * @author wcy 2017年7月21日
+     */
+    public static <T> void removeAllIndex(List<T> sources, List<Integer> indexList) {
+        Collections.sort(indexList);
+
+        int temp = -1;
+        int i = sources.size() - 1;
+        for (int j = indexList.size() - 1; j >= 0;) {
+            int index = indexList.get(j);
+            if (index == temp) {
+                j--;
+                continue;
+            }
+            for (; i >= 0; i--) {
+                if (index > i)
+                    continue;
+                if (index == i) {
+                    temp = index;
+                    sources.remove(i);
+                    j--;
+                    break;
+                }
+            }
+        }
+    }
 
 }

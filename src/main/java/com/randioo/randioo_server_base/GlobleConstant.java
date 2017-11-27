@@ -17,5 +17,7 @@ public class GlobleConstant {
     public static final String SPRING_XML_PATH = "ApplicationContext.xml";
     /** 网络日志（内网） */
     public static final String ARGS_LOG_NET = "lognet";
+    /** 日志地址 */
+    public static final String ARGS_LOG_URL = "logurl";
 
 }

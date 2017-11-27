@@ -17,5 +17,7 @@ public class QiaomaHuTypeResult {
     /** 所有的番数 */
     public int fanCount;
     public int flowerCount;
+    /** 勒子数 */
+    public float leziCount;
     public List<HuType> typeList = new ArrayList<>();
 }

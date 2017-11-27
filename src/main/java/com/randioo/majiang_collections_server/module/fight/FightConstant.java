@@ -11,6 +11,7 @@ public class FightConstant {
     public static final String FIGHT_GANG_PENG_HU = "fight_gang_peng_hu";
 
     public static final String FIGHT_GANG_PENG_HU_OVER = "fight_gang_peng_hu_over";
+    public static final String FIGHT_NOTICE_APPLY_LEAVE = "fight_notice_apply_leave";
     public static final String FIGHT_APPLY_LEAVE = "fight_apply_leave";
     public static final String FIGHT_READY = "fight_ready"; // 准备
     public static final String FIGHT_GAME_EXIT = "fight_exit_game";
@@ -34,7 +35,8 @@ public class FightConstant {
 
     public static final int SEND_CARD_WAIT_TIME = 30;
 
-    public static final int COUNTDOWN = 9;
+    public static final int COUNTDOWN = 150;
+    public static final int FIGHT_COUNTDOWN = 30;
 
     public static final int CHI = 1;
     public static final int PENG = 2;
@@ -54,8 +56,8 @@ public class FightConstant {
     public static final String FIGHT_START = "start"; // 开始游戏
     public static final String FIGHT_TOUCH_CARD = "touch_card";// 摸牌
     public static final String FIGHT_SEND_CARD = "send_card"; // 出牌
-    public static final String FIGHT_COUNT_DOWN = "count_down"; // 倒计绿时
-    public static final String FIGHT_POINT_SEAT = "point_seat";// 座位指绿针
+    public static final String FIGHT_COUNT_DOWN = "count_down"; // 倒计时
+    public static final String FIGHT_POINT_SEAT = "point_seat";// 座位指针
     public static final String FIGHT_VOTE_APPLY_EXIT = "vote_exit";// 投票退出
     public static final String FIGHT_DISMISS = "fight_dismiss";// 房间解散
 
@@ -68,7 +70,19 @@ public class FightConstant {
     public static final String FIGHT_SCORE = "fight_score";// 分数改变
     public static final String FIGHT_FLOWER_COUNT = "fight_flower_count"; // 花计数
     public static final String FIGHT_ADD_FLOWER = "fight_add_flower";// 补花
+
+    public static final String FIGHT_DICE = "fight_dice";// 投骰子
+
+    public static final String FIGHT_NOTICE_READY = "fight_notice_ready";// 通知准备
+    public static final String FIGHT_NOTICE_AGREE_EXIT = "fight_notice_agree_exit";// 同意退出
+    public static final String FIFHT_APPLY_EXIT_RESULT = "fight_apply_exit_result";// 申请退出结果
     /** 每个玩家初始的牌数量 */
     public static final int EVERY_INIT_CARD_COUNT = 13;
+
+    public static final String FIGHT_REJECT_DISMISS = "fight_reject_dismiss";// 拒绝解散房间
+
+    public static final String FIGHT_TING = "fight_ting";
+
+    public static final String FIGHT_GAME_START = "fight_game_start";
 
 }

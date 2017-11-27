@@ -1,0 +1,27 @@
+package com.randioo.mahjong_public_server.protocol;
+import "Entity.proto";
+//界面请求
+message PlaybackCatelogRequest{
+	
+}
+
+message PlaybackCatelogResponse{
+	repeated PlaybackCatelogRoundData data = 1;
+}
+
+//录像回放
+message PlaybackGetBinaryRequest{
+	optional int32 playbackId = 1;//回放id
+	optional bool needSCStream = 2;//是否需要回放数据
+}
+
+message PlaybackGetBinaryResponse{
+	optional int32 errorCode = 1 [default=1];
+	optional RoundVideoData RoundVideoData = 2 ; //所有推送数据
+    optional GameConfigData gameConfigData = 3;
+    optional string roomId = 4;
+    repeated int32 allCards = 5;
+    repeated int32 allFlowers = 6;
+    optional int32 viewSeat = 7;//视角
+    optional string roundStartTime = 8;//回合开始时间
+}

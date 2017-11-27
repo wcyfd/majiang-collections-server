@@ -24,9 +24,20 @@ message GmGameInfoResponse{
 message GmDispatchCardRequest{
 	optional string roomId = 1;
 	repeated ClientCard clientCards = 2;
-	repeated int32 remainCards = 3;
+	repeated int32 remainCards = 3;	
+	optional int32 remainCardCount = 4;
+	optional bool remainCardBoolean = 5;
 }
 
 message GmDispatchCardResponse{
 	optional int32 errorCode = 1 [default = 1];
+}
+
+message GmRoundRequest{
+	optional string roomId = 1;
+	optional int32 remainRound = 2;
+}
+
+message GmRoundResponse{
+	
 }

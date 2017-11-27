@@ -7,6 +7,7 @@ import org.apache.mina.core.session.IoSession;
 import com.randioo.mahjong_public_server.protocol.Entity.ClientCard;
 import com.randioo.mahjong_public_server.protocol.Entity.EnvVarsData;
 import com.randioo.mahjong_public_server.protocol.Entity.FightVoteApplyExit;
+import com.randioo.mahjong_public_server.protocol.Entity.TingData;
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.bo.Role;
 import com.randioo.majiang_collections_server.entity.po.CallCardList;
@@ -57,7 +58,7 @@ public interface FightService extends ObserveBaseServiceInterface {
      * @param role
      * @param paiList
      */
-    void sendCard(Role role, int card, boolean isTouchCard, List<Integer> tingCards);
+    void sendCard(Role role, int card, boolean isTouchCard);
 
     /**
      * 分牌
@@ -113,6 +114,14 @@ public interface FightService extends ObserveBaseServiceInterface {
     void hu(Role role, int gameSendCount, int callCardListId);
 
     /**
+     * 前端点击了听
+     * 
+     * @param game
+     * @param role
+     */
+    void preTing(Role role, int gameSendCount, int callCardListId);
+
+    /**
      * 过
      * 
      * @param role
@@ -128,6 +137,16 @@ public interface FightService extends ObserveBaseServiceInterface {
      * @return
      * @author wcy 2017年8月3日
      */
+    /**
+     * 出的牌可以听
+     * 
+     * @param role
+     * @param card
+     * @param isTouchcard
+     * @param tingCards
+     */
+    void sendTingCard(Role role, int card, boolean isTouchcard, List<Integer> tingCards);
+
     CallCardList getPreviousCallCardList(List<CallCardList> callCardLists);
 
     /**
@@ -204,6 +223,7 @@ public interface FightService extends ObserveBaseServiceInterface {
      * @return
      * @author wcy 2017年8月28日
      */
+
     boolean checkQiangGang(Game game);
 
     void roundOverHongZhong(Game game, boolean checkHu);
@@ -212,9 +232,11 @@ public interface FightService extends ObserveBaseServiceInterface {
 
     void roundOverQiaoMa(Game game, boolean checkHu);
 
-    void gameOverHongZhong(Game game);
+    void gameOver(Game game);
 
     void chi(Role role, int gameSendCount, int callCardListId);
+
+    void tingCheckResult(Role role, List<TingData> tingDataList);
 
     /**
      * 获得游戏环境变量
@@ -236,6 +258,9 @@ public interface FightService extends ObserveBaseServiceInterface {
      * @param session
      * @author wcy 2017年9月5日
      */
-    void gmDispatchCard(String roomId, List<ClientCard> list, List<Integer> remainCards, IoSession session);
+    void gmDispatchCard(String roomId, List<ClientCard> list, List<Integer> remainCards, IoSession session,
+            boolean remainCardBoolean, int remainCardCount);
+
+    void gmRound(String roomId, int round);
 
 }

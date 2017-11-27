@@ -27,25 +27,27 @@ import com.randioo.randioo_server_base.template.Ref;
 public class HuTypeCalculator {
 
     public List<HuType> getHuTypeList(Game game, RoleGameInfo roleGameInfo, Hu hu, Ref<Integer> fanNum) {
-        Integer baida = game.getBaidaCard();
+        int lastCard = hu.card;
 
-        List<Integer> handCardList = roleGameInfo.cards;
+        Integer baida = game.getBaidaCard();
+        List<Integer> handCardList = new ArrayList<>(roleGameInfo.cards);
+        handCardList.add(lastCard);
+
         List<CardList> showCard = roleGameInfo.showCardLists;
         boolean isGangKai = hu.gangKai;
         boolean isPaoBaiDa = hu.isPaoBaiDa;
-        int lastCard = hu.card;
 
         List<HuType> res = new ArrayList<>();
         ArrayList<HuTypeEnum> HuTypeEnumList = new ArrayList<>();
 
-        CardSort handCard = new CardSort(4);
+        CardSort handCard = new CardSort(5);
         handCard.fillCardSort(handCardList);
 
         // 获得所有的牌=手牌+亮出的牌
         List<Integer> allCards = handCard.toArray();
-        for (CardList item : showCard)
+        for (CardList item : showCard) {
             allCards.addAll(item.getCards());
-        allCards.add(lastCard);
+        }
 
         if (isSiBaiDa(baida, allCards)) {
             res.add(HuType.SI_BAI_DA);
@@ -63,7 +65,6 @@ public class HuTypeCalculator {
             res.add(HuType.GANG_KAI);
             HuTypeEnumList.add(HuTypeEnum.GANG_KAI);
         }
-
         if (handCard.toArray().size() == 2) {
             res.add(HuType.DA_DIAO_CHE);
             HuTypeEnumList.add(HuTypeEnum.DA_DIAO_CHE);
@@ -112,7 +113,7 @@ public class HuTypeCalculator {
         HuTypeCalculator cal = new HuTypeCalculator();
 
         List<Integer> list = Arrays.asList(101, 102, 103, 102, 102, 108, 108, 108);
-        CardSort handSort = new CardSort(4);
+        CardSort handSort = new CardSort(5);
         handSort.fillCardSort(list);
 
         List<CardList> showCard = new ArrayList<CardList>();

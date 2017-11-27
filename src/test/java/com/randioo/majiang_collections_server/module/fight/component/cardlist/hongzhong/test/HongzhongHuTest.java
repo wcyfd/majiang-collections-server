@@ -2,8 +2,6 @@ package com.randioo.majiang_collections_server.module.fight.component.cardlist.h
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
@@ -12,21 +10,22 @@ import org.springframework.util.ReflectionUtils;
 import com.google.common.collect.Lists;
 import com.randioo.mahjong_public_server.protocol.Entity.GameConfigData;
 import com.randioo.majiang_collections_server.entity.po.CardSort;
-import com.randioo.majiang_collections_server.module.fight.component.cardlist.NewHu;
 import com.randioo.majiang_collections_server.module.fight.component.cardlist.hongzhong.HongzhongHu;
 import com.randioo.randioo_server_base.utils.ReflectUtils;
 
 public class HongzhongHuTest {
 
+    @Test
     public void checkHu() {
         HongzhongHu hu = new HongzhongHu();
 
-        CardSort cardSort = new CardSort(4);
+        CardSort cardSort = new CardSort(5);
         // cardSort.fillCardSort(Arrays.asList(801, 801, 203, 203, 206, 206,
         // 207, 207, 208, 308, 308));
         // cardSort.fillCardSort(Arrays.asList(102, 102, 107, 108, 109, 204,
         // 204, 206, 207, 208, 307, 307, 308, 308));
-        cardSort.fillCardSort(Arrays.asList(801, 801, 801, 201, 302));
+       List<Integer> arr = Lists.newArrayList(101,102,103,203,204,204,205,205,206,306,306,308,309,307);
+        cardSort.fillCardSort(arr);
         // cardSort.fillCardSort(Arrays.asList(101, 102, 103, 104, 105, 201,
         // 302, 101, 102, 201, 302, 801, 801, 302));
 

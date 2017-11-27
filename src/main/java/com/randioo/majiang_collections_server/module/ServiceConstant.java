@@ -9,4 +9,12 @@ public class ServiceConstant {
     public static final String GUEST_HEAD_IMG_URL = "ui://h24q1ml0x7tz13m";
     /** 机器人使用的平台id */
     public static final String ROBOT_PLATFORM_ID = "";
+
+    /** 中华麻将标识符 */
+    public static final String COM_RANDIOO_RDMJ_ZHONG_HUA = "com.randioo.RDMJZhongHua";
+    /** 敲麻标识符 */
+    public static final String COM_RANDIOO_RDMJ_QIAO_MA = "com.randioo.RDMJQiaoMa";
+    /** 百搭麻将标识符 */
+    public static final String COM_RANDIOO_RDMJ_BAI_DA = "com.randioo.RDMJBaiDa";
+
 }

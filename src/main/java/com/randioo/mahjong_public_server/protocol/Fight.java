@@ -2133,6 +2133,20 @@ public final class Fight {
     public boolean hasApplyExitId() { return hasApplyExitId; }
     public int getApplyExitId() { return applyExitId_; }
     
+    // optional int32 seat = 4;
+    public static final int SEAT_FIELD_NUMBER = 4;
+    private boolean hasSeat;
+    private int seat_ = 0;
+    public boolean hasSeat() { return hasSeat; }
+    public int getSeat() { return seat_; }
+    
+    // optional int32 startTime = 5;
+    public static final int STARTTIME_FIELD_NUMBER = 5;
+    private boolean hasStartTime;
+    private int startTime_ = 0;
+    public boolean hasStartTime() { return hasStartTime; }
+    public int getStartTime() { return startTime_; }
+    
     private void initFields() {
     }
     public final boolean isInitialized() {
@@ -2150,6 +2164,12 @@ public final class Fight {
       }
       if (hasApplyExitId()) {
         output.writeInt32(3, getApplyExitId());
+      }
+      if (hasSeat()) {
+        output.writeInt32(4, getSeat());
+      }
+      if (hasStartTime()) {
+        output.writeInt32(5, getStartTime());
       }
       getUnknownFields().writeTo(output);
     }
@@ -2171,6 +2191,14 @@ public final class Fight {
       if (hasApplyExitId()) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(3, getApplyExitId());
+      }
+      if (hasSeat()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, getSeat());
+      }
+      if (hasStartTime()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, getStartTime());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -2339,6 +2367,12 @@ public final class Fight {
         if (other.hasApplyExitId()) {
           setApplyExitId(other.getApplyExitId());
         }
+        if (other.hasSeat()) {
+          setSeat(other.getSeat());
+        }
+        if (other.hasStartTime()) {
+          setStartTime(other.getStartTime());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -2374,6 +2408,14 @@ public final class Fight {
             }
             case 24: {
               setApplyExitId(input.readInt32());
+              break;
+            }
+            case 32: {
+              setSeat(input.readInt32());
+              break;
+            }
+            case 40: {
+              setStartTime(input.readInt32());
               break;
             }
           }
@@ -2435,6 +2477,42 @@ public final class Fight {
       public Builder clearApplyExitId() {
         result.hasApplyExitId = false;
         result.applyExitId_ = 0;
+        return this;
+      }
+      
+      // optional int32 seat = 4;
+      public boolean hasSeat() {
+        return result.hasSeat();
+      }
+      public int getSeat() {
+        return result.getSeat();
+      }
+      public Builder setSeat(int value) {
+        result.hasSeat = true;
+        result.seat_ = value;
+        return this;
+      }
+      public Builder clearSeat() {
+        result.hasSeat = false;
+        result.seat_ = 0;
+        return this;
+      }
+      
+      // optional int32 startTime = 5;
+      public boolean hasStartTime() {
+        return result.hasStartTime();
+      }
+      public int getStartTime() {
+        return result.getStartTime();
+      }
+      public Builder setStartTime(int value) {
+        result.hasStartTime = true;
+        result.startTime_ = value;
+        return this;
+      }
+      public Builder clearStartTime() {
+        result.hasStartTime = false;
+        result.startTime_ = 0;
         return this;
       }
       
@@ -7029,6 +7107,13 @@ public final class Fight {
     public boolean hasHuangFan() { return hasHuangFan; }
     public boolean getHuangFan() { return huangFan_; }
     
+    // optional bool isLiuju = 9;
+    public static final int ISLIUJU_FIELD_NUMBER = 9;
+    private boolean hasIsLiuju;
+    private boolean isLiuju_ = false;
+    public boolean hasIsLiuju() { return hasIsLiuju; }
+    public boolean getIsLiuju() { return isLiuju_; }
+    
     private void initFields() {
     }
     public final boolean isInitialized() {
@@ -7061,6 +7146,9 @@ public final class Fight {
       }
       if (hasHuangFan()) {
         output.writeBool(8, getHuangFan());
+      }
+      if (hasIsLiuju()) {
+        output.writeBool(9, getIsLiuju());
       }
       getUnknownFields().writeTo(output);
     }
@@ -7112,6 +7200,10 @@ public final class Fight {
       if (hasHuangFan()) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(8, getHuangFan());
+      }
+      if (hasIsLiuju()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(9, getIsLiuju());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -7316,6 +7408,9 @@ public final class Fight {
         if (other.hasHuangFan()) {
           setHuangFan(other.getHuangFan());
         }
+        if (other.hasIsLiuju()) {
+          setIsLiuju(other.getIsLiuju());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -7391,6 +7486,10 @@ public final class Fight {
             }
             case 64: {
               setHuangFan(input.readBool());
+              break;
+            }
+            case 72: {
+              setIsLiuju(input.readBool());
               break;
             }
           }
@@ -7607,6 +7706,24 @@ public final class Fight {
       public Builder clearHuangFan() {
         result.hasHuangFan = false;
         result.huangFan_ = false;
+        return this;
+      }
+      
+      // optional bool isLiuju = 9;
+      public boolean hasIsLiuju() {
+        return result.hasIsLiuju();
+      }
+      public boolean getIsLiuju() {
+        return result.getIsLiuju();
+      }
+      public Builder setIsLiuju(boolean value) {
+        result.hasIsLiuju = true;
+        result.isLiuju_ = value;
+        return this;
+      }
+      public Builder clearIsLiuju() {
+        result.hasIsLiuju = false;
+        result.isLiuju_ = false;
         return this;
       }
       
@@ -8107,6 +8224,13 @@ public final class Fight {
     public boolean hasSeat() { return hasSeat; }
     public int getSeat() { return seat_; }
     
+    // optional int32 banCard = 2;
+    public static final int BANCARD_FIELD_NUMBER = 2;
+    private boolean hasBanCard;
+    private int banCard_ = 0;
+    public boolean hasBanCard() { return hasBanCard; }
+    public int getBanCard() { return banCard_; }
+    
     private void initFields() {
     }
     public final boolean isInitialized() {
@@ -8118,6 +8242,9 @@ public final class Fight {
       getSerializedSize();
       if (hasSeat()) {
         output.writeInt32(1, getSeat());
+      }
+      if (hasBanCard()) {
+        output.writeInt32(2, getBanCard());
       }
       getUnknownFields().writeTo(output);
     }
@@ -8131,6 +8258,10 @@ public final class Fight {
       if (hasSeat()) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, getSeat());
+      }
+      if (hasBanCard()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, getBanCard());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -8293,6 +8424,9 @@ public final class Fight {
         if (other.hasSeat()) {
           setSeat(other.getSeat());
         }
+        if (other.hasBanCard()) {
+          setBanCard(other.getBanCard());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -8322,6 +8456,10 @@ public final class Fight {
               setSeat(input.readInt32());
               break;
             }
+            case 16: {
+              setBanCard(input.readInt32());
+              break;
+            }
           }
         }
       }
@@ -8342,6 +8480,24 @@ public final class Fight {
       public Builder clearSeat() {
         result.hasSeat = false;
         result.seat_ = 0;
+        return this;
+      }
+      
+      // optional int32 banCard = 2;
+      public boolean hasBanCard() {
+        return result.hasBanCard();
+      }
+      public int getBanCard() {
+        return result.getBanCard();
+      }
+      public Builder setBanCard(int value) {
+        result.hasBanCard = true;
+        result.banCard_ = value;
+        return this;
+      }
+      public Builder clearBanCard() {
+        result.hasBanCard = false;
+        result.banCard_ = 0;
         return this;
       }
       
@@ -8398,18 +8554,6 @@ public final class Fight {
     public boolean hasIsTouchCard() { return hasIsTouchCard; }
     public boolean getIsTouchCard() { return isTouchCard_; }
     
-    // repeated int32 tingCards = 3;
-    public static final int TINGCARDS_FIELD_NUMBER = 3;
-    private java.util.List<java.lang.Integer> tingCards_ =
-      java.util.Collections.emptyList();
-    public java.util.List<java.lang.Integer> getTingCardsList() {
-      return tingCards_;
-    }
-    public int getTingCardsCount() { return tingCards_.size(); }
-    public int getTingCards(int index) {
-      return tingCards_.get(index);
-    }
-    
     private void initFields() {
     }
     public final boolean isInitialized() {
@@ -8424,9 +8568,6 @@ public final class Fight {
       }
       if (hasIsTouchCard()) {
         output.writeBool(2, getIsTouchCard());
-      }
-      for (int element : getTingCardsList()) {
-        output.writeInt32(3, element);
       }
       getUnknownFields().writeTo(output);
     }
@@ -8444,15 +8585,6 @@ public final class Fight {
       if (hasIsTouchCard()) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(2, getIsTouchCard());
-      }
-      {
-        int dataSize = 0;
-        for (int element : getTingCardsList()) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeInt32SizeNoTag(element);
-        }
-        size += dataSize;
-        size += 1 * getTingCardsList().size();
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -8596,10 +8728,6 @@ public final class Fight {
           throw new IllegalStateException(
             "build() has already been called on this Builder.");
         }
-        if (result.tingCards_ != java.util.Collections.EMPTY_LIST) {
-          result.tingCards_ =
-            java.util.Collections.unmodifiableList(result.tingCards_);
-        }
         com.randioo.mahjong_public_server.protocol.Fight.FightSendCardRequest returnMe = result;
         result = null;
         return returnMe;
@@ -8621,12 +8749,6 @@ public final class Fight {
         }
         if (other.hasIsTouchCard()) {
           setIsTouchCard(other.getIsTouchCard());
-        }
-        if (!other.tingCards_.isEmpty()) {
-          if (result.tingCards_.isEmpty()) {
-            result.tingCards_ = new java.util.ArrayList<java.lang.Integer>();
-          }
-          result.tingCards_.addAll(other.tingCards_);
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -8659,19 +8781,6 @@ public final class Fight {
             }
             case 16: {
               setIsTouchCard(input.readBool());
-              break;
-            }
-            case 24: {
-              addTingCards(input.readInt32());
-              break;
-            }
-            case 26: {
-              int length = input.readRawVarint32();
-              int limit = input.pushLimit(length);
-              while (input.getBytesUntilLimit() > 0) {
-                addTingCards(input.readInt32());
-              }
-              input.popLimit(limit);
               break;
             }
           }
@@ -8712,40 +8821,6 @@ public final class Fight {
       public Builder clearIsTouchCard() {
         result.hasIsTouchCard = false;
         result.isTouchCard_ = false;
-        return this;
-      }
-      
-      // repeated int32 tingCards = 3;
-      public java.util.List<java.lang.Integer> getTingCardsList() {
-        return java.util.Collections.unmodifiableList(result.tingCards_);
-      }
-      public int getTingCardsCount() {
-        return result.getTingCardsCount();
-      }
-      public int getTingCards(int index) {
-        return result.getTingCards(index);
-      }
-      public Builder setTingCards(int index, int value) {
-        result.tingCards_.set(index, value);
-        return this;
-      }
-      public Builder addTingCards(int value) {
-        if (result.tingCards_.isEmpty()) {
-          result.tingCards_ = new java.util.ArrayList<java.lang.Integer>();
-        }
-        result.tingCards_.add(value);
-        return this;
-      }
-      public Builder addAllTingCards(
-          java.lang.Iterable<? extends java.lang.Integer> values) {
-        if (result.tingCards_.isEmpty()) {
-          result.tingCards_ = new java.util.ArrayList<java.lang.Integer>();
-        }
-        super.addAll(values, result.tingCards_);
-        return this;
-      }
-      public Builder clearTingCards() {
-        result.tingCards_ = java.util.Collections.emptyList();
         return this;
       }
       
@@ -9045,6 +9120,694 @@ public final class Fight {
     // @@protoc_insertion_point(class_scope:com.randioo.mahjong_public_server.protocol.FightSendCardResponse)
   }
   
+  public static final class FightSendTingCardRequest extends
+      com.google.protobuf.GeneratedMessage {
+    // Use FightSendTingCardRequest.newBuilder() to construct.
+    private FightSendTingCardRequest() {
+      initFields();
+    }
+    private FightSendTingCardRequest(boolean noInit) {}
+    
+    private static final FightSendTingCardRequest defaultInstance;
+    public static FightSendTingCardRequest getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public FightSendTingCardRequest getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_FightSendTingCardRequest_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_FightSendTingCardRequest_fieldAccessorTable;
+    }
+    
+    // optional int32 card = 1;
+    public static final int CARD_FIELD_NUMBER = 1;
+    private boolean hasCard;
+    private int card_ = 0;
+    public boolean hasCard() { return hasCard; }
+    public int getCard() { return card_; }
+    
+    // optional bool isTouchCard = 2 [default = false];
+    public static final int ISTOUCHCARD_FIELD_NUMBER = 2;
+    private boolean hasIsTouchCard;
+    private boolean isTouchCard_ = false;
+    public boolean hasIsTouchCard() { return hasIsTouchCard; }
+    public boolean getIsTouchCard() { return isTouchCard_; }
+    
+    // repeated int32 tingCards = 3;
+    public static final int TINGCARDS_FIELD_NUMBER = 3;
+    private java.util.List<java.lang.Integer> tingCards_ =
+      java.util.Collections.emptyList();
+    public java.util.List<java.lang.Integer> getTingCardsList() {
+      return tingCards_;
+    }
+    public int getTingCardsCount() { return tingCards_.size(); }
+    public int getTingCards(int index) {
+      return tingCards_.get(index);
+    }
+    
+    private void initFields() {
+    }
+    public final boolean isInitialized() {
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (hasCard()) {
+        output.writeInt32(1, getCard());
+      }
+      if (hasIsTouchCard()) {
+        output.writeBool(2, getIsTouchCard());
+      }
+      for (int element : getTingCardsList()) {
+        output.writeInt32(3, element);
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasCard()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, getCard());
+      }
+      if (hasIsTouchCard()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(2, getIsTouchCard());
+      }
+      {
+        int dataSize = 0;
+        for (int element : getTingCardsList()) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(element);
+        }
+        size += dataSize;
+        size += 1 * getTingCardsList().size();
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest result;
+      
+      // Construct using com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest();
+        return builder;
+      }
+      
+      protected com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest.getDescriptor();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest getDefaultInstanceForType() {
+        return com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        if (result.tingCards_ != java.util.Collections.EMPTY_LIST) {
+          result.tingCards_ =
+            java.util.Collections.unmodifiableList(result.tingCards_);
+        }
+        com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest) {
+          return mergeFrom((com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest other) {
+        if (other == com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest.getDefaultInstance()) return this;
+        if (other.hasCard()) {
+          setCard(other.getCard());
+        }
+        if (other.hasIsTouchCard()) {
+          setIsTouchCard(other.getIsTouchCard());
+        }
+        if (!other.tingCards_.isEmpty()) {
+          if (result.tingCards_.isEmpty()) {
+            result.tingCards_ = new java.util.ArrayList<java.lang.Integer>();
+          }
+          result.tingCards_.addAll(other.tingCards_);
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 8: {
+              setCard(input.readInt32());
+              break;
+            }
+            case 16: {
+              setIsTouchCard(input.readBool());
+              break;
+            }
+            case 24: {
+              addTingCards(input.readInt32());
+              break;
+            }
+            case 26: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              while (input.getBytesUntilLimit() > 0) {
+                addTingCards(input.readInt32());
+              }
+              input.popLimit(limit);
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // optional int32 card = 1;
+      public boolean hasCard() {
+        return result.hasCard();
+      }
+      public int getCard() {
+        return result.getCard();
+      }
+      public Builder setCard(int value) {
+        result.hasCard = true;
+        result.card_ = value;
+        return this;
+      }
+      public Builder clearCard() {
+        result.hasCard = false;
+        result.card_ = 0;
+        return this;
+      }
+      
+      // optional bool isTouchCard = 2 [default = false];
+      public boolean hasIsTouchCard() {
+        return result.hasIsTouchCard();
+      }
+      public boolean getIsTouchCard() {
+        return result.getIsTouchCard();
+      }
+      public Builder setIsTouchCard(boolean value) {
+        result.hasIsTouchCard = true;
+        result.isTouchCard_ = value;
+        return this;
+      }
+      public Builder clearIsTouchCard() {
+        result.hasIsTouchCard = false;
+        result.isTouchCard_ = false;
+        return this;
+      }
+      
+      // repeated int32 tingCards = 3;
+      public java.util.List<java.lang.Integer> getTingCardsList() {
+        return java.util.Collections.unmodifiableList(result.tingCards_);
+      }
+      public int getTingCardsCount() {
+        return result.getTingCardsCount();
+      }
+      public int getTingCards(int index) {
+        return result.getTingCards(index);
+      }
+      public Builder setTingCards(int index, int value) {
+        result.tingCards_.set(index, value);
+        return this;
+      }
+      public Builder addTingCards(int value) {
+        if (result.tingCards_.isEmpty()) {
+          result.tingCards_ = new java.util.ArrayList<java.lang.Integer>();
+        }
+        result.tingCards_.add(value);
+        return this;
+      }
+      public Builder addAllTingCards(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        if (result.tingCards_.isEmpty()) {
+          result.tingCards_ = new java.util.ArrayList<java.lang.Integer>();
+        }
+        super.addAll(values, result.tingCards_);
+        return this;
+      }
+      public Builder clearTingCards() {
+        result.tingCards_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:com.randioo.mahjong_public_server.protocol.FightSendTingCardRequest)
+    }
+    
+    static {
+      defaultInstance = new FightSendTingCardRequest(true);
+      com.randioo.mahjong_public_server.protocol.Fight.internalForceInit();
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:com.randioo.mahjong_public_server.protocol.FightSendTingCardRequest)
+  }
+  
+  public static final class FightSendTingCardResponse extends
+      com.google.protobuf.GeneratedMessage {
+    // Use FightSendTingCardResponse.newBuilder() to construct.
+    private FightSendTingCardResponse() {
+      initFields();
+    }
+    private FightSendTingCardResponse(boolean noInit) {}
+    
+    private static final FightSendTingCardResponse defaultInstance;
+    public static FightSendTingCardResponse getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public FightSendTingCardResponse getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_FightSendTingCardResponse_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_FightSendTingCardResponse_fieldAccessorTable;
+    }
+    
+    // optional int32 errorCode = 1 [default = 1];
+    public static final int ERRORCODE_FIELD_NUMBER = 1;
+    private boolean hasErrorCode;
+    private int errorCode_ = 1;
+    public boolean hasErrorCode() { return hasErrorCode; }
+    public int getErrorCode() { return errorCode_; }
+    
+    private void initFields() {
+    }
+    public final boolean isInitialized() {
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (hasErrorCode()) {
+        output.writeInt32(1, getErrorCode());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasErrorCode()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, getErrorCode());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse result;
+      
+      // Construct using com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse();
+        return builder;
+      }
+      
+      protected com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse.getDescriptor();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse getDefaultInstanceForType() {
+        return com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse) {
+          return mergeFrom((com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse other) {
+        if (other == com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse.getDefaultInstance()) return this;
+        if (other.hasErrorCode()) {
+          setErrorCode(other.getErrorCode());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 8: {
+              setErrorCode(input.readInt32());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // optional int32 errorCode = 1 [default = 1];
+      public boolean hasErrorCode() {
+        return result.hasErrorCode();
+      }
+      public int getErrorCode() {
+        return result.getErrorCode();
+      }
+      public Builder setErrorCode(int value) {
+        result.hasErrorCode = true;
+        result.errorCode_ = value;
+        return this;
+      }
+      public Builder clearErrorCode() {
+        result.hasErrorCode = false;
+        result.errorCode_ = 1;
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:com.randioo.mahjong_public_server.protocol.FightSendTingCardResponse)
+    }
+    
+    static {
+      defaultInstance = new FightSendTingCardResponse(true);
+      com.randioo.mahjong_public_server.protocol.Fight.internalForceInit();
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:com.randioo.mahjong_public_server.protocol.FightSendTingCardResponse)
+  }
+  
   public static final class SCFightSendCard extends
       com.google.protobuf.GeneratedMessage {
     // Use SCFightSendCard.newBuilder() to construct.
@@ -9093,6 +9856,13 @@ public final class Fight {
     public boolean hasIsTouchCard() { return hasIsTouchCard; }
     public boolean getIsTouchCard() { return isTouchCard_; }
     
+    // optional bool isTingCard = 4;
+    public static final int ISTINGCARD_FIELD_NUMBER = 4;
+    private boolean hasIsTingCard;
+    private boolean isTingCard_ = false;
+    public boolean hasIsTingCard() { return hasIsTingCard; }
+    public boolean getIsTingCard() { return isTingCard_; }
+    
     private void initFields() {
     }
     public final boolean isInitialized() {
@@ -9110,6 +9880,9 @@ public final class Fight {
       }
       if (hasIsTouchCard()) {
         output.writeBool(3, getIsTouchCard());
+      }
+      if (hasIsTingCard()) {
+        output.writeBool(4, getIsTingCard());
       }
       getUnknownFields().writeTo(output);
     }
@@ -9131,6 +9904,10 @@ public final class Fight {
       if (hasIsTouchCard()) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(3, getIsTouchCard());
+      }
+      if (hasIsTingCard()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(4, getIsTingCard());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -9299,6 +10076,9 @@ public final class Fight {
         if (other.hasIsTouchCard()) {
           setIsTouchCard(other.getIsTouchCard());
         }
+        if (other.hasIsTingCard()) {
+          setIsTingCard(other.getIsTingCard());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -9334,6 +10114,10 @@ public final class Fight {
             }
             case 24: {
               setIsTouchCard(input.readBool());
+              break;
+            }
+            case 32: {
+              setIsTingCard(input.readBool());
               break;
             }
           }
@@ -9392,6 +10176,24 @@ public final class Fight {
       public Builder clearIsTouchCard() {
         result.hasIsTouchCard = false;
         result.isTouchCard_ = false;
+        return this;
+      }
+      
+      // optional bool isTingCard = 4;
+      public boolean hasIsTingCard() {
+        return result.hasIsTingCard();
+      }
+      public boolean getIsTingCard() {
+        return result.getIsTingCard();
+      }
+      public Builder setIsTingCard(boolean value) {
+        result.hasIsTingCard = true;
+        result.isTingCard_ = value;
+        return this;
+      }
+      public Builder clearIsTingCard() {
+        result.hasIsTingCard = false;
+        result.isTingCard_ = false;
         return this;
       }
       
@@ -9873,7 +10675,15 @@ public final class Fight {
     public boolean hasTempGameCount() { return hasTempGameCount; }
     public int getTempGameCount() { return tempGameCount_; }
     
+    // optional .com.randioo.mahjong_public_server.protocol.CallTingData callTingData = 5;
+    public static final int CALLTINGDATA_FIELD_NUMBER = 5;
+    private boolean hasCallTingData;
+    private com.randioo.mahjong_public_server.protocol.Entity.CallTingData callTingData_;
+    public boolean hasCallTingData() { return hasCallTingData; }
+    public com.randioo.mahjong_public_server.protocol.Entity.CallTingData getCallTingData() { return callTingData_; }
+    
     private void initFields() {
+      callTingData_ = com.randioo.mahjong_public_server.protocol.Entity.CallTingData.getDefaultInstance();
     }
     public final boolean isInitialized() {
       return true;
@@ -9893,6 +10703,9 @@ public final class Fight {
       }
       if (hasTempGameCount()) {
         output.writeInt32(4, getTempGameCount());
+      }
+      if (hasCallTingData()) {
+        output.writeMessage(5, getCallTingData());
       }
       getUnknownFields().writeTo(output);
     }
@@ -9918,6 +10731,10 @@ public final class Fight {
       if (hasTempGameCount()) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(4, getTempGameCount());
+      }
+      if (hasCallTingData()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, getCallTingData());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -10103,6 +10920,9 @@ public final class Fight {
         if (other.hasTempGameCount()) {
           setTempGameCount(other.getTempGameCount());
         }
+        if (other.hasCallTingData()) {
+          mergeCallTingData(other.getCallTingData());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -10146,6 +10966,15 @@ public final class Fight {
             }
             case 32: {
               setTempGameCount(input.readInt32());
+              break;
+            }
+            case 42: {
+              com.randioo.mahjong_public_server.protocol.Entity.CallTingData.Builder subBuilder = com.randioo.mahjong_public_server.protocol.Entity.CallTingData.newBuilder();
+              if (hasCallTingData()) {
+                subBuilder.mergeFrom(getCallTingData());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setCallTingData(subBuilder.buildPartial());
               break;
             }
           }
@@ -10288,6 +11117,43 @@ public final class Fight {
       public Builder clearTempGameCount() {
         result.hasTempGameCount = false;
         result.tempGameCount_ = 0;
+        return this;
+      }
+      
+      // optional .com.randioo.mahjong_public_server.protocol.CallTingData callTingData = 5;
+      public boolean hasCallTingData() {
+        return result.hasCallTingData();
+      }
+      public com.randioo.mahjong_public_server.protocol.Entity.CallTingData getCallTingData() {
+        return result.getCallTingData();
+      }
+      public Builder setCallTingData(com.randioo.mahjong_public_server.protocol.Entity.CallTingData value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasCallTingData = true;
+        result.callTingData_ = value;
+        return this;
+      }
+      public Builder setCallTingData(com.randioo.mahjong_public_server.protocol.Entity.CallTingData.Builder builderForValue) {
+        result.hasCallTingData = true;
+        result.callTingData_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeCallTingData(com.randioo.mahjong_public_server.protocol.Entity.CallTingData value) {
+        if (result.hasCallTingData() &&
+            result.callTingData_ != com.randioo.mahjong_public_server.protocol.Entity.CallTingData.getDefaultInstance()) {
+          result.callTingData_ =
+            com.randioo.mahjong_public_server.protocol.Entity.CallTingData.newBuilder(result.callTingData_).mergeFrom(value).buildPartial();
+        } else {
+          result.callTingData_ = value;
+        }
+        result.hasCallTingData = true;
+        return this;
+      }
+      public Builder clearCallTingData() {
+        result.hasCallTingData = false;
+        result.callTingData_ = com.randioo.mahjong_public_server.protocol.Entity.CallTingData.getDefaultInstance();
         return this;
       }
       
@@ -12797,8 +13663,16 @@ public final class Fight {
     public boolean hasHuData() { return hasHuData; }
     public com.randioo.mahjong_public_server.protocol.Entity.RoundCardsData getHuData() { return huData_; }
     
+    // optional .com.randioo.mahjong_public_server.protocol.OverMethod overMethod = 3;
+    public static final int OVERMETHOD_FIELD_NUMBER = 3;
+    private boolean hasOverMethod;
+    private com.randioo.mahjong_public_server.protocol.Entity.OverMethod overMethod_;
+    public boolean hasOverMethod() { return hasOverMethod; }
+    public com.randioo.mahjong_public_server.protocol.Entity.OverMethod getOverMethod() { return overMethod_; }
+    
     private void initFields() {
       huData_ = com.randioo.mahjong_public_server.protocol.Entity.RoundCardsData.getDefaultInstance();
+      overMethod_ = com.randioo.mahjong_public_server.protocol.Entity.OverMethod.LOSS;
     }
     public final boolean isInitialized() {
       return true;
@@ -12812,6 +13686,9 @@ public final class Fight {
       }
       if (hasHuData()) {
         output.writeMessage(2, getHuData());
+      }
+      if (hasOverMethod()) {
+        output.writeEnum(3, getOverMethod().getNumber());
       }
       getUnknownFields().writeTo(output);
     }
@@ -12829,6 +13706,10 @@ public final class Fight {
       if (hasHuData()) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, getHuData());
+      }
+      if (hasOverMethod()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(3, getOverMethod().getNumber());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -12994,6 +13875,9 @@ public final class Fight {
         if (other.hasHuData()) {
           mergeHuData(other.getHuData());
         }
+        if (other.hasOverMethod()) {
+          setOverMethod(other.getOverMethod());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -13030,6 +13914,16 @@ public final class Fight {
               }
               input.readMessage(subBuilder, extensionRegistry);
               setHuData(subBuilder.buildPartial());
+              break;
+            }
+            case 24: {
+              int rawValue = input.readEnum();
+              com.randioo.mahjong_public_server.protocol.Entity.OverMethod value = com.randioo.mahjong_public_server.protocol.Entity.OverMethod.valueOf(rawValue);
+              if (value == null) {
+                unknownFields.mergeVarintField(3, rawValue);
+              } else {
+                setOverMethod(value);
+              }
               break;
             }
           }
@@ -13089,6 +13983,27 @@ public final class Fight {
       public Builder clearHuData() {
         result.hasHuData = false;
         result.huData_ = com.randioo.mahjong_public_server.protocol.Entity.RoundCardsData.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .com.randioo.mahjong_public_server.protocol.OverMethod overMethod = 3;
+      public boolean hasOverMethod() {
+        return result.hasOverMethod();
+      }
+      public com.randioo.mahjong_public_server.protocol.Entity.OverMethod getOverMethod() {
+        return result.getOverMethod();
+      }
+      public Builder setOverMethod(com.randioo.mahjong_public_server.protocol.Entity.OverMethod value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasOverMethod = true;
+        result.overMethod_ = value;
+        return this;
+      }
+      public Builder clearOverMethod() {
+        result.hasOverMethod = false;
+        result.overMethod_ = com.randioo.mahjong_public_server.protocol.Entity.OverMethod.LOSS;
         return this;
       }
       
@@ -18533,6 +19448,2419 @@ public final class Fight {
     // @@protoc_insertion_point(class_scope:com.randioo.mahjong_public_server.protocol.SCFightTing)
   }
   
+  public static final class SCFightTingCheck extends
+      com.google.protobuf.GeneratedMessage {
+    // Use SCFightTingCheck.newBuilder() to construct.
+    private SCFightTingCheck() {
+      initFields();
+    }
+    private SCFightTingCheck(boolean noInit) {}
+    
+    private static final SCFightTingCheck defaultInstance;
+    public static SCFightTingCheck getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public SCFightTingCheck getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_SCFightTingCheck_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_SCFightTingCheck_fieldAccessorTable;
+    }
+    
+    private void initFields() {
+    }
+    public final boolean isInitialized() {
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck result;
+      
+      // Construct using com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck();
+        return builder;
+      }
+      
+      protected com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck.getDescriptor();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck getDefaultInstanceForType() {
+        return com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck) {
+          return mergeFrom((com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck other) {
+        if (other == com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // @@protoc_insertion_point(builder_scope:com.randioo.mahjong_public_server.protocol.SCFightTingCheck)
+    }
+    
+    static {
+      defaultInstance = new SCFightTingCheck(true);
+      com.randioo.mahjong_public_server.protocol.Fight.internalForceInit();
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:com.randioo.mahjong_public_server.protocol.SCFightTingCheck)
+  }
+  
+  public static final class FightTingCheckResultRequest extends
+      com.google.protobuf.GeneratedMessage {
+    // Use FightTingCheckResultRequest.newBuilder() to construct.
+    private FightTingCheckResultRequest() {
+      initFields();
+    }
+    private FightTingCheckResultRequest(boolean noInit) {}
+    
+    private static final FightTingCheckResultRequest defaultInstance;
+    public static FightTingCheckResultRequest getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public FightTingCheckResultRequest getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_FightTingCheckResultRequest_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_FightTingCheckResultRequest_fieldAccessorTable;
+    }
+    
+    // repeated .com.randioo.mahjong_public_server.protocol.TingData tingData = 1;
+    public static final int TINGDATA_FIELD_NUMBER = 1;
+    private java.util.List<com.randioo.mahjong_public_server.protocol.Entity.TingData> tingData_ =
+      java.util.Collections.emptyList();
+    public java.util.List<com.randioo.mahjong_public_server.protocol.Entity.TingData> getTingDataList() {
+      return tingData_;
+    }
+    public int getTingDataCount() { return tingData_.size(); }
+    public com.randioo.mahjong_public_server.protocol.Entity.TingData getTingData(int index) {
+      return tingData_.get(index);
+    }
+    
+    private void initFields() {
+    }
+    public final boolean isInitialized() {
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      for (com.randioo.mahjong_public_server.protocol.Entity.TingData element : getTingDataList()) {
+        output.writeMessage(1, element);
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      for (com.randioo.mahjong_public_server.protocol.Entity.TingData element : getTingDataList()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, element);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest result;
+      
+      // Construct using com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest();
+        return builder;
+      }
+      
+      protected com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest.getDescriptor();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest getDefaultInstanceForType() {
+        return com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        if (result.tingData_ != java.util.Collections.EMPTY_LIST) {
+          result.tingData_ =
+            java.util.Collections.unmodifiableList(result.tingData_);
+        }
+        com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest) {
+          return mergeFrom((com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest other) {
+        if (other == com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest.getDefaultInstance()) return this;
+        if (!other.tingData_.isEmpty()) {
+          if (result.tingData_.isEmpty()) {
+            result.tingData_ = new java.util.ArrayList<com.randioo.mahjong_public_server.protocol.Entity.TingData>();
+          }
+          result.tingData_.addAll(other.tingData_);
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              com.randioo.mahjong_public_server.protocol.Entity.TingData.Builder subBuilder = com.randioo.mahjong_public_server.protocol.Entity.TingData.newBuilder();
+              input.readMessage(subBuilder, extensionRegistry);
+              addTingData(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // repeated .com.randioo.mahjong_public_server.protocol.TingData tingData = 1;
+      public java.util.List<com.randioo.mahjong_public_server.protocol.Entity.TingData> getTingDataList() {
+        return java.util.Collections.unmodifiableList(result.tingData_);
+      }
+      public int getTingDataCount() {
+        return result.getTingDataCount();
+      }
+      public com.randioo.mahjong_public_server.protocol.Entity.TingData getTingData(int index) {
+        return result.getTingData(index);
+      }
+      public Builder setTingData(int index, com.randioo.mahjong_public_server.protocol.Entity.TingData value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.tingData_.set(index, value);
+        return this;
+      }
+      public Builder setTingData(int index, com.randioo.mahjong_public_server.protocol.Entity.TingData.Builder builderForValue) {
+        result.tingData_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addTingData(com.randioo.mahjong_public_server.protocol.Entity.TingData value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        if (result.tingData_.isEmpty()) {
+          result.tingData_ = new java.util.ArrayList<com.randioo.mahjong_public_server.protocol.Entity.TingData>();
+        }
+        result.tingData_.add(value);
+        return this;
+      }
+      public Builder addTingData(com.randioo.mahjong_public_server.protocol.Entity.TingData.Builder builderForValue) {
+        if (result.tingData_.isEmpty()) {
+          result.tingData_ = new java.util.ArrayList<com.randioo.mahjong_public_server.protocol.Entity.TingData>();
+        }
+        result.tingData_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllTingData(
+          java.lang.Iterable<? extends com.randioo.mahjong_public_server.protocol.Entity.TingData> values) {
+        if (result.tingData_.isEmpty()) {
+          result.tingData_ = new java.util.ArrayList<com.randioo.mahjong_public_server.protocol.Entity.TingData>();
+        }
+        super.addAll(values, result.tingData_);
+        return this;
+      }
+      public Builder clearTingData() {
+        result.tingData_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:com.randioo.mahjong_public_server.protocol.FightTingCheckResultRequest)
+    }
+    
+    static {
+      defaultInstance = new FightTingCheckResultRequest(true);
+      com.randioo.mahjong_public_server.protocol.Fight.internalForceInit();
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:com.randioo.mahjong_public_server.protocol.FightTingCheckResultRequest)
+  }
+  
+  public static final class FightTingCheckResultResponse extends
+      com.google.protobuf.GeneratedMessage {
+    // Use FightTingCheckResultResponse.newBuilder() to construct.
+    private FightTingCheckResultResponse() {
+      initFields();
+    }
+    private FightTingCheckResultResponse(boolean noInit) {}
+    
+    private static final FightTingCheckResultResponse defaultInstance;
+    public static FightTingCheckResultResponse getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public FightTingCheckResultResponse getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_FightTingCheckResultResponse_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_FightTingCheckResultResponse_fieldAccessorTable;
+    }
+    
+    private void initFields() {
+    }
+    public final boolean isInitialized() {
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse result;
+      
+      // Construct using com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse();
+        return builder;
+      }
+      
+      protected com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse.getDescriptor();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse getDefaultInstanceForType() {
+        return com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse) {
+          return mergeFrom((com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse other) {
+        if (other == com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // @@protoc_insertion_point(builder_scope:com.randioo.mahjong_public_server.protocol.FightTingCheckResultResponse)
+    }
+    
+    static {
+      defaultInstance = new FightTingCheckResultResponse(true);
+      com.randioo.mahjong_public_server.protocol.Fight.internalForceInit();
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:com.randioo.mahjong_public_server.protocol.FightTingCheckResultResponse)
+  }
+  
+  public static final class FightPreTingResponse extends
+      com.google.protobuf.GeneratedMessage {
+    // Use FightPreTingResponse.newBuilder() to construct.
+    private FightPreTingResponse() {
+      initFields();
+    }
+    private FightPreTingResponse(boolean noInit) {}
+    
+    private static final FightPreTingResponse defaultInstance;
+    public static FightPreTingResponse getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public FightPreTingResponse getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_FightPreTingResponse_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_FightPreTingResponse_fieldAccessorTable;
+    }
+    
+    // optional int32 errorCode = 1 [default = 1];
+    public static final int ERRORCODE_FIELD_NUMBER = 1;
+    private boolean hasErrorCode;
+    private int errorCode_ = 1;
+    public boolean hasErrorCode() { return hasErrorCode; }
+    public int getErrorCode() { return errorCode_; }
+    
+    private void initFields() {
+    }
+    public final boolean isInitialized() {
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (hasErrorCode()) {
+        output.writeInt32(1, getErrorCode());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasErrorCode()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, getErrorCode());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse result;
+      
+      // Construct using com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse();
+        return builder;
+      }
+      
+      protected com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse.getDescriptor();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse getDefaultInstanceForType() {
+        return com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse) {
+          return mergeFrom((com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse other) {
+        if (other == com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse.getDefaultInstance()) return this;
+        if (other.hasErrorCode()) {
+          setErrorCode(other.getErrorCode());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 8: {
+              setErrorCode(input.readInt32());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // optional int32 errorCode = 1 [default = 1];
+      public boolean hasErrorCode() {
+        return result.hasErrorCode();
+      }
+      public int getErrorCode() {
+        return result.getErrorCode();
+      }
+      public Builder setErrorCode(int value) {
+        result.hasErrorCode = true;
+        result.errorCode_ = value;
+        return this;
+      }
+      public Builder clearErrorCode() {
+        result.hasErrorCode = false;
+        result.errorCode_ = 1;
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:com.randioo.mahjong_public_server.protocol.FightPreTingResponse)
+    }
+    
+    static {
+      defaultInstance = new FightPreTingResponse(true);
+      com.randioo.mahjong_public_server.protocol.Fight.internalForceInit();
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:com.randioo.mahjong_public_server.protocol.FightPreTingResponse)
+  }
+  
+  public static final class FightPreTingRequest extends
+      com.google.protobuf.GeneratedMessage {
+    // Use FightPreTingRequest.newBuilder() to construct.
+    private FightPreTingRequest() {
+      initFields();
+    }
+    private FightPreTingRequest(boolean noInit) {}
+    
+    private static final FightPreTingRequest defaultInstance;
+    public static FightPreTingRequest getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public FightPreTingRequest getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_FightPreTingRequest_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_FightPreTingRequest_fieldAccessorTable;
+    }
+    
+    // optional int32 tempGameCount = 1;
+    public static final int TEMPGAMECOUNT_FIELD_NUMBER = 1;
+    private boolean hasTempGameCount;
+    private int tempGameCount_ = 0;
+    public boolean hasTempGameCount() { return hasTempGameCount; }
+    public int getTempGameCount() { return tempGameCount_; }
+    
+    // optional int32 callCardListId = 2;
+    public static final int CALLCARDLISTID_FIELD_NUMBER = 2;
+    private boolean hasCallCardListId;
+    private int callCardListId_ = 0;
+    public boolean hasCallCardListId() { return hasCallCardListId; }
+    public int getCallCardListId() { return callCardListId_; }
+    
+    private void initFields() {
+    }
+    public final boolean isInitialized() {
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (hasTempGameCount()) {
+        output.writeInt32(1, getTempGameCount());
+      }
+      if (hasCallCardListId()) {
+        output.writeInt32(2, getCallCardListId());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasTempGameCount()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, getTempGameCount());
+      }
+      if (hasCallCardListId()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, getCallCardListId());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest result;
+      
+      // Construct using com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest();
+        return builder;
+      }
+      
+      protected com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest.getDescriptor();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest getDefaultInstanceForType() {
+        return com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest) {
+          return mergeFrom((com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest other) {
+        if (other == com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest.getDefaultInstance()) return this;
+        if (other.hasTempGameCount()) {
+          setTempGameCount(other.getTempGameCount());
+        }
+        if (other.hasCallCardListId()) {
+          setCallCardListId(other.getCallCardListId());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 8: {
+              setTempGameCount(input.readInt32());
+              break;
+            }
+            case 16: {
+              setCallCardListId(input.readInt32());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // optional int32 tempGameCount = 1;
+      public boolean hasTempGameCount() {
+        return result.hasTempGameCount();
+      }
+      public int getTempGameCount() {
+        return result.getTempGameCount();
+      }
+      public Builder setTempGameCount(int value) {
+        result.hasTempGameCount = true;
+        result.tempGameCount_ = value;
+        return this;
+      }
+      public Builder clearTempGameCount() {
+        result.hasTempGameCount = false;
+        result.tempGameCount_ = 0;
+        return this;
+      }
+      
+      // optional int32 callCardListId = 2;
+      public boolean hasCallCardListId() {
+        return result.hasCallCardListId();
+      }
+      public int getCallCardListId() {
+        return result.getCallCardListId();
+      }
+      public Builder setCallCardListId(int value) {
+        result.hasCallCardListId = true;
+        result.callCardListId_ = value;
+        return this;
+      }
+      public Builder clearCallCardListId() {
+        result.hasCallCardListId = false;
+        result.callCardListId_ = 0;
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:com.randioo.mahjong_public_server.protocol.FightPreTingRequest)
+    }
+    
+    static {
+      defaultInstance = new FightPreTingRequest(true);
+      com.randioo.mahjong_public_server.protocol.Fight.internalForceInit();
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:com.randioo.mahjong_public_server.protocol.FightPreTingRequest)
+  }
+  
+  public static final class SCFightNoticeAgreeExit extends
+      com.google.protobuf.GeneratedMessage {
+    // Use SCFightNoticeAgreeExit.newBuilder() to construct.
+    private SCFightNoticeAgreeExit() {
+      initFields();
+    }
+    private SCFightNoticeAgreeExit(boolean noInit) {}
+    
+    private static final SCFightNoticeAgreeExit defaultInstance;
+    public static SCFightNoticeAgreeExit getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public SCFightNoticeAgreeExit getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_SCFightNoticeAgreeExit_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_SCFightNoticeAgreeExit_fieldAccessorTable;
+    }
+    
+    // optional int32 seat = 1;
+    public static final int SEAT_FIELD_NUMBER = 1;
+    private boolean hasSeat;
+    private int seat_ = 0;
+    public boolean hasSeat() { return hasSeat; }
+    public int getSeat() { return seat_; }
+    
+    // optional .com.randioo.mahjong_public_server.protocol.FightVoteApplyExit fightVoteApplyExit = 2;
+    public static final int FIGHTVOTEAPPLYEXIT_FIELD_NUMBER = 2;
+    private boolean hasFightVoteApplyExit;
+    private com.randioo.mahjong_public_server.protocol.Entity.FightVoteApplyExit fightVoteApplyExit_;
+    public boolean hasFightVoteApplyExit() { return hasFightVoteApplyExit; }
+    public com.randioo.mahjong_public_server.protocol.Entity.FightVoteApplyExit getFightVoteApplyExit() { return fightVoteApplyExit_; }
+    
+    private void initFields() {
+      fightVoteApplyExit_ = com.randioo.mahjong_public_server.protocol.Entity.FightVoteApplyExit.VOTE_IDLE;
+    }
+    public final boolean isInitialized() {
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (hasSeat()) {
+        output.writeInt32(1, getSeat());
+      }
+      if (hasFightVoteApplyExit()) {
+        output.writeEnum(2, getFightVoteApplyExit().getNumber());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasSeat()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, getSeat());
+      }
+      if (hasFightVoteApplyExit()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(2, getFightVoteApplyExit().getNumber());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit result;
+      
+      // Construct using com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit();
+        return builder;
+      }
+      
+      protected com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit.getDescriptor();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit getDefaultInstanceForType() {
+        return com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit) {
+          return mergeFrom((com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit other) {
+        if (other == com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit.getDefaultInstance()) return this;
+        if (other.hasSeat()) {
+          setSeat(other.getSeat());
+        }
+        if (other.hasFightVoteApplyExit()) {
+          setFightVoteApplyExit(other.getFightVoteApplyExit());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 8: {
+              setSeat(input.readInt32());
+              break;
+            }
+            case 16: {
+              int rawValue = input.readEnum();
+              com.randioo.mahjong_public_server.protocol.Entity.FightVoteApplyExit value = com.randioo.mahjong_public_server.protocol.Entity.FightVoteApplyExit.valueOf(rawValue);
+              if (value == null) {
+                unknownFields.mergeVarintField(2, rawValue);
+              } else {
+                setFightVoteApplyExit(value);
+              }
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // optional int32 seat = 1;
+      public boolean hasSeat() {
+        return result.hasSeat();
+      }
+      public int getSeat() {
+        return result.getSeat();
+      }
+      public Builder setSeat(int value) {
+        result.hasSeat = true;
+        result.seat_ = value;
+        return this;
+      }
+      public Builder clearSeat() {
+        result.hasSeat = false;
+        result.seat_ = 0;
+        return this;
+      }
+      
+      // optional .com.randioo.mahjong_public_server.protocol.FightVoteApplyExit fightVoteApplyExit = 2;
+      public boolean hasFightVoteApplyExit() {
+        return result.hasFightVoteApplyExit();
+      }
+      public com.randioo.mahjong_public_server.protocol.Entity.FightVoteApplyExit getFightVoteApplyExit() {
+        return result.getFightVoteApplyExit();
+      }
+      public Builder setFightVoteApplyExit(com.randioo.mahjong_public_server.protocol.Entity.FightVoteApplyExit value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasFightVoteApplyExit = true;
+        result.fightVoteApplyExit_ = value;
+        return this;
+      }
+      public Builder clearFightVoteApplyExit() {
+        result.hasFightVoteApplyExit = false;
+        result.fightVoteApplyExit_ = com.randioo.mahjong_public_server.protocol.Entity.FightVoteApplyExit.VOTE_IDLE;
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:com.randioo.mahjong_public_server.protocol.SCFightNoticeAgreeExit)
+    }
+    
+    static {
+      defaultInstance = new SCFightNoticeAgreeExit(true);
+      com.randioo.mahjong_public_server.protocol.Fight.internalForceInit();
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:com.randioo.mahjong_public_server.protocol.SCFightNoticeAgreeExit)
+  }
+  
+  public static final class SCFightCastDices extends
+      com.google.protobuf.GeneratedMessage {
+    // Use SCFightCastDices.newBuilder() to construct.
+    private SCFightCastDices() {
+      initFields();
+    }
+    private SCFightCastDices(boolean noInit) {}
+    
+    private static final SCFightCastDices defaultInstance;
+    public static SCFightCastDices getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public SCFightCastDices getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_SCFightCastDices_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_SCFightCastDices_fieldAccessorTable;
+    }
+    
+    // repeated int32 dices = 1;
+    public static final int DICES_FIELD_NUMBER = 1;
+    private java.util.List<java.lang.Integer> dices_ =
+      java.util.Collections.emptyList();
+    public java.util.List<java.lang.Integer> getDicesList() {
+      return dices_;
+    }
+    public int getDicesCount() { return dices_.size(); }
+    public int getDices(int index) {
+      return dices_.get(index);
+    }
+    
+    private void initFields() {
+    }
+    public final boolean isInitialized() {
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      for (int element : getDicesList()) {
+        output.writeInt32(1, element);
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      {
+        int dataSize = 0;
+        for (int element : getDicesList()) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(element);
+        }
+        size += dataSize;
+        size += 1 * getDicesList().size();
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices result;
+      
+      // Construct using com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices();
+        return builder;
+      }
+      
+      protected com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices.getDescriptor();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices getDefaultInstanceForType() {
+        return com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        if (result.dices_ != java.util.Collections.EMPTY_LIST) {
+          result.dices_ =
+            java.util.Collections.unmodifiableList(result.dices_);
+        }
+        com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices) {
+          return mergeFrom((com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices other) {
+        if (other == com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices.getDefaultInstance()) return this;
+        if (!other.dices_.isEmpty()) {
+          if (result.dices_.isEmpty()) {
+            result.dices_ = new java.util.ArrayList<java.lang.Integer>();
+          }
+          result.dices_.addAll(other.dices_);
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 8: {
+              addDices(input.readInt32());
+              break;
+            }
+            case 10: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              while (input.getBytesUntilLimit() > 0) {
+                addDices(input.readInt32());
+              }
+              input.popLimit(limit);
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // repeated int32 dices = 1;
+      public java.util.List<java.lang.Integer> getDicesList() {
+        return java.util.Collections.unmodifiableList(result.dices_);
+      }
+      public int getDicesCount() {
+        return result.getDicesCount();
+      }
+      public int getDices(int index) {
+        return result.getDices(index);
+      }
+      public Builder setDices(int index, int value) {
+        result.dices_.set(index, value);
+        return this;
+      }
+      public Builder addDices(int value) {
+        if (result.dices_.isEmpty()) {
+          result.dices_ = new java.util.ArrayList<java.lang.Integer>();
+        }
+        result.dices_.add(value);
+        return this;
+      }
+      public Builder addAllDices(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        if (result.dices_.isEmpty()) {
+          result.dices_ = new java.util.ArrayList<java.lang.Integer>();
+        }
+        super.addAll(values, result.dices_);
+        return this;
+      }
+      public Builder clearDices() {
+        result.dices_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:com.randioo.mahjong_public_server.protocol.SCFightCastDices)
+    }
+    
+    static {
+      defaultInstance = new SCFightCastDices(true);
+      com.randioo.mahjong_public_server.protocol.Fight.internalForceInit();
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:com.randioo.mahjong_public_server.protocol.SCFightCastDices)
+  }
+  
+  public static final class SCFightNoticeSeat extends
+      com.google.protobuf.GeneratedMessage {
+    // Use SCFightNoticeSeat.newBuilder() to construct.
+    private SCFightNoticeSeat() {
+      initFields();
+    }
+    private SCFightNoticeSeat(boolean noInit) {}
+    
+    private static final SCFightNoticeSeat defaultInstance;
+    public static SCFightNoticeSeat getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public SCFightNoticeSeat getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_SCFightNoticeSeat_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.randioo.mahjong_public_server.protocol.Fight.internal_static_com_randioo_mahjong_public_server_protocol_SCFightNoticeSeat_fieldAccessorTable;
+    }
+    
+    // repeated int32 seat = 1;
+    public static final int SEAT_FIELD_NUMBER = 1;
+    private java.util.List<java.lang.Integer> seat_ =
+      java.util.Collections.emptyList();
+    public java.util.List<java.lang.Integer> getSeatList() {
+      return seat_;
+    }
+    public int getSeatCount() { return seat_.size(); }
+    public int getSeat(int index) {
+      return seat_.get(index);
+    }
+    
+    private void initFields() {
+    }
+    public final boolean isInitialized() {
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      for (int element : getSeatList()) {
+        output.writeInt32(1, element);
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      {
+        int dataSize = 0;
+        for (int element : getSeatList()) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(element);
+        }
+        size += dataSize;
+        size += 1 * getSeatList().size();
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat result;
+      
+      // Construct using com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat();
+        return builder;
+      }
+      
+      protected com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat.getDescriptor();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat getDefaultInstanceForType() {
+        return com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        if (result.seat_ != java.util.Collections.EMPTY_LIST) {
+          result.seat_ =
+            java.util.Collections.unmodifiableList(result.seat_);
+        }
+        com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat) {
+          return mergeFrom((com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat other) {
+        if (other == com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat.getDefaultInstance()) return this;
+        if (!other.seat_.isEmpty()) {
+          if (result.seat_.isEmpty()) {
+            result.seat_ = new java.util.ArrayList<java.lang.Integer>();
+          }
+          result.seat_.addAll(other.seat_);
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 8: {
+              addSeat(input.readInt32());
+              break;
+            }
+            case 10: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              while (input.getBytesUntilLimit() > 0) {
+                addSeat(input.readInt32());
+              }
+              input.popLimit(limit);
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // repeated int32 seat = 1;
+      public java.util.List<java.lang.Integer> getSeatList() {
+        return java.util.Collections.unmodifiableList(result.seat_);
+      }
+      public int getSeatCount() {
+        return result.getSeatCount();
+      }
+      public int getSeat(int index) {
+        return result.getSeat(index);
+      }
+      public Builder setSeat(int index, int value) {
+        result.seat_.set(index, value);
+        return this;
+      }
+      public Builder addSeat(int value) {
+        if (result.seat_.isEmpty()) {
+          result.seat_ = new java.util.ArrayList<java.lang.Integer>();
+        }
+        result.seat_.add(value);
+        return this;
+      }
+      public Builder addAllSeat(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        if (result.seat_.isEmpty()) {
+          result.seat_ = new java.util.ArrayList<java.lang.Integer>();
+        }
+        super.addAll(values, result.seat_);
+        return this;
+      }
+      public Builder clearSeat() {
+        result.seat_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:com.randioo.mahjong_public_server.protocol.SCFightNoticeSeat)
+    }
+    
+    static {
+      defaultInstance = new SCFightNoticeSeat(true);
+      com.randioo.mahjong_public_server.protocol.Fight.internalForceInit();
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:com.randioo.mahjong_public_server.protocol.SCFightNoticeSeat)
+  }
+  
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_randioo_mahjong_public_server_protocol_FightExitGameRequest_descriptor;
   private static
@@ -18673,6 +22001,16 @@ public final class Fight {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_randioo_mahjong_public_server_protocol_FightSendCardResponse_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_randioo_mahjong_public_server_protocol_FightSendTingCardRequest_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_randioo_mahjong_public_server_protocol_FightSendTingCardRequest_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_randioo_mahjong_public_server_protocol_FightSendTingCardResponse_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_randioo_mahjong_public_server_protocol_FightSendTingCardResponse_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_randioo_mahjong_public_server_protocol_SCFightSendCard_descriptor;
   private static
@@ -18823,6 +22161,46 @@ public final class Fight {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_randioo_mahjong_public_server_protocol_SCFightTing_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_randioo_mahjong_public_server_protocol_SCFightTingCheck_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_randioo_mahjong_public_server_protocol_SCFightTingCheck_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_randioo_mahjong_public_server_protocol_FightTingCheckResultRequest_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_randioo_mahjong_public_server_protocol_FightTingCheckResultRequest_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_randioo_mahjong_public_server_protocol_FightTingCheckResultResponse_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_randioo_mahjong_public_server_protocol_FightTingCheckResultResponse_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_randioo_mahjong_public_server_protocol_FightPreTingResponse_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_randioo_mahjong_public_server_protocol_FightPreTingResponse_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_randioo_mahjong_public_server_protocol_FightPreTingRequest_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_randioo_mahjong_public_server_protocol_FightPreTingRequest_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_randioo_mahjong_public_server_protocol_SCFightNoticeAgreeExit_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_randioo_mahjong_public_server_protocol_SCFightNoticeAgreeExit_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_randioo_mahjong_public_server_protocol_SCFightCastDices_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_randioo_mahjong_public_server_protocol_SCFightCastDices_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_randioo_mahjong_public_server_protocol_SCFightNoticeSeat_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_randioo_mahjong_public_server_protocol_SCFightNoticeSeat_fieldAccessorTable;
   
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -18840,99 +22218,120 @@ public final class Fight {
       "e\022\024\n\terrorCode\030\001 \001(\005:\0011\"\037\n\017SCFightExitGa" +
       "me\022\014\n\004seat\030\001 \001(\005\"\024\n\022SCFightRoomDismiss\"\035" +
       "\n\033FightConfirmGameOverRequest\"\036\n\034FightCo" +
-      "nfirmGameOverResponse\"L\n\024SCFightApplyExi" +
+      "nfirmGameOverResponse\"m\n\024SCFightApplyExi" +
       "tGame\022\014\n\004name\030\001 \001(\t\022\021\n\tcountDown\030\002 \001(\005\022\023",
-      "\n\013applyExitId\030\003 \001(\005\"\214\001\n\031FightAgreeExitGa" +
-      "meRequest\022Z\n\022fightVoteApplyExit\030\001 \001(\0162>." +
+      "\n\013applyExitId\030\003 \001(\005\022\014\n\004seat\030\004 \001(\005\022\021\n\tsta" +
+      "rtTime\030\005 \001(\005\"\214\001\n\031FightAgreeExitGameReque" +
+      "st\022Z\n\022fightVoteApplyExit\030\001 \001(\0162>.com.ran" +
+      "dioo.mahjong_public_server.protocol.Figh" +
+      "tVoteApplyExit\022\023\n\013applyExitId\030\002 \001(\005\"2\n\032F" +
+      "ightAgreeExitGameResponse\022\024\n\terrorCode\030\001" +
+      " \001(\005:\0011\"?\n\026SCFightApplyExitResult\022\022\n\nrej" +
+      "ectName\030\001 \003(\t\022\021\n\tagreeName\030\002 \003(\t\"\024\n\022SCFi" +
+      "ghtClearRoomId\"\025\n\023SCFightLoadResource\"\023\n" +
+      "\021FightReadyRequest\"*\n\022FightReadyResponse",
+      "\022\024\n\terrorCode\030\001 \001(\005:\0011\"\024\n\022SCFightNoticeR" +
+      "eady\"\034\n\014SCFightReady\022\014\n\004seat\030\001 \001(\005\"\032\n\030Fi" +
+      "ghtGetlastRoundRequest\"v\n\031FightGetlastRo" +
+      "undResponse\022\024\n\terrorCode\030\001 \001(\005:\0011\022C\n\007rec" +
+      "ords\030\002 \003(\01322.com.randioo.mahjong_public_" +
+      "server.protocol.Record\"\027\n\025FightRecommand" +
+      "Request\"~\n\026FightRecommandResponse\022\024\n\terr" +
+      "orCode\030\001 \001(\005:\0011\022N\n\014recommandPai\030\002 \003(\01328." +
       "com.randioo.mahjong_public_server.protoc" +
-      "ol.FightVoteApplyExit\022\023\n\013applyExitId\030\002 \001" +
-      "(\005\"2\n\032FightAgreeExitGameResponse\022\024\n\terro" +
-      "rCode\030\001 \001(\005:\0011\"?\n\026SCFightApplyExitResult" +
-      "\022\022\n\nrejectName\030\001 \003(\t\022\021\n\tagreeName\030\002 \003(\t\"" +
-      "\024\n\022SCFightClearRoomId\"\025\n\023SCFightLoadReso" +
-      "urce\"\023\n\021FightReadyRequest\"*\n\022FightReadyR" +
-      "esponse\022\024\n\terrorCode\030\001 \001(\005:\0011\"\024\n\022SCFight",
-      "NoticeReady\"\034\n\014SCFightReady\022\014\n\004seat\030\001 \001(" +
-      "\005\"\032\n\030FightGetlastRoundRequest\"v\n\031FightGe" +
-      "tlastRoundResponse\022\024\n\terrorCode\030\001 \001(\005:\0011" +
-      "\022C\n\007records\030\002 \003(\01322.com.randioo.mahjong_" +
-      "public_server.protocol.Record\"\027\n\025FightRe" +
-      "commandRequest\"~\n\026FightRecommandResponse" +
-      "\022\024\n\terrorCode\030\001 \001(\005:\0011\022N\n\014recommandPai\030\002" +
-      " \003(\01328.com.randioo.mahjong_public_server" +
-      ".protocol.RecommandPai\"\223\002\n\014SCFightStart\022" +
-      "Z\n\022fightStartRoleData\030\001 \003(\0132>.com.randio",
-      "o.mahjong_public_server.protocol.FightSt" +
-      "artRoleData\022\027\n\017remainCardCount\030\002 \001(\005\022\022\n\n" +
-      "zhuangSeat\030\003 \001(\005\022\021\n\tbaidaCard\030\004 \001(\005\022\014\n\004d" +
-      "ice\030\005 \003(\005\022\026\n\016remainHuangFan\030\006 \001(\005\022\027\n\017cur" +
-      "rentRoundNum\030\007 \001(\005\022\020\n\010maxRound\030\010 \001(\005\022\026\n\016" +
-      "firstBaiDaCard\030\t \001(\005\"\377\001\n\020SCFightRoundOve" +
-      "r\022\022\n\nzhamaCards\030\001 \003(\005\022\020\n\010flyCards\030\002 \003(\005\022" +
-      "`\n\025roleRoundOverInfoData\030\003 \003(\0132A.com.ran" +
-      "dioo.mahjong_public_server.protocol.Role" +
-      "RoundOverInfoData\022\016\n\006roomId\030\004 \001(\t\022\030\n\020fin",
-      "ishRoundCount\030\005 \001(\005\022\025\n\rmaxRoundCount\030\006 \001" +
-      "(\005\022\020\n\010flyScore\030\007 \001(\005\022\020\n\010huangFan\030\010 \001(\010\"\262" +
-      "\001\n\017SCFightGameOver\022^\n\024roleGameOverInfoDa" +
-      "ta\030\001 \003(\0132@.com.randioo.mahjong_public_se" +
-      "rver.protocol.RoleGameOverInfoData\022\016\n\006ro" +
-      "omId\030\002 \001(\t\022\030\n\020finishRoundCount\030\003 \001(\005\022\025\n\r" +
-      "maxRoundCount\030\004 \001(\005\"%\n\025SCFightNoticeSend" +
-      "Card\022\014\n\004seat\030\001 \001(\005\"S\n\024FightSendCardReque" +
-      "st\022\014\n\004card\030\001 \001(\005\022\032\n\013isTouchCard\030\002 \001(\010:\005f" +
-      "alse\022\021\n\ttingCards\030\003 \003(\005\"-\n\025FightSendCard",
-      "Response\022\024\n\terrorCode\030\001 \001(\005:\0011\"B\n\017SCFigh" +
-      "tSendCard\022\014\n\004card\030\001 \001(\005\022\014\n\004seat\030\002 \001(\005\022\023\n" +
-      "\013isTouchCard\030\003 \001(\010\"e\n\020SCFightTouchCard\022\014" +
-      "\n\004seat\030\001 \001(\005\022\021\n\ttouchCard\030\002 \001(\005\022\027\n\017remai" +
-      "nCardCount\030\003 \001(\005\022\027\n\010isFlower\030\004 \001(\010:\005fals" +
-      "e\"\346\001\n\033SCFightNoticeChooseCardList\022J\n\ncal" +
-      "lHuData\030\001 \003(\01326.com.randioo.mahjong_publ" +
-      "ic_server.protocol.CallHuData\022V\n\020callCar" +
-      "dListData\030\002 \003(\0132<.com.randioo.mahjong_pu" +
-      "blic_server.protocol.CallCardListData\022\014\n",
-      "\004seat\030\003 \001(\005\022\025\n\rtempGameCount\030\004 \001(\005\"%\n\020SC" +
-      "FightCountdown\022\021\n\tcountdown\030\001 \001(\005\"A\n\020Fig" +
-      "htPengRequest\022\025\n\rtempGameCount\030\001 \001(\005\022\026\n\016" +
-      "callCardListId\030\002 \001(\005\")\n\021FightPengRespons" +
-      "e\022\024\n\terrorCode\030\001 \001(\005:\0011\"o\n\017SCFightCardLi" +
-      "st\022\014\n\004seat\030\001 \001(\005\022N\n\014cardListData\030\002 \001(\01328" +
-      ".com.randioo.mahjong_public_server.proto" +
-      "col.CardListData\"A\n\020FightGangRequest\022\025\n\r" +
-      "tempGameCount\030\001 \001(\005\022\026\n\016callCardListId\030\002 " +
-      "\001(\005\")\n\021FightGangResponse\022\024\n\terrorCode\030\001 ",
-      "\001(\005:\0011\"?\n\016FightHuRequest\022\025\n\rtempGameCoun" +
-      "t\030\001 \001(\005\022\026\n\016callCardListId\030\002 \001(\005\"\'\n\017Fight" +
-      "HuResponse\022\024\n\terrorCode\030\001 \001(\005:\0011\"e\n\tSCFi" +
-      "ghtHu\022\014\n\004seat\030\001 \001(\005\022J\n\006huData\030\002 \001(\0132:.co" +
-      "m.randioo.mahjong_public_server.protocol" +
-      ".RoundCardsData\"(\n\017FightGuoRequest\022\025\n\rte" +
-      "mpGameCount\030\001 \001(\005\"(\n\020FightGuoResponse\022\024\n" +
-      "\terrorCode\030\001 \001(\005:\0011\"\032\n\nSCFightGuo\022\014\n\004sea" +
-      "t\030\001 \001(\005\"@\n\017FightChiRequest\022\025\n\rtempGameCo" +
-      "unt\030\001 \001(\005\022\026\n\016callCardListId\030\002 \001(\005\"(\n\020Fig",
-      "htChiResponse\022\024\n\terrorCode\030\001 \001(\005:\0011\"7\n\020S" +
-      "CFightPointSeat\022\014\n\004seat\030\001 \001(\005\022\025\n\rtempGam" +
-      "eCount\030\002 \001(\005\"!\n\021SCFightDisconnect\022\014\n\004sea" +
-      "t\030\001 \001(\005\"X\n\014SCFightScore\022H\n\tscoreData\030\001 \003" +
-      "(\01325.com.randioo.mahjong_public_server.p" +
-      "rotocol.ScoreData\"\033\n\031SCFightChooseCardLi" +
-      "stOver\"\035\n\033FightQueryGameConfigRequest\"\244\001" +
-      "\n\034FightQueryGameConfigResponse\022\024\n\terrorC" +
-      "ode\030\001 \001(\005:\0011\022R\n\016gameConfigData\030\002 \001(\0132:.c" +
-      "om.randioo.mahjong_public_server.protoco",
-      "l.GameConfigData\022\032\n\022currentRoundNumber\030\003" +
-      " \001(\005\"7\n\022SCFightFlowerCount\022\023\n\013flowerCoun" +
-      "t\030\001 \001(\005\022\014\n\004seat\030\002 \001(\005\"c\n\032FightClientDisp" +
-      "atchRequest\022E\n\005cards\030\001 \003(\01326.com.randioo" +
-      ".mahjong_public_server.protocol.ClientCa" +
-      "rd\"0\n\033FightClientDispatchResponse\022\021\n\terr" +
-      "orCode\030\001 \001(\005\"+\n\033FightClientTouchCardRequ" +
-      "est\022\014\n\004card\030\001 \001(\005\"1\n\034FightClientTouchCar" +
-      "dResponse\022\021\n\terrorCode\030\001 \001(\005\"0\n\021SCFightF" +
-      "illFlower\022\r\n\005cards\030\001 \003(\005\022\014\n\004seat\030\003 \001(\005\"\033",
-      "\n\013SCFightTing\022\014\n\004seat\030\001 \001(\005"
+      "ol.RecommandPai\"\223\002\n\014SCFightStart\022Z\n\022figh",
+      "tStartRoleData\030\001 \003(\0132>.com.randioo.mahjo" +
+      "ng_public_server.protocol.FightStartRole" +
+      "Data\022\027\n\017remainCardCount\030\002 \001(\005\022\022\n\nzhuangS" +
+      "eat\030\003 \001(\005\022\021\n\tbaidaCard\030\004 \001(\005\022\014\n\004dice\030\005 \003" +
+      "(\005\022\026\n\016remainHuangFan\030\006 \001(\005\022\027\n\017currentRou" +
+      "ndNum\030\007 \001(\005\022\020\n\010maxRound\030\010 \001(\005\022\026\n\016firstBa" +
+      "iDaCard\030\t \001(\005\"\220\002\n\020SCFightRoundOver\022\022\n\nzh" +
+      "amaCards\030\001 \003(\005\022\020\n\010flyCards\030\002 \003(\005\022`\n\025role" +
+      "RoundOverInfoData\030\003 \003(\0132A.com.randioo.ma" +
+      "hjong_public_server.protocol.RoleRoundOv",
+      "erInfoData\022\016\n\006roomId\030\004 \001(\t\022\030\n\020finishRoun" +
+      "dCount\030\005 \001(\005\022\025\n\rmaxRoundCount\030\006 \001(\005\022\020\n\010f" +
+      "lyScore\030\007 \001(\005\022\020\n\010huangFan\030\010 \001(\010\022\017\n\007isLiu" +
+      "ju\030\t \001(\010\"\262\001\n\017SCFightGameOver\022^\n\024roleGame" +
+      "OverInfoData\030\001 \003(\0132@.com.randioo.mahjong" +
+      "_public_server.protocol.RoleGameOverInfo" +
+      "Data\022\016\n\006roomId\030\002 \001(\t\022\030\n\020finishRoundCount" +
+      "\030\003 \001(\005\022\025\n\rmaxRoundCount\030\004 \001(\005\"6\n\025SCFight" +
+      "NoticeSendCard\022\014\n\004seat\030\001 \001(\005\022\017\n\007banCard\030" +
+      "\002 \001(\005\"@\n\024FightSendCardRequest\022\014\n\004card\030\001 ",
+      "\001(\005\022\032\n\013isTouchCard\030\002 \001(\010:\005false\"-\n\025Fight" +
+      "SendCardResponse\022\024\n\terrorCode\030\001 \001(\005:\0011\"W" +
+      "\n\030FightSendTingCardRequest\022\014\n\004card\030\001 \001(\005" +
+      "\022\032\n\013isTouchCard\030\002 \001(\010:\005false\022\021\n\ttingCard" +
+      "s\030\003 \003(\005\"1\n\031FightSendTingCardResponse\022\024\n\t" +
+      "errorCode\030\001 \001(\005:\0011\"V\n\017SCFightSendCard\022\014\n" +
+      "\004card\030\001 \001(\005\022\014\n\004seat\030\002 \001(\005\022\023\n\013isTouchCard" +
+      "\030\003 \001(\010\022\022\n\nisTingCard\030\004 \001(\010\"e\n\020SCFightTou" +
+      "chCard\022\014\n\004seat\030\001 \001(\005\022\021\n\ttouchCard\030\002 \001(\005\022" +
+      "\027\n\017remainCardCount\030\003 \001(\005\022\027\n\010isFlower\030\004 \001",
+      "(\010:\005false\"\266\002\n\033SCFightNoticeChooseCardLis" +
+      "t\022J\n\ncallHuData\030\001 \003(\01326.com.randioo.mahj" +
+      "ong_public_server.protocol.CallHuData\022V\n" +
+      "\020callCardListData\030\002 \003(\0132<.com.randioo.ma" +
+      "hjong_public_server.protocol.CallCardLis" +
+      "tData\022\014\n\004seat\030\003 \001(\005\022\025\n\rtempGameCount\030\004 \001" +
+      "(\005\022N\n\014callTingData\030\005 \001(\01328.com.randioo.m" +
+      "ahjong_public_server.protocol.CallTingDa" +
+      "ta\"%\n\020SCFightCountdown\022\021\n\tcountdown\030\001 \001(" +
+      "\005\"A\n\020FightPengRequest\022\025\n\rtempGameCount\030\001",
+      " \001(\005\022\026\n\016callCardListId\030\002 \001(\005\")\n\021FightPen" +
+      "gResponse\022\024\n\terrorCode\030\001 \001(\005:\0011\"o\n\017SCFig" +
+      "htCardList\022\014\n\004seat\030\001 \001(\005\022N\n\014cardListData" +
+      "\030\002 \001(\01328.com.randioo.mahjong_public_serv" +
+      "er.protocol.CardListData\"A\n\020FightGangReq" +
+      "uest\022\025\n\rtempGameCount\030\001 \001(\005\022\026\n\016callCardL" +
+      "istId\030\002 \001(\005\")\n\021FightGangResponse\022\024\n\terro" +
+      "rCode\030\001 \001(\005:\0011\"?\n\016FightHuRequest\022\025\n\rtemp" +
+      "GameCount\030\001 \001(\005\022\026\n\016callCardListId\030\002 \001(\005\"" +
+      "\'\n\017FightHuResponse\022\024\n\terrorCode\030\001 \001(\005:\0011",
+      "\"\261\001\n\tSCFightHu\022\014\n\004seat\030\001 \001(\005\022J\n\006huData\030\002" +
+      " \001(\0132:.com.randioo.mahjong_public_server" +
+      ".protocol.RoundCardsData\022J\n\noverMethod\030\003" +
+      " \001(\01626.com.randioo.mahjong_public_server" +
+      ".protocol.OverMethod\"(\n\017FightGuoRequest\022" +
+      "\025\n\rtempGameCount\030\001 \001(\005\"(\n\020FightGuoRespon" +
+      "se\022\024\n\terrorCode\030\001 \001(\005:\0011\"\032\n\nSCFightGuo\022\014" +
+      "\n\004seat\030\001 \001(\005\"@\n\017FightChiRequest\022\025\n\rtempG" +
+      "ameCount\030\001 \001(\005\022\026\n\016callCardListId\030\002 \001(\005\"(" +
+      "\n\020FightChiResponse\022\024\n\terrorCode\030\001 \001(\005:\0011",
+      "\"7\n\020SCFightPointSeat\022\014\n\004seat\030\001 \001(\005\022\025\n\rte" +
+      "mpGameCount\030\002 \001(\005\"!\n\021SCFightDisconnect\022\014" +
+      "\n\004seat\030\001 \001(\005\"X\n\014SCFightScore\022H\n\tscoreDat" +
+      "a\030\001 \003(\01325.com.randioo.mahjong_public_ser" +
+      "ver.protocol.ScoreData\"\033\n\031SCFightChooseC" +
+      "ardListOver\"\035\n\033FightQueryGameConfigReque" +
+      "st\"\244\001\n\034FightQueryGameConfigResponse\022\024\n\te" +
+      "rrorCode\030\001 \001(\005:\0011\022R\n\016gameConfigData\030\002 \001(" +
+      "\0132:.com.randioo.mahjong_public_server.pr" +
+      "otocol.GameConfigData\022\032\n\022currentRoundNum",
+      "ber\030\003 \001(\005\"7\n\022SCFightFlowerCount\022\023\n\013flowe" +
+      "rCount\030\001 \001(\005\022\014\n\004seat\030\002 \001(\005\"c\n\032FightClien" +
+      "tDispatchRequest\022E\n\005cards\030\001 \003(\01326.com.ra" +
+      "ndioo.mahjong_public_server.protocol.Cli" +
+      "entCard\"0\n\033FightClientDispatchResponse\022\021" +
+      "\n\terrorCode\030\001 \001(\005\"+\n\033FightClientTouchCar" +
+      "dRequest\022\014\n\004card\030\001 \001(\005\"1\n\034FightClientTou" +
+      "chCardResponse\022\021\n\terrorCode\030\001 \001(\005\"0\n\021SCF" +
+      "ightFillFlower\022\r\n\005cards\030\001 \003(\005\022\014\n\004seat\030\003 " +
+      "\001(\005\"\033\n\013SCFightTing\022\014\n\004seat\030\001 \001(\005\"\022\n\020SCFi",
+      "ghtTingCheck\"e\n\033FightTingCheckResultRequ" +
+      "est\022F\n\010tingData\030\001 \003(\01324.com.randioo.mahj" +
+      "ong_public_server.protocol.TingData\"\036\n\034F" +
+      "ightTingCheckResultResponse\",\n\024FightPreT" +
+      "ingResponse\022\024\n\terrorCode\030\001 \001(\005:\0011\"D\n\023Fig" +
+      "htPreTingRequest\022\025\n\rtempGameCount\030\001 \001(\005\022" +
+      "\026\n\016callCardListId\030\002 \001(\005\"\202\001\n\026SCFightNotic" +
+      "eAgreeExit\022\014\n\004seat\030\001 \001(\005\022Z\n\022fightVoteApp" +
+      "lyExit\030\002 \001(\0162>.com.randioo.mahjong_publi" +
+      "c_server.protocol.FightVoteApplyExit\"!\n\020",
+      "SCFightCastDices\022\r\n\005dices\030\001 \003(\005\"!\n\021SCFig" +
+      "htNoticeSeat\022\014\n\004seat\030\001 \003(\005"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -19008,7 +22407,7 @@ public final class Fight {
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightApplyExitGame_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_SCFightApplyExitGame_descriptor,
-              new java.lang.String[] { "Name", "CountDown", "ApplyExitId", },
+              new java.lang.String[] { "Name", "CountDown", "ApplyExitId", "Seat", "StartTime", },
               com.randioo.mahjong_public_server.protocol.Fight.SCFightApplyExitGame.class,
               com.randioo.mahjong_public_server.protocol.Fight.SCFightApplyExitGame.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_FightAgreeExitGameRequest_descriptor =
@@ -19128,7 +22527,7 @@ public final class Fight {
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightRoundOver_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_SCFightRoundOver_descriptor,
-              new java.lang.String[] { "ZhamaCards", "FlyCards", "RoleRoundOverInfoData", "RoomId", "FinishRoundCount", "MaxRoundCount", "FlyScore", "HuangFan", },
+              new java.lang.String[] { "ZhamaCards", "FlyCards", "RoleRoundOverInfoData", "RoomId", "FinishRoundCount", "MaxRoundCount", "FlyScore", "HuangFan", "IsLiuju", },
               com.randioo.mahjong_public_server.protocol.Fight.SCFightRoundOver.class,
               com.randioo.mahjong_public_server.protocol.Fight.SCFightRoundOver.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightGameOver_descriptor =
@@ -19144,7 +22543,7 @@ public final class Fight {
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightNoticeSendCard_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_SCFightNoticeSendCard_descriptor,
-              new java.lang.String[] { "Seat", },
+              new java.lang.String[] { "Seat", "BanCard", },
               com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSendCard.class,
               com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSendCard.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_FightSendCardRequest_descriptor =
@@ -19152,7 +22551,7 @@ public final class Fight {
           internal_static_com_randioo_mahjong_public_server_protocol_FightSendCardRequest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_FightSendCardRequest_descriptor,
-              new java.lang.String[] { "Card", "IsTouchCard", "TingCards", },
+              new java.lang.String[] { "Card", "IsTouchCard", },
               com.randioo.mahjong_public_server.protocol.Fight.FightSendCardRequest.class,
               com.randioo.mahjong_public_server.protocol.Fight.FightSendCardRequest.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_FightSendCardResponse_descriptor =
@@ -19163,16 +22562,32 @@ public final class Fight {
               new java.lang.String[] { "ErrorCode", },
               com.randioo.mahjong_public_server.protocol.Fight.FightSendCardResponse.class,
               com.randioo.mahjong_public_server.protocol.Fight.FightSendCardResponse.Builder.class);
-          internal_static_com_randioo_mahjong_public_server_protocol_SCFightSendCard_descriptor =
+          internal_static_com_randioo_mahjong_public_server_protocol_FightSendTingCardRequest_descriptor =
             getDescriptor().getMessageTypes().get(28);
+          internal_static_com_randioo_mahjong_public_server_protocol_FightSendTingCardRequest_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_randioo_mahjong_public_server_protocol_FightSendTingCardRequest_descriptor,
+              new java.lang.String[] { "Card", "IsTouchCard", "TingCards", },
+              com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest.class,
+              com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardRequest.Builder.class);
+          internal_static_com_randioo_mahjong_public_server_protocol_FightSendTingCardResponse_descriptor =
+            getDescriptor().getMessageTypes().get(29);
+          internal_static_com_randioo_mahjong_public_server_protocol_FightSendTingCardResponse_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_randioo_mahjong_public_server_protocol_FightSendTingCardResponse_descriptor,
+              new java.lang.String[] { "ErrorCode", },
+              com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse.class,
+              com.randioo.mahjong_public_server.protocol.Fight.FightSendTingCardResponse.Builder.class);
+          internal_static_com_randioo_mahjong_public_server_protocol_SCFightSendCard_descriptor =
+            getDescriptor().getMessageTypes().get(30);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightSendCard_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_SCFightSendCard_descriptor,
-              new java.lang.String[] { "Card", "Seat", "IsTouchCard", },
+              new java.lang.String[] { "Card", "Seat", "IsTouchCard", "IsTingCard", },
               com.randioo.mahjong_public_server.protocol.Fight.SCFightSendCard.class,
               com.randioo.mahjong_public_server.protocol.Fight.SCFightSendCard.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightTouchCard_descriptor =
-            getDescriptor().getMessageTypes().get(29);
+            getDescriptor().getMessageTypes().get(31);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightTouchCard_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_SCFightTouchCard_descriptor,
@@ -19180,15 +22595,15 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.SCFightTouchCard.class,
               com.randioo.mahjong_public_server.protocol.Fight.SCFightTouchCard.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightNoticeChooseCardList_descriptor =
-            getDescriptor().getMessageTypes().get(30);
+            getDescriptor().getMessageTypes().get(32);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightNoticeChooseCardList_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_SCFightNoticeChooseCardList_descriptor,
-              new java.lang.String[] { "CallHuData", "CallCardListData", "Seat", "TempGameCount", },
+              new java.lang.String[] { "CallHuData", "CallCardListData", "Seat", "TempGameCount", "CallTingData", },
               com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeChooseCardList.class,
               com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeChooseCardList.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightCountdown_descriptor =
-            getDescriptor().getMessageTypes().get(31);
+            getDescriptor().getMessageTypes().get(33);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightCountdown_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_SCFightCountdown_descriptor,
@@ -19196,7 +22611,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.SCFightCountdown.class,
               com.randioo.mahjong_public_server.protocol.Fight.SCFightCountdown.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_FightPengRequest_descriptor =
-            getDescriptor().getMessageTypes().get(32);
+            getDescriptor().getMessageTypes().get(34);
           internal_static_com_randioo_mahjong_public_server_protocol_FightPengRequest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_FightPengRequest_descriptor,
@@ -19204,7 +22619,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.FightPengRequest.class,
               com.randioo.mahjong_public_server.protocol.Fight.FightPengRequest.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_FightPengResponse_descriptor =
-            getDescriptor().getMessageTypes().get(33);
+            getDescriptor().getMessageTypes().get(35);
           internal_static_com_randioo_mahjong_public_server_protocol_FightPengResponse_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_FightPengResponse_descriptor,
@@ -19212,7 +22627,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.FightPengResponse.class,
               com.randioo.mahjong_public_server.protocol.Fight.FightPengResponse.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightCardList_descriptor =
-            getDescriptor().getMessageTypes().get(34);
+            getDescriptor().getMessageTypes().get(36);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightCardList_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_SCFightCardList_descriptor,
@@ -19220,7 +22635,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.SCFightCardList.class,
               com.randioo.mahjong_public_server.protocol.Fight.SCFightCardList.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_FightGangRequest_descriptor =
-            getDescriptor().getMessageTypes().get(35);
+            getDescriptor().getMessageTypes().get(37);
           internal_static_com_randioo_mahjong_public_server_protocol_FightGangRequest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_FightGangRequest_descriptor,
@@ -19228,7 +22643,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.FightGangRequest.class,
               com.randioo.mahjong_public_server.protocol.Fight.FightGangRequest.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_FightGangResponse_descriptor =
-            getDescriptor().getMessageTypes().get(36);
+            getDescriptor().getMessageTypes().get(38);
           internal_static_com_randioo_mahjong_public_server_protocol_FightGangResponse_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_FightGangResponse_descriptor,
@@ -19236,7 +22651,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.FightGangResponse.class,
               com.randioo.mahjong_public_server.protocol.Fight.FightGangResponse.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_FightHuRequest_descriptor =
-            getDescriptor().getMessageTypes().get(37);
+            getDescriptor().getMessageTypes().get(39);
           internal_static_com_randioo_mahjong_public_server_protocol_FightHuRequest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_FightHuRequest_descriptor,
@@ -19244,7 +22659,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.FightHuRequest.class,
               com.randioo.mahjong_public_server.protocol.Fight.FightHuRequest.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_FightHuResponse_descriptor =
-            getDescriptor().getMessageTypes().get(38);
+            getDescriptor().getMessageTypes().get(40);
           internal_static_com_randioo_mahjong_public_server_protocol_FightHuResponse_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_FightHuResponse_descriptor,
@@ -19252,15 +22667,15 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.FightHuResponse.class,
               com.randioo.mahjong_public_server.protocol.Fight.FightHuResponse.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightHu_descriptor =
-            getDescriptor().getMessageTypes().get(39);
+            getDescriptor().getMessageTypes().get(41);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightHu_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_SCFightHu_descriptor,
-              new java.lang.String[] { "Seat", "HuData", },
+              new java.lang.String[] { "Seat", "HuData", "OverMethod", },
               com.randioo.mahjong_public_server.protocol.Fight.SCFightHu.class,
               com.randioo.mahjong_public_server.protocol.Fight.SCFightHu.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_FightGuoRequest_descriptor =
-            getDescriptor().getMessageTypes().get(40);
+            getDescriptor().getMessageTypes().get(42);
           internal_static_com_randioo_mahjong_public_server_protocol_FightGuoRequest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_FightGuoRequest_descriptor,
@@ -19268,7 +22683,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.FightGuoRequest.class,
               com.randioo.mahjong_public_server.protocol.Fight.FightGuoRequest.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_FightGuoResponse_descriptor =
-            getDescriptor().getMessageTypes().get(41);
+            getDescriptor().getMessageTypes().get(43);
           internal_static_com_randioo_mahjong_public_server_protocol_FightGuoResponse_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_FightGuoResponse_descriptor,
@@ -19276,7 +22691,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.FightGuoResponse.class,
               com.randioo.mahjong_public_server.protocol.Fight.FightGuoResponse.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightGuo_descriptor =
-            getDescriptor().getMessageTypes().get(42);
+            getDescriptor().getMessageTypes().get(44);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightGuo_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_SCFightGuo_descriptor,
@@ -19284,7 +22699,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.SCFightGuo.class,
               com.randioo.mahjong_public_server.protocol.Fight.SCFightGuo.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_FightChiRequest_descriptor =
-            getDescriptor().getMessageTypes().get(43);
+            getDescriptor().getMessageTypes().get(45);
           internal_static_com_randioo_mahjong_public_server_protocol_FightChiRequest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_FightChiRequest_descriptor,
@@ -19292,7 +22707,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.FightChiRequest.class,
               com.randioo.mahjong_public_server.protocol.Fight.FightChiRequest.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_FightChiResponse_descriptor =
-            getDescriptor().getMessageTypes().get(44);
+            getDescriptor().getMessageTypes().get(46);
           internal_static_com_randioo_mahjong_public_server_protocol_FightChiResponse_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_FightChiResponse_descriptor,
@@ -19300,7 +22715,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.FightChiResponse.class,
               com.randioo.mahjong_public_server.protocol.Fight.FightChiResponse.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightPointSeat_descriptor =
-            getDescriptor().getMessageTypes().get(45);
+            getDescriptor().getMessageTypes().get(47);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightPointSeat_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_SCFightPointSeat_descriptor,
@@ -19308,7 +22723,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.SCFightPointSeat.class,
               com.randioo.mahjong_public_server.protocol.Fight.SCFightPointSeat.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightDisconnect_descriptor =
-            getDescriptor().getMessageTypes().get(46);
+            getDescriptor().getMessageTypes().get(48);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightDisconnect_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_SCFightDisconnect_descriptor,
@@ -19316,7 +22731,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.SCFightDisconnect.class,
               com.randioo.mahjong_public_server.protocol.Fight.SCFightDisconnect.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightScore_descriptor =
-            getDescriptor().getMessageTypes().get(47);
+            getDescriptor().getMessageTypes().get(49);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightScore_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_SCFightScore_descriptor,
@@ -19324,7 +22739,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.SCFightScore.class,
               com.randioo.mahjong_public_server.protocol.Fight.SCFightScore.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightChooseCardListOver_descriptor =
-            getDescriptor().getMessageTypes().get(48);
+            getDescriptor().getMessageTypes().get(50);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightChooseCardListOver_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_SCFightChooseCardListOver_descriptor,
@@ -19332,7 +22747,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.SCFightChooseCardListOver.class,
               com.randioo.mahjong_public_server.protocol.Fight.SCFightChooseCardListOver.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_FightQueryGameConfigRequest_descriptor =
-            getDescriptor().getMessageTypes().get(49);
+            getDescriptor().getMessageTypes().get(51);
           internal_static_com_randioo_mahjong_public_server_protocol_FightQueryGameConfigRequest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_FightQueryGameConfigRequest_descriptor,
@@ -19340,7 +22755,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.FightQueryGameConfigRequest.class,
               com.randioo.mahjong_public_server.protocol.Fight.FightQueryGameConfigRequest.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_FightQueryGameConfigResponse_descriptor =
-            getDescriptor().getMessageTypes().get(50);
+            getDescriptor().getMessageTypes().get(52);
           internal_static_com_randioo_mahjong_public_server_protocol_FightQueryGameConfigResponse_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_FightQueryGameConfigResponse_descriptor,
@@ -19348,7 +22763,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.FightQueryGameConfigResponse.class,
               com.randioo.mahjong_public_server.protocol.Fight.FightQueryGameConfigResponse.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightFlowerCount_descriptor =
-            getDescriptor().getMessageTypes().get(51);
+            getDescriptor().getMessageTypes().get(53);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightFlowerCount_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_SCFightFlowerCount_descriptor,
@@ -19356,7 +22771,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.SCFightFlowerCount.class,
               com.randioo.mahjong_public_server.protocol.Fight.SCFightFlowerCount.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_FightClientDispatchRequest_descriptor =
-            getDescriptor().getMessageTypes().get(52);
+            getDescriptor().getMessageTypes().get(54);
           internal_static_com_randioo_mahjong_public_server_protocol_FightClientDispatchRequest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_FightClientDispatchRequest_descriptor,
@@ -19364,7 +22779,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.FightClientDispatchRequest.class,
               com.randioo.mahjong_public_server.protocol.Fight.FightClientDispatchRequest.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_FightClientDispatchResponse_descriptor =
-            getDescriptor().getMessageTypes().get(53);
+            getDescriptor().getMessageTypes().get(55);
           internal_static_com_randioo_mahjong_public_server_protocol_FightClientDispatchResponse_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_FightClientDispatchResponse_descriptor,
@@ -19372,7 +22787,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.FightClientDispatchResponse.class,
               com.randioo.mahjong_public_server.protocol.Fight.FightClientDispatchResponse.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_FightClientTouchCardRequest_descriptor =
-            getDescriptor().getMessageTypes().get(54);
+            getDescriptor().getMessageTypes().get(56);
           internal_static_com_randioo_mahjong_public_server_protocol_FightClientTouchCardRequest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_FightClientTouchCardRequest_descriptor,
@@ -19380,7 +22795,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.FightClientTouchCardRequest.class,
               com.randioo.mahjong_public_server.protocol.Fight.FightClientTouchCardRequest.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_FightClientTouchCardResponse_descriptor =
-            getDescriptor().getMessageTypes().get(55);
+            getDescriptor().getMessageTypes().get(57);
           internal_static_com_randioo_mahjong_public_server_protocol_FightClientTouchCardResponse_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_FightClientTouchCardResponse_descriptor,
@@ -19388,7 +22803,7 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.FightClientTouchCardResponse.class,
               com.randioo.mahjong_public_server.protocol.Fight.FightClientTouchCardResponse.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightFillFlower_descriptor =
-            getDescriptor().getMessageTypes().get(56);
+            getDescriptor().getMessageTypes().get(58);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightFillFlower_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_SCFightFillFlower_descriptor,
@@ -19396,13 +22811,77 @@ public final class Fight {
               com.randioo.mahjong_public_server.protocol.Fight.SCFightFillFlower.class,
               com.randioo.mahjong_public_server.protocol.Fight.SCFightFillFlower.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightTing_descriptor =
-            getDescriptor().getMessageTypes().get(57);
+            getDescriptor().getMessageTypes().get(59);
           internal_static_com_randioo_mahjong_public_server_protocol_SCFightTing_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_SCFightTing_descriptor,
               new java.lang.String[] { "Seat", },
               com.randioo.mahjong_public_server.protocol.Fight.SCFightTing.class,
               com.randioo.mahjong_public_server.protocol.Fight.SCFightTing.Builder.class);
+          internal_static_com_randioo_mahjong_public_server_protocol_SCFightTingCheck_descriptor =
+            getDescriptor().getMessageTypes().get(60);
+          internal_static_com_randioo_mahjong_public_server_protocol_SCFightTingCheck_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_randioo_mahjong_public_server_protocol_SCFightTingCheck_descriptor,
+              new java.lang.String[] { },
+              com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck.class,
+              com.randioo.mahjong_public_server.protocol.Fight.SCFightTingCheck.Builder.class);
+          internal_static_com_randioo_mahjong_public_server_protocol_FightTingCheckResultRequest_descriptor =
+            getDescriptor().getMessageTypes().get(61);
+          internal_static_com_randioo_mahjong_public_server_protocol_FightTingCheckResultRequest_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_randioo_mahjong_public_server_protocol_FightTingCheckResultRequest_descriptor,
+              new java.lang.String[] { "TingData", },
+              com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest.class,
+              com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultRequest.Builder.class);
+          internal_static_com_randioo_mahjong_public_server_protocol_FightTingCheckResultResponse_descriptor =
+            getDescriptor().getMessageTypes().get(62);
+          internal_static_com_randioo_mahjong_public_server_protocol_FightTingCheckResultResponse_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_randioo_mahjong_public_server_protocol_FightTingCheckResultResponse_descriptor,
+              new java.lang.String[] { },
+              com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse.class,
+              com.randioo.mahjong_public_server.protocol.Fight.FightTingCheckResultResponse.Builder.class);
+          internal_static_com_randioo_mahjong_public_server_protocol_FightPreTingResponse_descriptor =
+            getDescriptor().getMessageTypes().get(63);
+          internal_static_com_randioo_mahjong_public_server_protocol_FightPreTingResponse_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_randioo_mahjong_public_server_protocol_FightPreTingResponse_descriptor,
+              new java.lang.String[] { "ErrorCode", },
+              com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse.class,
+              com.randioo.mahjong_public_server.protocol.Fight.FightPreTingResponse.Builder.class);
+          internal_static_com_randioo_mahjong_public_server_protocol_FightPreTingRequest_descriptor =
+            getDescriptor().getMessageTypes().get(64);
+          internal_static_com_randioo_mahjong_public_server_protocol_FightPreTingRequest_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_randioo_mahjong_public_server_protocol_FightPreTingRequest_descriptor,
+              new java.lang.String[] { "TempGameCount", "CallCardListId", },
+              com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest.class,
+              com.randioo.mahjong_public_server.protocol.Fight.FightPreTingRequest.Builder.class);
+          internal_static_com_randioo_mahjong_public_server_protocol_SCFightNoticeAgreeExit_descriptor =
+            getDescriptor().getMessageTypes().get(65);
+          internal_static_com_randioo_mahjong_public_server_protocol_SCFightNoticeAgreeExit_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_randioo_mahjong_public_server_protocol_SCFightNoticeAgreeExit_descriptor,
+              new java.lang.String[] { "Seat", "FightVoteApplyExit", },
+              com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit.class,
+              com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeAgreeExit.Builder.class);
+          internal_static_com_randioo_mahjong_public_server_protocol_SCFightCastDices_descriptor =
+            getDescriptor().getMessageTypes().get(66);
+          internal_static_com_randioo_mahjong_public_server_protocol_SCFightCastDices_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_randioo_mahjong_public_server_protocol_SCFightCastDices_descriptor,
+              new java.lang.String[] { "Dices", },
+              com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices.class,
+              com.randioo.mahjong_public_server.protocol.Fight.SCFightCastDices.Builder.class);
+          internal_static_com_randioo_mahjong_public_server_protocol_SCFightNoticeSeat_descriptor =
+            getDescriptor().getMessageTypes().get(67);
+          internal_static_com_randioo_mahjong_public_server_protocol_SCFightNoticeSeat_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_randioo_mahjong_public_server_protocol_SCFightNoticeSeat_descriptor,
+              new java.lang.String[] { "Seat", },
+              com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat.class,
+              com.randioo.mahjong_public_server.protocol.Fight.SCFightNoticeSeat.Builder.class);
           return null;
         }
       };

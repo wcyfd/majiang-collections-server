@@ -14,8 +14,8 @@
 			<list>
 				<value>
 					CREATE TABLE IF NOT EXISTS {database}.`role` (
-					`roleId` int(11) DEFAULT NULL COMMENT '玩家id',
-					`account` varchar(255) DEFAULT NULL COMMENT '帐号',
+					`roleId` int(11) NOT NULL COMMENT '玩家id',
+					`account` varchar(255) NOT NULL COMMENT '帐号',
 					`name` varchar(255) DEFAULT NULL COMMENT '名称',
 					`money` int(11) DEFAULT NULL COMMENT '游戏币（欢乐豆）',
 					`gameId` int(11) DEFAULT NULL COMMENT '游戏id',
@@ -31,7 +31,7 @@
 					PRIMARY KEY (`roleId`)
 					) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 				</value>
-					<value>
+				<value>
 					CREATE TABLE IF NOT EXISTS {database}.`video` (
 					`ID` int(11) DEFAULT NULL AUTO_INCREMENT COMMENT '录像id',
 					`roleId` int(11) DEFAULT NULL COMMENT '玩家id',
@@ -40,6 +40,66 @@
 					`time` datetime DEFAULT NULL COMMENT '时间',
 					PRIMARY KEY (`ID`)
 					)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+				</value>
+				<value>
+					CREATE TABLE IF NOT EXISTS {database}.`game_record` (
+					`id` int(11) NOT NULL AUTO_INCREMENT,
+					`roleId` int(11) NOT NULL,
+					`time` datetime DEFAULT NULL COMMENT '创建时间',
+					PRIMARY KEY (`id`)
+					) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+				</value>
+				<value>
+					CREATE TABLE IF NOT EXISTS {database}.`consume` (
+					`id` int(11) NOT NULL AUTO_INCREMENT,
+					`roleId` int(11) NOT NULL,
+					`money` int(11) NOT NULL COMMENT '燃点币消耗',
+					`time` datetime DEFAULT NULL COMMENT '创建时间',
+					PRIMARY KEY (`id`)
+					) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+				</value>
+				<value>
+					CREATE TABLE IF NOT EXISTS {database}.`playback` (
+					`id` int(11) NOT NULL,
+					`sc_stream` mediumblob,
+					`config_stream` blob,
+					`view_seat` int(11),
+					`config_str` text,
+					`sc_str` text,
+					PRIMARY KEY (`id`)
+					) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+				</value>
+				<value>
+					CREATE TABLE IF NOT EXISTS {database}.`round_score` (
+					`id` int(11) NOT NULL AUTO_INCREMENT,
+					`role_id` int(11) NOT NULL,
+					`room_id` int(11) NOT NULL,
+					`game_start_time` datetime NOT NULL,
+					`round_start_time` datetime NOT NULL,
+					`round_end_time` datetime NOT NULL,
+					`game_end_time` datetime,
+					`round_count` int(11) NOT NULL,
+					`score` int(11) NOT NULL,
+					`playback_id` int(11) NOT NULL,
+					`score_map` text NOT NULL,
+					PRIMARY KEY (`id`)
+					) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+				</value>
+				<value>
+					CREATE TABLE IF NOT EXISTS {database}.`online_time` (
+					`role_id` int(11) NOT NULL,
+					`online_time` int(11) NOT NULL,
+					PRIMARY KEY (`role_id`)
+					) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+				</value>
+				<value>
+					CREATE TABLE IF NOT EXISTS {database}.`login` (
+					`login_id` int(11) NOT NULL AUTO_INCREMENT,
+					`account` varchar(255) NOT NULL,
+					`online` int(11) NOT NULL,
+					`login_time` datetime NOT NULL,
+					PRIMARY KEY (`login_id`)
+					) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 				</value>
 			</list>
 		</property>
@@ -66,6 +126,8 @@
 				<ref bean="closeService" />
 				<ref bean="audienceService" />
 				<ref bean="videoService" />
+				<ref bean="statisticService" />
+				<ref bean="playbackService" />
 			</list>
 		</property>
 	</bean>
@@ -83,5 +145,20 @@
 	<bean id="keyStore" class="com.randioo.majiang_collections_server.util.key.KeyStore"></bean>
 
 	<!-- 燃点平台包 -->
-	<bean id="randiooPlatformSdk" class="com.randioo.randioo_platform_sdk.RandiooPlatformSdk"></bean>
+	<bean id="randiooPlatformSdk" class="com.randioo.randioo_platform_sdk.RandiooPlatformSdk">
+		<property name="accountUrl" value="${randioo.platform.account}" />
+		<property name="moneyUrl" value="${randioo.platform.money}" />
+		<property name="activeUrl" value="${randioo.platform.active}" />
+		<property name="roundOverUrl" value="${randioo.platform.roundOver}" />
+		<property name="detailUrl" value="${randioo.platform.detailUrl}" />
+		<property name="gameStartUrl" value="${randioo.platform.gameStartUrl}" />
+	</bean>
+
+	<!-- 后置处理器 -->
+	<bean id="beanPostProcessor1" class="com.randioo.majiang_collections_server.util.processor.BeanPostProcessor1" />
+
+	<bean id="gmConsole" class="com.randioo.majiang_collections_server.module.gm.component.GmConsole" />
+
+	<!-- js脚本引擎 -->
+	<!-- <bean id="scriptEngineManager" class="javax.script.ScriptEngineManager"></bean> <bean id="scriptEngine" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"> <property name="targetObject" ref="scriptEngineManager" /> <property name="targetMethod" value="getEngineByName" /> <property name="arguments"> <list> <value>javascript</value> </list> </property> </bean> -->
 </beans>

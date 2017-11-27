@@ -13,6 +13,8 @@ public class RoundOverResult {
     public int score;
     /** 胡的牌型 */
     public List<HuType> huTypeList = new ArrayList<>();
+    /** 花的个数 */
+    public int flowerCount;
     /** 结束原因 */
     public OverMethod overMethod;
     /** 是否杠开 */

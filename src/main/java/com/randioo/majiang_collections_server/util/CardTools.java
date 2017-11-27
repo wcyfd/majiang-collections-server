@@ -90,7 +90,7 @@ public class CardTools {
 	};
 
 	public static void main(String[] args) {
-		CardSort cardSort = new CardSort(4);
+		CardSort cardSort = new CardSort(5);
 		List<Integer> cards = new ArrayList<>();
 
 		cards.add(1);

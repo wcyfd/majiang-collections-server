@@ -1247,6 +1247,20 @@ public final class Login {
     public boolean hasNickname() { return hasNickname; }
     public java.lang.String getNickname() { return nickname_; }
     
+    // optional string lantiLongi = 5;
+    public static final int LANTILONGI_FIELD_NUMBER = 5;
+    private boolean hasLantiLongi;
+    private java.lang.String lantiLongi_ = "";
+    public boolean hasLantiLongi() { return hasLantiLongi; }
+    public java.lang.String getLantiLongi() { return lantiLongi_; }
+    
+    // optional string voiceId = 6;
+    public static final int VOICEID_FIELD_NUMBER = 6;
+    private boolean hasVoiceId;
+    private java.lang.String voiceId_ = "";
+    public boolean hasVoiceId() { return hasVoiceId; }
+    public java.lang.String getVoiceId() { return voiceId_; }
+    
     private void initFields() {
     }
     public final boolean isInitialized() {
@@ -1267,6 +1281,12 @@ public final class Login {
       }
       if (hasNickname()) {
         output.writeString(4, getNickname());
+      }
+      if (hasLantiLongi()) {
+        output.writeString(5, getLantiLongi());
+      }
+      if (hasVoiceId()) {
+        output.writeString(6, getVoiceId());
       }
       getUnknownFields().writeTo(output);
     }
@@ -1292,6 +1312,14 @@ public final class Login {
       if (hasNickname()) {
         size += com.google.protobuf.CodedOutputStream
           .computeStringSize(4, getNickname());
+      }
+      if (hasLantiLongi()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(5, getLantiLongi());
+      }
+      if (hasVoiceId()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(6, getVoiceId());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1463,6 +1491,12 @@ public final class Login {
         if (other.hasNickname()) {
           setNickname(other.getNickname());
         }
+        if (other.hasLantiLongi()) {
+          setLantiLongi(other.getLantiLongi());
+        }
+        if (other.hasVoiceId()) {
+          setVoiceId(other.getVoiceId());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -1502,6 +1536,14 @@ public final class Login {
             }
             case 34: {
               setNickname(input.readString());
+              break;
+            }
+            case 42: {
+              setLantiLongi(input.readString());
+              break;
+            }
+            case 50: {
+              setVoiceId(input.readString());
               break;
             }
           }
@@ -1590,6 +1632,48 @@ public final class Login {
       public Builder clearNickname() {
         result.hasNickname = false;
         result.nickname_ = getDefaultInstance().getNickname();
+        return this;
+      }
+      
+      // optional string lantiLongi = 5;
+      public boolean hasLantiLongi() {
+        return result.hasLantiLongi();
+      }
+      public java.lang.String getLantiLongi() {
+        return result.getLantiLongi();
+      }
+      public Builder setLantiLongi(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasLantiLongi = true;
+        result.lantiLongi_ = value;
+        return this;
+      }
+      public Builder clearLantiLongi() {
+        result.hasLantiLongi = false;
+        result.lantiLongi_ = getDefaultInstance().getLantiLongi();
+        return this;
+      }
+      
+      // optional string voiceId = 6;
+      public boolean hasVoiceId() {
+        return result.hasVoiceId();
+      }
+      public java.lang.String getVoiceId() {
+        return result.getVoiceId();
+      }
+      public Builder setVoiceId(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasVoiceId = true;
+        result.voiceId_ = value;
+        return this;
+      }
+      public Builder clearVoiceId() {
+        result.hasVoiceId = false;
+        result.voiceId_ = getDefaultInstance().getVoiceId();
         return this;
       }
       
@@ -2248,13 +2332,14 @@ public final class Login {
       "LoginCheckAccountResponse\022\024\n\terrorCode\030\001" +
       " \001(\005:\0011\"7\n\026LoginCreateRoleRequest\022\017\n\007acc" +
       "ount\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\"/\n\027LoginCreateR" +
-      "oleResponse\022\024\n\terrorCode\030\001 \001(\005:\0011\"`\n\027Log" +
-      "inGetRoleDataRequest\022\017\n\007account\030\001 \001(\t\022\014\n" +
-      "\004uuid\030\002 \001(\t\022\024\n\014headImageUrl\030\003 \001(\t\022\020\n\010nic" +
-      "kname\030\004 \001(\t\"x\n\030LoginGetRoleDataResponse\022",
-      "\024\n\terrorCode\030\001 \001(\005:\0011\022F\n\010roleData\030\002 \001(\0132" +
-      "4.com.randioo.mahjong_public_server.prot" +
-      "ocol.RoleData\"\022\n\020SCLoginOtherSide"
+      "oleResponse\022\024\n\terrorCode\030\001 \001(\005:\0011\"\205\001\n\027Lo" +
+      "ginGetRoleDataRequest\022\017\n\007account\030\001 \001(\t\022\014" +
+      "\n\004uuid\030\002 \001(\t\022\024\n\014headImageUrl\030\003 \001(\t\022\020\n\010ni" +
+      "ckname\030\004 \001(\t\022\022\n\nlantiLongi\030\005 \001(\t\022\017\n\007voic",
+      "eId\030\006 \001(\t\"x\n\030LoginGetRoleDataResponse\022\024\n" +
+      "\terrorCode\030\001 \001(\005:\0011\022F\n\010roleData\030\002 \001(\01324." +
+      "com.randioo.mahjong_public_server.protoc" +
+      "ol.RoleData\"\022\n\020SCLoginOtherSide"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -2298,7 +2383,7 @@ public final class Login {
           internal_static_com_randioo_mahjong_public_server_protocol_LoginGetRoleDataRequest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_randioo_mahjong_public_server_protocol_LoginGetRoleDataRequest_descriptor,
-              new java.lang.String[] { "Account", "Uuid", "HeadImageUrl", "Nickname", },
+              new java.lang.String[] { "Account", "Uuid", "HeadImageUrl", "Nickname", "LantiLongi", "VoiceId", },
               com.randioo.mahjong_public_server.protocol.Login.LoginGetRoleDataRequest.class,
               com.randioo.mahjong_public_server.protocol.Login.LoginGetRoleDataRequest.Builder.class);
           internal_static_com_randioo_mahjong_public_server_protocol_LoginGetRoleDataResponse_descriptor =

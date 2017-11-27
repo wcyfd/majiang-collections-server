@@ -103,9 +103,9 @@ public class RaceServiceImpl extends ObserveBaseService implements RaceService {
 
     private GameConfigData parseGameConfig(MahjongRaceConfigure configure) {
         GameConfigData gameConfig = GameConfigData.newBuilder().setRaceType(configure.raceType)
-                .setBaseScore(configure.minStartScore).setMaxCount(configure.maxCount).setGangScore(configure.gangScore)
-                .setFlyScore(configure.catchScore).setFlyCount(configure.endCatchCount).setEndTime(configure.endTime)
-                .build();
+                .setBaseScore(configure.minStartScore).setMaxCount(configure.maxCount)
+                .setGangScore(configure.gangScore).setFlyScore(configure.catchScore)
+                .setFlyCount(configure.endCatchCount).setEndTime(configure.endTime).build();
 
         return gameConfig;
     }
@@ -142,9 +142,9 @@ public class RaceServiceImpl extends ObserveBaseService implements RaceService {
 
     @Override
     public void joinRace(Role role, int raceId) {
-        loggerinfo(role, "race join " + raceId);
-        SessionUtils.sc(role.getRoleId(),
-                SC.newBuilder().setRaceJoinRaceResponse(RaceJoinRaceResponse.newBuilder()).build());
+        logger.info("race join {}", role.getAccount());
+        SessionUtils.sc(role.getRoleId(), SC.newBuilder().setRaceJoinRaceResponse(RaceJoinRaceResponse.newBuilder())
+                .build());
 
         SCRaceJoinRace.Builder scRaceJoinRaceBuilder = SCRaceJoinRace.newBuilder();
         Lock lock = CacheLockUtil.getLock(Race.class, raceId);
@@ -182,8 +182,11 @@ public class RaceServiceImpl extends ObserveBaseService implements RaceService {
                     String gameRoleId = matchService.getGameRoleId(game.getGameId(), firstRoleId);
                     RoleGameInfo roleGameInfo = game.getRoleIdMap().get(gameRoleId);
                     GameRoleData gameRoleData = matchService.parseGameRoleData(roleGameInfo, game);
-                    SessionUtils.sc(role.getRoleId(), SC.newBuilder()
-                            .setSCMatchMineInfo(SCMatchMineInfo.newBuilder().setGameRoleData(gameRoleData)).build());
+                    SessionUtils.sc(
+                            role.getRoleId(),
+                            SC.newBuilder()
+                                    .setSCMatchMineInfo(SCMatchMineInfo.newBuilder().setGameRoleData(gameRoleData))
+                                    .build());
                     SessionUtils.sc(role.getRoleId(),
                             SC.newBuilder().setSCFightNoticeReady(SCFightNoticeReady.newBuilder()).build());
                 }

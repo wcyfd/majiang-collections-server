@@ -7,9 +7,14 @@ message RoleData{
 	optional int32 sex = 4;
 	optional int32 serverTime = 5;
 	optional string name = 6;
-	optional string headImageUrl = 7;
-	optional bytes gameOverSC = 8;
+	optional string headImageUrl = 7;	
 	optional int32 randiooCoin = 9;
+	optional ReconnectData reconnectData = 10;
+}
+
+message ReconnectData{
+	optional bytes gameOverSC = 1;
+	optional GameConfigData gameConfigData = 2;
 }
 
 message GameConfigData{
@@ -37,7 +42,19 @@ message GameConfigData{
 	optional bool zhuaHu = 22;//能否抓胡
 	optional int32 moFlowerCount = 23; //几个花时才能自摸
 	optional int32 zhuaFlowerCount = 24;//几个花时才能抓胡
+	optional bool noChi =25; //是否不能吃
+	optional bool baoSanKou = 26;//能不能包三口
+	repeated HuType leZiType = 27;//勒子玩法
+	optional int32 leZiScore = 28;//勒子分数，同maxScore
+	optional bool ipLimit = 29;//ip限制
+	optional bool randomSeat = 30;//座位随机
+	optional PlayMode playMode = 31;//玩法
+}
 
+//玩法
+enum PlayMode{
+	FAN = 0;
+	LE_ZI = 1;
 }
 
 /**游戏结束的方式*/
@@ -72,11 +89,15 @@ message GameRoleData{
 	optional bool ready = 4;
 	optional string headImgUrl = 5;
 	optional int32 money = 6;
-	optional int32 point = 7;
+	optional int32 score = 7;//比赛分数
 	optional int32 sex = 8;
 	optional bool online = 9;	
 	optional string platformRoleId = 10;
 	optional int32 flower = 11;//花的数量
+	optional string ip = 12;//ip地址
+	optional string account = 13;
+	optional string latiLongi = 14;//经纬度坐标
+	optional string voiceId = 15;//声音id
 }
 
 enum GameState{
@@ -103,11 +124,16 @@ enum CardListType{
 	CARD_LIST_TYPE_GANG_LIGHT = 3;
 	CARD_LIST_TYPE_GANG_DARK = 4;
 	CARD_LIST_TYPE_GANG_ADD = 5;
+	CARD_LIST_TYPE_TING = 6;
 }
 
 message CallHuData{
 	optional int32 callId = 1;
 	optional RoundCardsData huData = 2;
+}
+message CallTingData{
+	optional int32 callId = 1;
+	repeated TingData tingData = 2;
 }
 enum HuType{
 	//共有
@@ -127,6 +153,11 @@ enum HuType{
 	WU_HUA_GUO = 12;//无花果
 	HAI_DI_LAO = 13;//海底捞
 	LA_JI_HU = 14;//垃圾胡
+
+	LEZI_WU_HUA_GUO = 15;//勒子无花果
+	LEZI_MEN_QING_WU_HUA_GUO = 16;//勒子门清无花果
+	LEZI_QING_YI_SE = 17;//勒子清一色
+	LEZI_QING_PENG = 18;//勒子清碰
 }
 message RoleRoundOverInfoData{
 	optional GameRoleData gameRoleData = 1;
@@ -236,4 +267,23 @@ message EnvVarsData{
 	optional string key = 1;
 	optional string value = 2;
 	optional string type = 3;
+}
+
+message TingData{
+	optional int32 pai = 1;
+	repeated int32 tingPai = 2;
+}
+
+message PlaybackCatelogRoundData{
+	optional string gameStartTime = 1;//游戏开始时间
+	optional string startTime = 2;//开始时间
+	optional string roomId = 3;//房间id
+	optional int32 playbackId = 4;//回放编号
+	repeated PlaybackScoreData playbackScoreData = 5;
+}
+
+message PlaybackScoreData{
+	optional string account = 1;
+	optional string name = 2;
+	optional int32 score = 3;
 }

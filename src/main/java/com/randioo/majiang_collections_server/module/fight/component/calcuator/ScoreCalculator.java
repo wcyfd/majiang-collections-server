@@ -26,7 +26,9 @@ public class ScoreCalculator {
         int limit = parameter.getLimit();
 
         int score = (baseScore + huaMultiple * huaNum) * (int) Math.pow(2, fanNum) * (isHuangFan ? 2 : 1);
-        score += flyScore;
+//        score += flyScore;
+        // 百搭和敲麻苍蝇计算方式应该是一致的，wcy
+        score += flyScore * huaMultiple;
         score = score > limit ? limit : score;
         return score;
     }

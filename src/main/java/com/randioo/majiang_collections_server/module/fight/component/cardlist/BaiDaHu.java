@@ -131,7 +131,7 @@ public class BaiDaHu extends Hu {
     }
 
     public boolean removePeng(List<Integer> cards) {
-        CardSort cardSort = new CardSort(4);
+        CardSort cardSort = new CardSort(5);
         cardSort.fillCardSort(cards);
 
         int baidaCount = cardSort.count(801);
@@ -209,7 +209,7 @@ public class BaiDaHu extends Hu {
         List<Integer> list3 = Arrays.asList(109, 201, 203, 801);
         List<Integer> list4 = Arrays.asList(801, 801);
 
-        CardSort cardSort = new CardSort(4);
+        CardSort cardSort = new CardSort(5);
 
         cardSort.fillCardSort(list1);
         cardSort.fillCardSort(list2);

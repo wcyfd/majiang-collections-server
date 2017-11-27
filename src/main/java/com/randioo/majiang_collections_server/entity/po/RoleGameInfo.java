@@ -59,6 +59,12 @@ public class RoleGameInfo {
 
     /** 不显示的花的数量 */
     public int darkFlowerCount;
+    /** 进入补花流程后为true */
+    public boolean isAddFlowerState;
+    /** 本圈吃碰的牌,吃过的牌本回合不能再出这张牌 */
+    public int chiCard;
+    /** 通知碰，选择过之后记录这样碰的牌 */
+    public int pengGuoCard;
 
     @Override
     public String toString() {

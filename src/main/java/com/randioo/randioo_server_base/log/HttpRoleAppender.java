@@ -26,7 +26,7 @@ public class HttpRoleAppender extends AppenderSkeleton {
     private String httpRoleKey = "userId";
     private String httpGameKey = "gameName";
     private String httpLogInfoKey = "logInfo";
-    private String logRoleKey = "roleId:";
+    private String logRoleKey = "account:";
     private String logSplitPrefix = ",";
 
     private Map<String, List<String>> map = new HashMap<>();
@@ -48,14 +48,15 @@ public class HttpRoleAppender extends AppenderSkeleton {
 
     @Override
     public void activateOptions() {
+
         map.put(httpKey, new ArrayList<String>(1));
         map.get(httpKey).add(httpKeyValue);
 
         List<String> gameList = new ArrayList<>(1);
-        gameList.add(HttpLogUtils.projectName);
-        
+        gameList.add(L.projectName);
+
         // 调试模式进内网
-        url = HttpLogUtils.debug ? debugUrl : url;
+        url = L.debug ? debugUrl : url;
 
         map.put(httpGameKey, gameList);
         map.put(httpRoleKey, new ArrayList<String>(1));
@@ -80,6 +81,7 @@ public class HttpRoleAppender extends AppenderSkeleton {
             public void run(LoggingEvent loggingevent) {
                 String value = loggingevent.getMessage().toString();
                 String message = value.replace("\n", "");
+
                 {
                     List<String> list = map.get(httpRoleKey);
                     list.clear();
@@ -117,6 +119,14 @@ public class HttpRoleAppender extends AppenderSkeleton {
         this.url = url;
     }
 
+    public void setDebugUrl(String debugUrl) {
+        this.debugUrl = debugUrl;
+    }
+
+    public String getDebugUrl() {
+        return debugUrl;
+    }
+
     public void setHttpKeyValue(String httpKeyValue) {
         this.httpKeyValue = httpKeyValue;
     }
@@ -137,11 +147,4 @@ public class HttpRoleAppender extends AppenderSkeleton {
         return null;
     }
 
-    public static void main(String[] args) {
-        // String m = "roleId:11,tiger:122,";
-        // System.out.println(substring(m, "roleId:", ","));
-        // System.out.println(substring(m, "tiger:", "2,"));
-        String s = "<ROLE>";
-        System.out.println(s.startsWith("<ROLE>"));
-    }
 }

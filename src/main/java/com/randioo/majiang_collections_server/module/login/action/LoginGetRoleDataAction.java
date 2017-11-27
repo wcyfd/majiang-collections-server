@@ -29,6 +29,8 @@ public class LoginGetRoleDataAction implements IActionSupport {
         loginConfig.setHeadImageUrl(request.getHeadImageUrl());
         loginConfig.setMacAddress(request.getUuid());
         loginConfig.setNickname(request.getNickname());
+        loginConfig.setLantiLongi(request.getLantiLongi());
+        loginConfig.setVoiceId(request.getVoiceId());
 
         GeneratedMessage sc = loginService.getRoleData(loginConfig, session);
         SessionUtils.sc(session, sc);

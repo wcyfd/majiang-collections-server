@@ -13,4 +13,6 @@ public class MatchConstant {
     public static final String AI_GAME_ROLE_ID_FORMAT = "{0}_0_{1}";
     /** 创建游戏 */
     public static final String MATCH_CREATE_GAME = "match_create_game";
+    /** 机器人的声音id */
+    public static final String ROBOT_VOICE_ID = "0";
 }

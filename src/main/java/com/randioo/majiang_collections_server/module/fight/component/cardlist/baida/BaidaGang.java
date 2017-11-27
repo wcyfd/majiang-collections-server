@@ -38,8 +38,9 @@ public class BaidaGang extends Gang {
             // 检查暗杠
             if (hasPeng) {
                 for (int value : set) {
-                    if (GameCache.getBaiDaCardNumSet().contains(value))
+                    if (baida == value) {
                         continue;
+                    }
 
                     Gang gang = new Gang();
                     gang.card = value;

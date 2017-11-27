@@ -40,5 +40,13 @@ public class RoleMatchRule extends MatchRule implements Comparable<RoleMatchRule
 	public int compareTo(RoleMatchRule o) {
 		return matchTime - o.matchTime;
 	}
+	
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("RoleMatchRule [roleId=").append(roleId).append(", matchTime=").append(matchTime)
+                .append(", ai=").append(ai).append(", maxCount=").append(maxCount).append("]");
+        return builder.toString();
+    }
 
 }

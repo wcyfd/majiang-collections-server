@@ -3,6 +3,7 @@ package com.randioo.majiang_collections_server.module.fight.component.dispatch;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.stereotype.Component;
 
@@ -16,7 +17,7 @@ public class RandomDispatcher implements Dispatcher {
     @Override
     public List<CardPart> dispatch(Game game, List<Integer> cards, int partCount, int everyPartCount) {
         // 打乱牌的顺序
-        Collections.shuffle(cards);
+        Collections.shuffle(cards, new Random());
 
         List<CardPart> cardParts = new ArrayList<>(partCount);
         for (int i = 0; i < partCount; i++) {

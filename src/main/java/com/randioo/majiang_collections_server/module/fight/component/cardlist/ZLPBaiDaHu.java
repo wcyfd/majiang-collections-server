@@ -443,7 +443,7 @@ public class ZLPBaiDaHu extends Hu {
 
     public static void main(String[] args) {
         ZLPBaiDaHu hu = new ZLPBaiDaHu();
-        CardSort cardSort = new CardSort(4);
+        CardSort cardSort = new CardSort(5);
         // cardSort.fillCardSort(Arrays.asList(101, 102, 103, 104, 105, 201,
         // 302, 101, 102, 201, 302, 801, 801, 302));
         cardSort.fillCardSort(Arrays.asList(801, 801, 203, 203, 206, 206, 207, 207, 208, 308, 308));

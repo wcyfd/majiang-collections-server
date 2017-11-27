@@ -30,28 +30,34 @@ enum ErrorCode{
 	MONEY_NUM_ERROR = 17;//兑换数量错误
 	MATCH_ERROR_LOCK = 18;//房间号错误
 	MATCH_MAX_ROLE_COUNT = 19;//房间已经满了
+	IP_LIMIT = 20;//ip相同
 
-	GAME_NOT_EXIST = 20;//游戏不存在
-	GAME_CARD_NOT_EXIST = 21;//卡牌不存在
-	GAME_EXITING = 22;//其他人正申请退出
-	GAME_TING_FAIL = 23;//听牌失败
-	APPLY_REJECT = 24;//拒绝解散房间
-	NOT_YOUR_TURN = 25;//没轮到你
+	GAME_NOT_EXIST = 21;//游戏不存在
+	GAME_CARD_NOT_EXIST = 22;//卡牌不存在
+	GAME_EXITING = 23;//其他人正申请退出
+	GAME_TING_FAIL = 24;//听牌失败
+	APPLY_REJECT = 25;//拒绝解散房间
+	NOT_YOUR_TURN = 26;//没轮到你
+	CHI_PENG_CARD = 27;//吃碰过的牌本回合不能出
 	
-	NOT_SAME_TYPE = 26;//牌型不符
-	SMALLER = 27;//牌比上家小
-	NULL_REJECT = 28;//不允许不出牌
-	NOT_LANDLORD = 29;//你不是地主
-	MINGPAI_FORBIDDEN = 30;//不能明牌
-	FIRST_ROUND = 31;//第一轮
+	NOT_SAME_TYPE = 28;//牌型不符
+	SMALLER = 29;//牌比上家小
+	NULL_REJECT = 30;//不允许不出牌
+	NOT_LANDLORD = 31;//你不是地主
+	MINGPAI_FORBIDDEN = 32;//不能明牌
+	FIRST_ROUND = 33;//第一轮
 
 	//战斗
-	FIGHT_TIME_PASS = 32;//时间过期
-	FIGHT_MORE_CARD = 33;//牌多了一张，有问题	
+	FIGHT_TIME_PASS = 34;//时间过期
+	FIGHT_MORE_CARD = 35;//牌多了一张，有问题	
 
 	//比赛
-	RACE_JOIN_FAILED = 34;//比赛加入失败
+	RACE_JOIN_FAILED = 36;//比赛加入失败
 	
 	//燃点币
-	NOT_RANDIOOMONEY_ENOUGH = 35;//燃点币不足
-} // 35
+	NOT_RANDIOOMONEY_ENOUGH = 37;//燃点币不足
+
+	//回放
+	PLAYBACK_NOT_EXIST = 38;//回放录像不存在
+	PLAYBACK_DAMAGED = 39;//回放录像损坏
+} // 39

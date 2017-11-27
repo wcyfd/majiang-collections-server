@@ -48,7 +48,7 @@ public class GameServerInit {
         this.extensionRegistryLite = extensionRegistryLite;
     }
 
-    public void start() {
+    public void start() {        
         serviceManager.initServices();
         logger.info("init Services");
 

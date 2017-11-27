@@ -41,7 +41,7 @@ public class HongZhongMajiangRule extends MajiangRule {
     private RoleGameInfoGetter roleGameInfoGetter;
 
     private final List<Integer> cards = Arrays.asList(
-    //
+            //
             101, 102, 103, 104, 105, 106, 107, 108, 109, // 条
             101, 102, 103, 104, 105, 106, 107, 108, 109, // 条
             101, 102, 103, 104, 105, 106, 107, 108, 109, // 条
@@ -58,7 +58,7 @@ public class HongZhongMajiangRule extends MajiangRule {
             301, 302, 303, 304, 305, 306, 307, 308, 309, // 万
 
             801, 801, 801, 801// 中
-            );
+    );
 
     private List<Integer> flowers = Arrays.asList();
 
@@ -69,19 +69,19 @@ public class HongZhongMajiangRule extends MajiangRule {
             MajiangStateEnum.STATE_TOUCH_CARD, // 摸牌
             MajiangStateEnum.STATE_SC_TOUCH_CARD, // 摸牌通知
             MajiangStateEnum.STATE_CHECK_MINE_CARDLIST // 检查我自己的手牌
-            );
+    );
 
     /** 出牌流程 */
     private List<MajiangStateEnum> sendCardProcesses = Arrays.asList(//
             MajiangStateEnum.STATE_SC_SEND_CARD, // 通知出牌
             MajiangStateEnum.STATE_WAIT_OPERATION// 玩家等待
-            );
+    );
 
     /** 自己有胡杠碰吃 */
     private List<MajiangStateEnum> noticeCardListProcesses = Arrays.asList(//
             MajiangStateEnum.STATE_SC_SEND_CARDLIST_2_ROLE, //
             MajiangStateEnum.STATE_WAIT_OPERATION//
-            );
+    );
 
     @Override
     public List<MajiangStateEnum> beforeStateExecute(RuleableGame ruleableGame, MajiangStateEnum majiangStateEnum,
@@ -114,9 +114,9 @@ public class HongZhongMajiangRule extends MajiangRule {
         List<MajiangStateEnum> list = new ArrayList<>();
 
         switch (currentState) {
-        case STATE_INIT_READY:
-            list.add(MajiangStateEnum.STATE_ROLE_GAME_READY);
-            break;
+//        case STATE_INIT_READY:
+//            list.add(MajiangStateEnum.STATE_ROLE_GAME_READY);
+//            break;
         case STATE_ROLE_GAME_READY:
             if (fightService.checkAllReady(game)) {
                 list.add(MajiangStateEnum.STATE_GAME_START);
@@ -125,6 +125,7 @@ public class HongZhongMajiangRule extends MajiangRule {
             }
             break;
         case STATE_GAME_START:
+            ruleableGame.getOperations().clear();
             list.add(MajiangStateEnum.STATE_CHECK_ZHUANG);
             list.add(MajiangStateEnum.STATE_DISPATCH);
             list.add(MajiangStateEnum.STATE_SC_GAME_START);
@@ -187,7 +188,7 @@ public class HongZhongMajiangRule extends MajiangRule {
             // 没有花进入的下一个人则视为上家出牌没有人要杠碰吃胡
             // 直接重置
             game.sendCard = 0;
-            game.sendCardSeat = 0;
+            game.sendCardSeat = -1;
 
             list.addAll(touchCardProcesses);
             list.addAll(sendCardProcesses);
@@ -217,7 +218,8 @@ public class HongZhongMajiangRule extends MajiangRule {
                             game.checkOtherCardListSeats.add(i);
                         }
                     }
-                    if (gang.peng != null && !hasHongzhong(game, roleGameInfo, 0) && fightService.checkQiangGang(game)) {
+                    if (gang.peng != null && !hasHongzhong(game, roleGameInfo, 0)
+                            && fightService.checkQiangGang(game)) {
                         // 显示已经杠了
                         list.add(MajiangStateEnum.STATE_GANG);
                         list.addAll(noticeCardListProcesses);
@@ -281,7 +283,6 @@ public class HongZhongMajiangRule extends MajiangRule {
         allCardListMap.put(Gang.class, ReflectUtils.newInstance(HongzhongGang.class));
         allCardListMap.put(Peng.class, ReflectUtils.newInstance(HongzhongPeng.class));
         allCardListMap.put(Hu.class, ReflectUtils.newInstance(HongzhongHu.class));
-        allCardListMap.put(Hu.class, ReflectUtils.newInstance(NewHu.class));
 
         otherCardListSequence.add(Hu.class);
         otherCardListSequence.add(Gang.class);
@@ -353,7 +354,7 @@ public class HongZhongMajiangRule extends MajiangRule {
 
     @Override
     public void executeGameOverProcess(Game game) {
-        fightService.gameOverHongZhong(game);
+        fightService.gameOver(game);
     }
 
     @Override

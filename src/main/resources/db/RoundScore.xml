@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.randioo.majiang_collections_server.dao.RoundScoreDao">
+	<!-- insert -->
+	<insert id="insert">
+		insert into round_score(
+			role_id,
+			room_id,
+			game_start_time,
+			round_start_time,
+			round_end_time,
+			game_end_time,
+			round_count,
+			score,
+			playback_id,
+			score_map
+		) values(
+			#{roleId},
+			#{roomId},
+			#{gameStartTime},
+			#{roundStartTime},
+			#{roundEndTime},
+			#{gameEndTime},
+			#{roundCount},
+			#{score},
+			#{playbackId},
+			#{roundScoreStr}
+		)
+	</insert>
+
+	<!-- 获得某人参与的所有游戏 -->
+	<select id="getAllRoomByRoleId" resultType="RoundScore">
+		select
+			DISTINCT
+			room_id as roomId,
+			UNIX_TIMESTAMP(game_start_time) as gameStartTime,
+			UNIX_TIMESTAMP(round_start_time) as roundStartTime,
+			playback_id as playbackId,
+			score_map as roundScoreStr
+		from round_score
+		<where>
+			role_id=#{roleId}
+		</where>
+	</select>
+	
+	<!-- 获得某人参与的所有游戏 -->
+	<select id="getRoundScoreByRoleIdAndRoomId" resultType="RoundScore">
+		select
+			score_map as roundScore
+		from round_score
+		<where>
+			role_id=#{roleId} and room_id=#{roomId} and game_start_time=#{gameStartTime}
+		</where>
+	</select>
+
+	<!-- 获得指定游戏的所有结算分数 -->
+	<select id="getGameScoreByRoomIdAndStartTime" resultType="RoundScore">
+		select
+			id as id,
+			role_id as roleId,
+			room_id as roomId,
+			UNIX_TIMESTAMP(game_start_time) as gameStartTime,
+			UNIX_TIMESTAMP(round_start_time) as roundStartTime,
+			round_count as roundCount,
+			score as score,
+			playback_id as playbackId,
+			score_map as roundScore
+		from round_score
+		<where>
+			room_id=#{room_id} and game_start_time=#{game_start_time}
+		</where>
+	</select>
+	
+	<select id="getLimitRoomRoundScore" resultType="RoundScore">
+		SELECT 
+			room_id as roomId,
+			UNIX_TIMESTAMP(game_start_time) as gameStartTime,
+			UNIX_TIMESTAMP(round_start_time) as roundStartTime,
+			playback_id as playbackId,
+			score_map as roundScoreStr
+		FROM round_score 
+		<where>
+			room_id IN
+			(
+				SELECT A.room_id FROM
+				(
+					SELECT DISTINCT(room_id) FROM round_score 
+					<where>
+						role_id = #{roleId}
+					</where> 
+						order by game_start_time DESC
+					<if test="limit > 0">
+						LIMIT #{limit}					
+					</if>
+				) AS A
+			) and role_id=#{roleId}
+			order by round_start_time DESC
+		</where>
+	</select>
+	
+	<select id="getRoundStartTimeByPlackbackId" resultType="java.lang.String">
+		SELECT 
+			UNIX_TIMESTAMP(round_start_time)
+		FROM 
+			round_score 
+		WHERE 
+			playback_id=#{playbackId} LIMIT 1
+	</select>
+</mapper>

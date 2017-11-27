@@ -7,6 +7,7 @@ import java.util.Stack;
 
 import org.springframework.stereotype.Component;
 
+import com.randioo.mahjong_public_server.protocol.Entity.GameState;
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.module.fight.component.MajiangRule.MajiangStateEnum;
 
@@ -46,7 +47,7 @@ public class Processor {
         // 继续执行执行出栈
         Stack<MajiangStateEnum> operations = game.getOperations();
         // 栈顶为等待操作状态时不继续流程
-        while (operations.peek() != MajiangStateEnum.STATE_WAIT_OPERATION) {
+        while (operations.size() != 0 && operations.peek() != MajiangStateEnum.STATE_WAIT_OPERATION) {
             MajiangRule majiangRule = game.getRule();
 
             // 获取栈顶但是不要取出来
@@ -58,7 +59,7 @@ public class Processor {
             }
 
             MajiangStateEnum topOperation = operations.pop();
-            System.out.println("pop process=" + topOperation);
+            game.logger.info("pop process={}", topOperation);
 
             // 获得当前事件
             Flow flow = flows.get(topOperation);
@@ -67,36 +68,54 @@ public class Processor {
                 // 执行流过程
                 flow.execute(game, currentSeat);
             } else {
-                this.noFlowException(topOperation);
+                this.noFlowException(game, topOperation);
             }
 
             // 游戏结束标识,直接结束
             if (topOperation == MajiangStateEnum.STATE_GAME_OVER) {
+                game.getOperations().clear();
                 break;
             }
 
             {
                 List<MajiangStateEnum> list = majiangRule.afterStateExecute(game, topOperation, currentSeat);
                 this.addProcesses(operations, list);
-                System.out.println("add process=" + list);
-                System.out.println("remain process" + operations);
+                game.logger.info("add process={}", list);
+                game.logger.info("remain process {}", operations);
+            }
+
+            if (game.getOperations().size() == 0) {
+                game.logger.info("栈为空,下次循环会报错");
             }
 
         }
 
     }
 
-    public void pop(RuleableGame game) {
-        game.getOperations().pop();
+    public void pop(Game game) {
+        if (game.getGameState() == GameState.GAME_START_END) {
+            return;
+        }
+        if (game.getOperations().size() != 0) {
+            game.getOperations().pop();
+        } else {
+            game.logger.info("栈为空，不可弹出");
+        }
     }
 
-    public void push(RuleableGame game, MajiangStateEnum... states) {
+    public void push(Game game, MajiangStateEnum... states) {
+        if (game.getGameState() == GameState.GAME_START_END) {
+            return;
+        }
         for (MajiangStateEnum item : states) {
             game.getOperations().push(item);
         }
     }
 
-    public void push(RuleableGame game, List<MajiangStateEnum> states) {
+    public void push(Game game, List<MajiangStateEnum> states) {
+        if (game.getGameState() == GameState.GAME_START_END) {
+            return;
+        }
         for (MajiangStateEnum item : states) {
             game.getOperations().push(item);
         }
@@ -121,7 +140,7 @@ public class Processor {
         }
     }
 
-    private void noFlowException(MajiangStateEnum majiangStateEnum) {
+    private void noFlowException(Game game, MajiangStateEnum majiangStateEnum) {
         String equals = "==========================================================";
         String context = " no flow : " + majiangStateEnum + " ";
         int len1 = equals.length();
@@ -139,7 +158,7 @@ public class Processor {
         }
         sb.append("\n");
         sb.append(equals).append("\n");
-        System.out.println(sb);
+        game.logger.info(sb.toString());
     }
 
 }

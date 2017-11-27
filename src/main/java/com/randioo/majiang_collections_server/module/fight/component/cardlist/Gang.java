@@ -31,7 +31,7 @@ public class Gang extends AbstractCardList {
             // 检查暗杠
             if (hasPeng) {
                 for (int value : set) {
-                    if (GameCache.getBaiDaCardNumSet().contains(value))
+                    if (value == baida)
                         continue;
 
                     Gang gang = new Gang();

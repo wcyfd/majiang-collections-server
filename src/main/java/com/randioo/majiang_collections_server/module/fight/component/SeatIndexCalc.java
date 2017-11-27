@@ -21,8 +21,11 @@ public class SeatIndexCalc {
      * @return
      */
     public int getNext(Game game) {
-        int currentIndex = game.getCurrentRoleIdIndex();
-        int nextIndex = currentIndex + 1;
+        return getNext(game.getCurrentRoleIdIndex());
+    }
+
+    public int getNext(int seat) {
+        int nextIndex = seat + 1;
         nextIndex = nextIndex == 4 ? 0 : nextIndex;
         return nextIndex;
     }

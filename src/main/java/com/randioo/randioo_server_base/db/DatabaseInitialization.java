@@ -40,7 +40,7 @@ public class DatabaseInitialization implements InitializingBean {
 	}
 
 	public void initialize() {
-		String databaseName = this.databaseName + GlobleMap.Int(GlobleConstant.ARGS_PORT);
+		String databaseName = this.databaseName;
 
 		DatabaseCreator creator = new DatabaseCreator();
 		creator.setDatabaseName(databaseName);

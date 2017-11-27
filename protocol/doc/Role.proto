@@ -19,3 +19,11 @@ message RoleGetRoleDataResponse{
 message SCRoleRandiooCoinChange{
 	optional int32 randiooCoin = 1;
 }
+
+message RoleGetServerTimeRequest{
+	
+}
+
+message RoleGetServerTimeResponse{
+	optional int32 serverTime = 1;
+}

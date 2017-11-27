@@ -1,5 +1,7 @@
 package com.randioo.majiang_collections_server;
 
+import java.io.IOException;
+
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.filter.keepalive.KeepAliveFilter;
 
@@ -10,7 +12,7 @@ import com.randioo.mahjong_public_server.protocol.Heart.HeartResponse;
 import com.randioo.mahjong_public_server.protocol.Heart.SCHeart;
 import com.randioo.mahjong_public_server.protocol.ServerMessage.SC;
 import com.randioo.majiang_collections_server.handler.HeartTimeOutHandler;
-import com.randioo.randioo_platform_sdk.RandiooPlatformSdk;
+import com.randioo.majiang_collections_server.util.JedisUtils;
 import com.randioo.randioo_server_base.config.ConfigLoader;
 import com.randioo.randioo_server_base.config.GlobleArgsLoader;
 import com.randioo.randioo_server_base.config.GlobleMap;
@@ -30,6 +32,7 @@ public class majiang_collections_serverApp {
     /**
      * @param args
      * @author wcy 2017年8月17日
+     * @throws IOException
      */
     public static void main(String[] args) {
 
@@ -44,11 +47,6 @@ public class majiang_collections_serverApp {
 
         SpringContext.initSpringCtx("classpath:ApplicationContext.xml");
 
-        // 平台接口初始化
-        RandiooPlatformSdk randiooPlatformSdk = SpringContext.getBean(RandiooPlatformSdk.class);
-        randiooPlatformSdk.setDebug(GlobleMap.Boolean(GlobleConstant.ARGS_PLATFORM));
-        randiooPlatformSdk.setActiveProjectName(GlobleMap.String(GlobleConstant.ARGS_PLATFORM_PACKAGE_NAME));
-
         GameServerInit gameServerInit = ((GameServerInit) SpringContext.getBean(GameServerInit.class));
         // 设置CS
         gameServerInit.setMessageLite(CS.getDefaultInstance());
@@ -62,7 +60,7 @@ public class majiang_collections_serverApp {
 
         HeartTimeOutHandler heartTimeOutHandler = SpringContext.getBean(HeartTimeOutHandler.class);
         gameServerInit.setKeepAliveFilter(new KeepAliveFilter(protoHeartFactory, IdleStatus.READER_IDLE,
-                heartTimeOutHandler, 5, 10));
+                heartTimeOutHandler, 8, 10));
         gameServerInit.start();
 
         GlobleMap.putParam(GlobleConstant.ARGS_LOGIN, true);

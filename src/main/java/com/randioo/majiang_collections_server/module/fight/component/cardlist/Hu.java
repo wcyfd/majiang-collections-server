@@ -3,6 +3,7 @@ package com.randioo.majiang_collections_server.module.fight.component.cardlist;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.randioo.mahjong_public_server.protocol.Entity.OverMethod;
 import com.randioo.majiang_collections_server.entity.bo.Game;
 import com.randioo.majiang_collections_server.entity.po.CardSort;
 
@@ -16,6 +17,7 @@ public abstract class Hu extends AbstractCardList {
     public boolean gangChong;
     public int gangChongTargetSeat;
     public boolean isPaoBaiDa;
+    public OverMethod overMethod;
 
     public abstract boolean checkTing(Game game, CardSort cardSort, List<Integer> waitCards);
 }

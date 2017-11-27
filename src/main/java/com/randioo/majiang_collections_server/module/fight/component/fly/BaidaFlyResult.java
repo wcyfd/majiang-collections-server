@@ -3,6 +3,8 @@
  */
 package com.randioo.majiang_collections_server.module.fight.component.fly;
 
+import java.util.List;
+
 /**
  * @Description: 百搭麻将飞苍蝇结果
  * @author zsy
@@ -11,9 +13,9 @@ package com.randioo.majiang_collections_server.module.fight.component.fly;
 public class BaidaFlyResult {
     private int flyScore;
     /** 哪张牌 */
-    private int flys;
+    private List<Integer> flys;
 
-    public BaidaFlyResult(int flyScore, int fly) {
+    public BaidaFlyResult(int flyScore, List<Integer> fly) {
         this.flys = fly;
         this.flyScore = flyScore;
     }
@@ -26,12 +28,8 @@ public class BaidaFlyResult {
         this.flyScore = flyScore;
     }
 
-    public int getFlys() {
+    public List<Integer> getFlys() {
         return flys;
-    }
-
-    public void setFlys(int fly) {
-        this.flys = fly;
     }
 
 }

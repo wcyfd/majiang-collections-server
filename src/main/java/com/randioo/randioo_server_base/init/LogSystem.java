@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.randioo.randioo_server_base.GlobleConstant;
 import com.randioo.randioo_server_base.config.GlobleMap;
-import com.randioo.randioo_server_base.log.HttpLogUtils;
+import com.randioo.randioo_server_base.log.L;
 import com.randioo.randioo_server_base.utils.StringUtils;
 
 /**
@@ -27,13 +27,15 @@ public class LogSystem {
         String projectName = GlobleMap.String(GlobleConstant.ARGS_PROJECT_NAME);
         int port = GlobleMap.Int(GlobleConstant.ARGS_PORT);
         boolean logInnerNet = GlobleMap.Boolean(GlobleConstant.ARGS_LOG_NET);
+        String url = GlobleMap.String(GlobleConstant.ARGS_LOG_URL);
         String projectString = projectName + port;
 
-        HttpLogUtils.setProjectName(projectString);
-        HttpLogUtils.setDebug(logInnerNet);
+        L.setProjectName(projectString);
+        L.setDebug(logInnerNet);
+        L.setUrl(url);
 
         Logger logger = LoggerFactory.getLogger(clazz.getSimpleName());
-        logger.info(HttpLogUtils.sys(GlobleMap.print()));
+        logger.info(GlobleMap.print());
     }
 
     private static void checkLogSystemParam() {
@@ -50,7 +52,4 @@ public class LogSystem {
 
     }
 
-    public static void main(String[] args) {
-        LogSystem.init(LogSystem.class);
-    }
 }

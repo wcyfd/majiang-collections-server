@@ -7,6 +7,7 @@ import "Settings.proto";
 import "Race.proto";
 import "Heart.proto";
 import "Gm.proto";
+import "Playback.proto";
 
 message SC{
 	optional HeartResponse HeartResponse = 1;//心跳回馈
@@ -20,68 +21,80 @@ message SC{
 	optional RoleRenameResponse RoleRenameResponse = 7;
 	optional RoleGetRoleDataResponse RoleGetRoleDataResponse = 8;
 	optional SCRoleRandiooCoinChange SCRoleRandiooCoinChange = 9;//燃点币变化
+	optional RoleGetServerTimeResponse RoleGetServerTimeResponse = 10;
 
-	optional MatchCreateGameResponse MatchCreateGameResponse = 10;
-	optional MatchJoinGameResponse MatchJoinGameResponse = 11;
-	optional SCMatchJoinGame SCMatchJoinGame = 12;
-	optional SCMatchMineInfo SCMatchMineInfo = 13;
-	optional SCMatchCreateGame SCMatchCreateGame = 14;
-    optional MatchPreJoinResponse MatchPreJoinResponse = 15;//预加入房间
+	optional MatchCreateGameResponse MatchCreateGameResponse = 11;
+	optional MatchJoinGameResponse MatchJoinGameResponse = 12;
+	optional SCMatchJoinGame SCMatchJoinGame = 13;
+	optional SCMatchMineInfo SCMatchMineInfo = 14;
+	optional SCMatchCreateGame SCMatchCreateGame = 15;
+    optional MatchPreJoinResponse MatchPreJoinResponse = 16;//预加入房间
 
-	optional SCFightNoticeReady SCFightNoticeReady = 16;
-	optional FightReadyResponse FightReadyResponse = 17;//准备(只有好友对战用)
-	optional SCFightReady SCFightReady = 18;//某玩家进行准备
-	optional SCFightStart SCFightStart = 19;//游戏开始
-	optional FightExitGameResponse FightExitGameResponse = 20;//游戏退出
-	optional SCFightExitGame SCFightExitGame = 21;//某玩家游戏退出
-	optional FightApplyExitGameResponse FightApplyExitGameResponse = 22;
-	optional SCFightApplyExitGame SCFightApplyExitGame = 23;//某玩家申请游戏退出
-	optional FightAgreeExitGameResponse FightAgreeExitGameResponse = 24;//同意游戏退出
-	optional SCFightClearRoomId SCFightClearRoomId = 25;//清除房间号
-	optional SCFightLoadResource SCFightLoadResource = 26;//游戏资源加载(用于匹配)
-	optional SCFightNoticeSendCard SCFightNoticeSendCard = 27;//通知出牌
-	optional FightSendCardResponse FightSendCardResponse = 28;
-	optional SCFightSendCard SCFightSendCard = 29;
-	optional SCFightRoundOver SCFightRoundOver = 30;
-	optional FightRecommandResponse FightRecommandResponse = 31;
-	optional SCFightGameOver SCFightGameOver = 32;
-	optional FightGetlastRoundResponse FightGetlastRoundResponse = 33;
-	optional SCFightTouchCard SCFightTouchCard = 34;//摸一张牌
-	optional SCFightNoticeChooseCardList SCFightNoticeChooseCardList = 35;//通知所有人的杠碰胡
-	optional FightPengResponse FightPengResponse = 36;
-	optional FightGangResponse FightGangResponse = 37;
-	optional FightHuResponse FightHuResponse = 38;
-	optional SCFightHu SCFightHu = 39;
-	optional FightGuoResponse FightGuoResponse = 40;
-	optional SCFightGuo SCFightGuo = 41;
-	optional SCFightCountdown SCFightCountdown = 42;
-	optional SCFightCardList SCFightCardList = 43;
-	optional SCFightPointSeat SCFightPointSeat = 44;
-	optional SCFightApplyExitResult SCFightApplyExitResult = 45;//申请退出的结果
-	optional SCFightDisconnect SCFightDisconnect = 46;//通知玩家断连
-	optional FightChiResponse FightChiResponse = 47;//吃的响应
-	optional SCFightScore SCFightScore = 48;//分数改变
-	optional SCFightChooseCardListOver SCFightChooseCardListOver = 49;//取消通知
-	optional FightQueryGameConfigResponse FightQueryGameConfigResponse = 50;//查询游戏配置
-	optional FightClientDispatchResponse FightClientDispatchResponse = 51;//客户端调试配牌
-	optional FightClientTouchCardResponse FightClientTouchCardResponse = 52;//客户端调试摸牌
-	optional SCFightRoomDismiss SCFightRoomDismiss = 53;//通知房间解散
-	optional FightConfirmGameOverResponse FightConfirmGameOverResponse = 54;//确认游戏结束
+	optional SCFightNoticeReady SCFightNoticeReady = 17;
+	optional FightReadyResponse FightReadyResponse = 18;//准备(只有好友对战用)
+	optional SCFightReady SCFightReady = 19;//某玩家进行准备
+	optional SCFightStart SCFightStart = 20;//游戏开始
+	optional FightExitGameResponse FightExitGameResponse = 21;//游戏退出
+	optional SCFightExitGame SCFightExitGame = 22;//某玩家游戏退出
+	optional FightApplyExitGameResponse FightApplyExitGameResponse = 23;
+	optional SCFightApplyExitGame SCFightApplyExitGame = 24;//某玩家申请游戏退出
+	optional FightAgreeExitGameResponse FightAgreeExitGameResponse = 25;//同意游戏退出
+	optional SCFightClearRoomId SCFightClearRoomId = 26;//清除房间号
+	optional SCFightLoadResource SCFightLoadResource = 27;//游戏资源加载(用于匹配)
+	optional SCFightNoticeSendCard SCFightNoticeSendCard = 28;//通知出牌
+	optional FightSendCardResponse FightSendCardResponse = 29;
+	optional FightSendTingCardResponse FightSendTingCardResponse = 30;
+	optional SCFightSendCard SCFightSendCard = 31;
+	optional SCFightRoundOver SCFightRoundOver = 32;
+	optional FightRecommandResponse FightRecommandResponse = 33;
+	optional SCFightGameOver SCFightGameOver = 34;
+	optional FightGetlastRoundResponse FightGetlastRoundResponse = 35;
+	optional SCFightTouchCard SCFightTouchCard = 36;//摸一张牌
+	optional SCFightNoticeChooseCardList SCFightNoticeChooseCardList = 37;//通知所有人的杠碰胡
+	optional FightPengResponse FightPengResponse = 38;
+	optional FightGangResponse FightGangResponse = 39;
+	optional FightHuResponse FightHuResponse = 40;
+	optional SCFightHu SCFightHu = 41;
+	optional FightGuoResponse FightGuoResponse = 42;
+	optional SCFightGuo SCFightGuo = 43;
+	optional SCFightCountdown SCFightCountdown = 44;
+	optional SCFightCardList SCFightCardList = 45;
+	optional SCFightPointSeat SCFightPointSeat = 46;
+	optional SCFightApplyExitResult SCFightApplyExitResult = 47;//申请退出的结果
+	optional SCFightDisconnect SCFightDisconnect = 48;//通知玩家断连
+	optional FightChiResponse FightChiResponse = 49;//吃的响应
+	optional SCFightScore SCFightScore = 50;//分数改变
+	optional SCFightChooseCardListOver SCFightChooseCardListOver = 51;//取消通知
+	optional FightQueryGameConfigResponse FightQueryGameConfigResponse = 52;//查询游戏配置
+	optional FightClientDispatchResponse FightClientDispatchResponse = 53;//客户端调试配牌
+	optional FightClientTouchCardResponse FightClientTouchCardResponse = 54;//客户端调试摸牌
+	optional SCFightRoomDismiss SCFightRoomDismiss = 55;//通知房间解散
+	optional FightConfirmGameOverResponse FightConfirmGameOverResponse = 56;//确认游戏结束
+	optional SCFightCastDices SCFightCastDices = 57;//掷骰子
+	optional SCFightNoticeSeat SCFightNoticeSeat = 58;//通知座位号
 	
-	optional SettingsResponse SettingsResponse = 55;//设置
-	optional SettingsShowResponse SettingsShowResponse = 56;//设置
+	optional SettingsResponse SettingsResponse = 59;//设置
+	optional SettingsShowResponse SettingsShowResponse = 60;//设置
 
-	optional RaceJoinRaceResponse RaceJoinRaceResponse = 57;
-	optional SCRaceJoinRace SCRaceJoinRace = 58;
-	optional RaceShowQueueResponse RaceShowQueueResponse = 59;
-	optional SCRaceQueueChange SCRaceQueueChange = 60;
+	optional RaceJoinRaceResponse RaceJoinRaceResponse = 61;
+	optional SCRaceJoinRace SCRaceJoinRace = 62;
+	optional RaceShowQueueResponse RaceShowQueueResponse = 63;
+	optional SCRaceQueueChange SCRaceQueueChange = 64;
 
-	optional MatchCheckRoomResponse MatchCheckRoomResponse = 61;// 检查房间号
-	optional SCFightFlowerCount SCFightFlowerCount = 62;//杠 碰时花的计数改变
-    optional SCFightFillFlower SCFightFillFlower = 63;//补花
-	optional SCFightTing SCFightTing = 64;//听
+	optional MatchCheckRoomResponse MatchCheckRoomResponse = 65;// 检查房间号
+	optional SCFightFlowerCount SCFightFlowerCount = 66;//杠 碰时花的计数改变
+    optional SCFightFillFlower SCFightFillFlower = 67;//补花
+	optional SCFightTing SCFightTing = 68;//听
+	optional SCFightTingCheck SCFightTingCheck = 69;//检查可不可以听
+	optional FightTingCheckResultResponse FightTingCheckResultResponse = 70;
+	optional FightPreTingResponse FightPreTingResponse = 71;//收到听
 
-	optional GmEnvVarsResponse GmEnvVarsResponse = 65;
-	optional GmGameInfoResponse GmGameInfoResponse = 66;
-	optional GmDispatchCardResponse GmDispatchCardResponse = 67;
-} // 67
+	optional GmEnvVarsResponse GmEnvVarsResponse = 72;
+	optional GmGameInfoResponse GmGameInfoResponse = 73;
+	optional GmDispatchCardResponse GmDispatchCardResponse = 74;
+	optional GmRoundResponse GmRoundResponse = 75;
+	optional SCFightNoticeAgreeExit SCFightNoticeAgreeExit= 76;//通知做出的选择
+
+	optional PlaybackCatelogResponse PlaybackCatelogResponse = 77;
+	optional PlaybackGetBinaryResponse PlaybackGetBinaryResponse = 78;
+} // 78

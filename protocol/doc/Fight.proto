@@ -41,6 +41,8 @@ message SCFightApplyExitGame{//
 	optional string name = 1;
 	optional int32 countDown = 2;
 	optional int32 applyExitId = 3;
+	optional int32 seat = 4;
+	optional int32 startTime = 5;
 }
 
 message FightAgreeExitGameRequest{//
@@ -116,6 +118,7 @@ message SCFightRoundOver{
 	optional int32 maxRoundCount = 6;//最大局数
 	optional int32 flyScore = 7; //飞苍蝇的分数
 	optional bool huangFan = 8;//是否荒番
+	optional bool isLiuju = 9;//是否流局
 }
 
 message SCFightGameOver{
@@ -127,21 +130,33 @@ message SCFightGameOver{
 
 message SCFightNoticeSendCard{
 	optional int32 seat = 1;
+	optional int32 banCard = 2;//禁止出的牌
 }
 
 message FightSendCardRequest{
 	optional int32 card = 1;
 	optional bool isTouchCard = 2[default=false];
-	repeated int32 tingCards = 3;//听牌数组
 }
 
 message FightSendCardResponse{//
 	optional int32 errorCode = 1 [default = 1];
 }
+
+message FightSendTingCardRequest{
+	optional int32 card = 1;
+	optional bool isTouchCard = 2[default=false];
+	repeated int32 tingCards = 3;//听牌数组
+}
+
+message FightSendTingCardResponse{//
+	optional int32 errorCode = 1 [default = 1];
+}
+
 message SCFightSendCard{
 	optional int32 card = 1;
 	optional int32 seat = 2;
 	optional bool isTouchCard = 3;
+	optional bool isTingCard= 4;
 }
 
 message SCFightTouchCard{
@@ -156,6 +171,7 @@ message SCFightNoticeChooseCardList{
 	repeated CallCardListData callCardListData = 2;
 	optional int32 seat = 3;
 	optional int32 tempGameCount = 4;
+	optional CallTingData callTingData =5;
 }
 
 message SCFightCountdown{
@@ -197,6 +213,7 @@ message FightHuResponse{
 message SCFightHu{
 	optional int32 seat = 1;
 	optional RoundCardsData huData = 2;
+	optional OverMethod overMethod = 3;//胡的方式
 }
 
 message FightGuoRequest{
@@ -273,4 +290,40 @@ message SCFightFillFlower{
 
 message SCFightTing{
 	optional int32 seat = 1;//谁听了
+}
+
+message SCFightTingCheck{
+	 
+}
+
+message FightTingCheckResultRequest{
+	repeated TingData tingData = 1;
+}
+
+message FightTingCheckResultResponse{
+
+}
+
+message FightPreTingResponse{
+	optional int32 errorCode = 1[default = 1];
+}
+
+message FightPreTingRequest{
+	optional int32 tempGameCount = 1;
+	optional int32 callCardListId = 2;
+}
+
+message SCFightNoticeAgreeExit{
+	optional int32 seat = 1;
+	optional FightVoteApplyExit fightVoteApplyExit = 2;
+}
+
+//主推掷骰子
+message SCFightCastDices{
+	repeated int32 dices = 1;
+}
+
+message SCFightNoticeSeat{
+	//索引是现在的座位号，值是之前的座位号
+	repeated int32 seat = 1;
 }
